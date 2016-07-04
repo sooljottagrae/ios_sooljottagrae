@@ -58,10 +58,9 @@ fastlane/screenshots
 #Add fileType
 #*.xcodeproj
 *.DS_Store
-*.xcassets
+#*.xcassets
 #*.lproj
 *.xcbkptlist
-
 
 #pod file
 /sooljottagrae/Podfile.lock
