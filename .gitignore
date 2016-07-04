@@ -59,7 +59,7 @@ fastlane/screenshots
 #*.xcodeproj
 *.DS_Store
 *.xcassets
-*.lproj
+#*.lproj
 *.xcbkptlist
 
 
