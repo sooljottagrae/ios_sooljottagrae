@@ -6,6 +6,8 @@
 //  Copyright © 2016년 alcoholic. All rights reserved.
 //
 
+//허홍준의 수정
+
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
