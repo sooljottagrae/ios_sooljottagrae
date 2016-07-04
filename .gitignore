@@ -61,3 +61,9 @@ fastlane/screenshots
 *.xcassets
 *.lproj
 *.xcbkptlist
+
+
+#pod file
+/sooljottagrae/Podfile.lock
+/sooljottagrae/Pods/ 
+/sooljottagrae/sooljottagrae.xcworkspace/
