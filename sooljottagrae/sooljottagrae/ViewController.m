@@ -24,7 +24,7 @@
     
     //로그인뷰 배경화면 투명화
     UIView *loginViewBgColor = [[UIView alloc]initWithFrame:self.loginView.bounds];
-    loginViewBgColor.backgroundColor = [UIColor colorWithRed:254 green:254 blue:254 alpha:0.7];
+    loginViewBgColor.backgroundColor = UIColorFromRGB(0x000000, 0.8);
     
     
     [self.loginView addSubview:loginViewBgColor];
