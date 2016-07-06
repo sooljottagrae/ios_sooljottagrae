@@ -25,11 +25,17 @@
                                         <rect key="frame" x="31" y="79" width="219" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="XGD-Eb-WiE"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pEv-N4-Qec">
                                         <rect key="frame" x="31" y="120" width="219" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="xtp-Ay-hsg"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="jBn-g8-lTH">
                                         <rect key="frame" x="31" y="207" width="219" height="21"/>
@@ -209,24 +215,32 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvs-4Q-Q5D">
                                 <rect key="frame" x="0.0" y="60" width="600" height="55"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buC-o6-vVr">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="55"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="most Commented">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="qOQ-eX-AR5" kind="custom" identifier="mostCommented" customClass="MainNavigationSegue" id="c0u-IJ-GWb"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oO-FN-h0F">
                                         <rect key="frame" x="300" y="0.0" width="300" height="55"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="My Tags">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <segue destination="qYI-T4-mSt" kind="custom" identifier="MyTags" customClass="MainNavigationSegue" id="YNs-OD-de8"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buC-o6-vVr">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="55"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="most Commented">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="qOQ-eX-AR5" kind="custom" identifier="mostCommented" customClass="MainNavigationSegue" id="c0u-IJ-GWb"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -275,10 +289,12 @@
                     </view>
                     <connections>
                         <outlet property="addPostButton" destination="7oh-hJ-3GK" id="B5v-cu-uW7"/>
+                        <outlet property="menuView" destination="Kgb-Ro-95b" id="MQ1-Se-qNH"/>
                         <outlet property="mostCommentedButton" destination="buC-o6-vVr" id="ebn-I6-8Iu"/>
                         <outlet property="myTagsButton" destination="3oO-FN-h0F" id="IlK-1d-hTE"/>
                         <outlet property="placeholderView" destination="6sg-Nz-9wx" id="8Qz-h5-rm6"/>
                         <outlet property="profileButton" destination="Sfd-HM-uK9" id="RuR-Xm-V20"/>
+                        <outlet property="tabAreaView" destination="nvs-4Q-Q5D" id="0Fa-ls-5ak"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Wk-mh-0JG" userLabel="First Responder" sceneMemberID="firstResponder"/>

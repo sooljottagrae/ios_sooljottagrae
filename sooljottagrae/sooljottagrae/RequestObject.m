@@ -12,9 +12,9 @@
 #import "AFNetworking.h"
 
 //서버정보
-static NSString *const SERVER_HOST = @"";  //서버 주소
-static NSString *const LOGIN_API_FB = @""; //페이스북 로그인 API
-static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
+static NSString *const ServerHost = @"";  //서버 주소
+static NSString *const LoginAPIFacebook = @""; //페이스북 로그인 API
+static NSString *const LoginAPINormal = @""; //일반 로그인 API
 
 
 
@@ -31,14 +31,14 @@ static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
     return object;
 }
 
-//로그인
+//로그인(일반)
 -(void) loginID:(NSString *)email passwd:(NSString *)passWord{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     //AFNSerializer를 통한 파라미터 전달법
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",SERVER_HOST,LOGIN_API_FB];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPINormal];
     NSDictionary *parameters = @{@"email":email, @"password":passWord};
     
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
@@ -53,9 +53,19 @@ static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
             
             if([[responseObject objectForKey:@"CODE"] isEqualToString:@"200"]){
                 
-                //Notification을 통한 구현
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:LOGIN_SUCCESS
+                
+                //자동로그인설정
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LOGIN"];
+                
+                //유저정보설정
+                NSString *sessindId = [[responseObject objectForKey:@"contents"] objectForKey:@"session"];
+                NSDictionary *userInfo = @{@"email":email, @"authKey":sessindId};
+                [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"USER_INFO"];
+                
+                
+                //Notification을 통한 구현
+                [[NSNotificationCenter defaultCenter] postNotificationName:LoginSuccess
                                                                     object:nil];
 
                 
@@ -65,9 +75,6 @@ static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
     
     
     [dataTask resume];
-    
-    
-    
 }
 
 //페이스북 로그인후 처리
@@ -80,7 +87,7 @@ static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     //AFNSerializer를 통한 파라미터 전달법
-    NSString *urlString = [NSString stringWithFormat:@"%@",SERVER_HOST];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPIFacebook];
     NSDictionary *parameters = @{@"email":email, @"token":tokenString};
     
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
@@ -95,8 +102,17 @@ static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
             
             if([[responseObject objectForKey:@"CODE"]isEqualToString:@"200"]){
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:LOGIN_SUCCESS
+                [[NSNotificationCenter defaultCenter] postNotificationName:LoginSuccess
                                                                     object:nil];
+                
+                //자동로그인여부설정
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LOGIN"];
+                
+                //유저정보설정
+                NSString *sessindId = [[responseObject objectForKey:@"contents"] objectForKey:@"session"];
+                NSDictionary *userInfo = @{@"email":email, @"authKey":sessindId};
+                [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"USER_INFO"];
+
 
             }
         }
@@ -106,6 +122,8 @@ static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
     [dataTask resume];
 }
 
+
+//이미지 보내는 것을 임시로 셋팅한다.
 -(void) sendProfilePhoto:(UIImage *)image email:(NSString *) email_ID session:(NSString *)token{
     //AFNetworking 으로 멀티파트 구현
     
@@ -148,15 +166,7 @@ static NSString *const LOGIN_API_NM = @""; //일반 로그인 API
                            NSLog(@"%@ %@", response, responseObject);
                        }
                        
-                       
-//                       if ([[responseObject objectForKey:@"code"] isEqualToNumber:@201]) {
-//                           [[NSNotificationCenter defaultCenter] postNotificationName:ImageUploadDidSuccessNotification
-//                                                                               object:nil];
-//                       } else {
-//                           [[NSNotificationCenter defaultCenter] postNotificationName:ImageUploadDidFailNotification
-//                                                                               object:nil];
-//                       }
-//                       
+        
                        
                    }];
     

@@ -31,10 +31,10 @@
     [childview setTranslatesAutoresizingMaskIntoConstraints: NO];
     
     // fill horizontal
-    [mainVC.placeholderView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[childview]|" options: 0 metrics: nil views: NSDictionaryOfVariableBindings(childview)]];
+    [mainVC.placeholderView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat: @"H:|[childview]|" options: 0 metrics: nil views: NSDictionaryOfVariableBindings(childview)]];
     
     // fill vertical
-    [mainVC.placeholderView addConstraints:[ NSLayoutConstraint constraintsWithVisualFormat: @"V:|-0-[childview]-0-|" options: 0 metrics: nil views: NSDictionaryOfVariableBindings(childview)]];
+    [mainVC.placeholderView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat: @"V:|-0-[childview]-0-|" options: 0 metrics: nil views: NSDictionaryOfVariableBindings(childview)]];
     
     [mainVC.placeholderView layoutIfNeeded];
     

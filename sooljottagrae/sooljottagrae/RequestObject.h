@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //Notification을 위한 플래그
-static NSString *const LOGIN_SUCCESS = @"LOGIN_SUCCESS";
+static NSString *const LoginSuccess = @"LOGIN_SUCCESS";
 
 
 @interface RequestObject : NSObject
