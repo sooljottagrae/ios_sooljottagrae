@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "SettingViewController.h"
 #import "RequestObject.h"
 
 
@@ -66,8 +67,10 @@
 
 //프로필 버튼 액션
 - (IBAction)clickedProfileButton:(UIButton *)sender {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
+    SettingViewController *settingVC = [stb instantiateViewControllerWithIdentifier:@"SettingViewController"];
     
+    /*
     UIViewController * contributeViewController = [[UIViewController alloc] init];
     UIBlurEffect * blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     UIVisualEffectView *beView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -77,6 +80,7 @@
     contributeViewController.view.backgroundColor = [UIColor clearColor];
     [contributeViewController.view insertSubview:beView atIndex:0];
     contributeViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+     
 
     
     //임시버튼을 만들어서 추가 한다.
@@ -87,11 +91,12 @@
     
     [contributeViewController.view addSubview:dissButton];
     
+    */
     
-    
-    [self addChildViewController:contributeViewController];
-    contributeViewController.view.frame = CGRectMake(0, 0, 0, contributeViewController.view.frame.size.height);
-    [self.view addSubview:contributeViewController.view];
+    [self addChildViewController:settingVC];
+//    contributeViewController.view.frame = CGRectMake(0, 0, 0, contributeViewController.view.frame.size.height);
+    [settingVC setModalPresentationStyle:UIModalPresentationCurrentContext];
+    [self.view addSubview:settingVC.view];
     
 
     
@@ -99,9 +104,9 @@
     [UIView animateWithDuration:0.2 delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                          contributeViewController.view.frame = self.view.bounds;
+                          settingVC.view.frame = self.view.bounds;
                      } completion:^(BOOL finished) {
-                          [contributeViewController didMoveToParentViewController:self];
+                          [settingVC didMoveToParentViewController:self];
                      }];
     
 

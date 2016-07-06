@@ -10,6 +10,7 @@
 #import "ViewController.h"
 #import "RequestObject.h"
 #import "MainViewController.h"
+#import "SignInViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <QuartzCore/CALayer.h>
@@ -245,6 +246,10 @@
 
 -(IBAction)clickedSignInButton:(id)sender{
     //회원가입 화면으로 넘어간다.
+    UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
+    
+    SignInViewController *signInVC = [stb instantiateViewControllerWithIdentifier:@"SignInViewController"];
+    [self presentViewController:signInVC animated:YES completion:nil];
     
     
 }
