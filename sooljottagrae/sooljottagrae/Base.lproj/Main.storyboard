@@ -201,7 +201,7 @@
                                         <state key="normal" backgroundImage="Add"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.87697831199999998" green="0.92381810900000005" blue="0.1544678763" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.69019607839999997" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Sfd-HM-uK9" firstAttribute="leading" secondItem="Kgb-Ro-95b" secondAttribute="leading" constant="16" id="4KQ-zo-99I"/>
                                     <constraint firstAttribute="height" constant="40" id="K7E-Js-bYn"/>
@@ -215,14 +215,21 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvs-4Q-Q5D">
                                 <rect key="frame" x="0.0" y="60" width="600" height="55"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oO-FN-h0F">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7b-IW-KH6">
+                                        <rect key="frame" x="0.0" y="52.5" width="600" height="2.5"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2.5" id="rgh-D2-HXo"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oO-FN-h0F">
                                         <rect key="frame" x="300" y="0.0" width="300" height="55"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="My Tags">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="selected">
+                                        <state key="selected" backgroundImage="underline-slicing">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -234,9 +241,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="most Commented">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="selected">
+                                        <state key="selected" backgroundImage="underline-slicing">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -244,7 +251,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.062882441740000003" green="0.79295937449999998" blue="0.92381810900000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="3oO-FN-h0F" firstAttribute="leading" secondItem="buC-o6-vVr" secondAttribute="trailing" id="0ac-IL-Jek"/>
                                     <constraint firstAttribute="bottom" secondItem="buC-o6-vVr" secondAttribute="bottom" id="0gT-gc-WG7"/>
@@ -253,10 +260,13 @@
                                     <constraint firstAttribute="trailing" secondItem="3oO-FN-h0F" secondAttribute="trailing" id="Luw-09-6WK"/>
                                     <constraint firstAttribute="height" constant="55" id="MO6-dW-1Ng"/>
                                     <constraint firstItem="3oO-FN-h0F" firstAttribute="top" secondItem="nvs-4Q-Q5D" secondAttribute="top" id="NsM-JZ-14P"/>
+                                    <constraint firstItem="w7b-IW-KH6" firstAttribute="leading" secondItem="nvs-4Q-Q5D" secondAttribute="leading" id="P0H-mW-boe"/>
                                     <constraint firstItem="buC-o6-vVr" firstAttribute="top" secondItem="nvs-4Q-Q5D" secondAttribute="top" id="QAa-Aj-NQp"/>
                                     <constraint firstItem="buC-o6-vVr" firstAttribute="leading" secondItem="nvs-4Q-Q5D" secondAttribute="leading" id="X9e-Cb-bwJ"/>
                                     <constraint firstItem="3oO-FN-h0F" firstAttribute="width" secondItem="buC-o6-vVr" secondAttribute="width" id="bj2-pN-pe5"/>
+                                    <constraint firstAttribute="bottom" secondItem="w7b-IW-KH6" secondAttribute="bottom" id="eFW-O3-pUG"/>
                                     <constraint firstAttribute="bottom" secondItem="3oO-FN-h0F" secondAttribute="bottom" id="qfa-Ek-W2w"/>
+                                    <constraint firstAttribute="trailing" secondItem="w7b-IW-KH6" secondAttribute="trailing" id="qrC-Cr-Phl"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -267,10 +277,15 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6sg-Nz-9wx">
                                 <rect key="frame" x="0.0" y="115" width="600" height="485"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="kZa-uS-JDw"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="kZa-uS-JDw"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -305,7 +320,7 @@
         <scene sceneID="0d9-X3-TC2">
             <objects>
                 <collectionViewController storyboardIdentifier="MOST_COMMENTED" id="qOQ-eX-AR5" customClass="MostCommentedCollectionViewController" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="KYC-r8-vYY">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="KYC-r8-vYY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -341,7 +356,7 @@
         <scene sceneID="EP8-9U-97U">
             <objects>
                 <collectionViewController storyboardIdentifier="MY_TAGS" id="qYI-T4-mSt" customClass="MyTagsCollectionViewController" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="XsN-YQ-ITD">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="XsN-YQ-ITD">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -378,5 +393,6 @@
         <image name="Add" width="128" height="128"/>
         <image name="Facebook-login" width="390" height="76"/>
         <image name="profile" width="128" height="128"/>
+        <image name="underline-slicing" width="512" height="512"/>
     </resources>
 </document>

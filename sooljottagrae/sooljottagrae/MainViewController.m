@@ -23,6 +23,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *profileButton;
 @property (strong, nonatomic) IBOutlet UIButton *addPostButton;
 
+@property (strong, nonatomic) UIButton *targetButton;
+
+
 @end
 
 @implementation MainViewController
@@ -30,13 +33,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self createView];
     [self settingFoTabbarButton];
     
     [self performSegueWithIdentifier:@"mostCommented" sender:self.tabBarButtons[0]];
     
     
 }
+-(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"1");
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -45,10 +52,20 @@
 
 -(void) createView{
     
-    self.menuView.backgroundColor = UIColorFromRGB(0x000000, 1.0);
+    
+    self.menuView.backgroundColor = UIColorFromRGB(0xfdc2ff, 1.0);//[UIColor clearColor];
     self.tabAreaView.backgroundColor = [UIColor whiteColor];
     
-    
+//    //상위메뉴 배경 그라디언트
+//    CAGradientLayer *gradient = [CAGradientLayer layer];
+//    gradient.frame = self.menuView.bounds;
+//    gradient.colors = [NSArray arrayWithObjects:(id)[UIColorFromRGB(0xffffff,1.0) CGColor],
+//                       (id)[UIColorFromRGB(0xfdc2ff,1.0) CGColor],nil];
+//    gradient.locations =[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.09],
+//                         [NSNumber numberWithFloat:0.91], nil];
+//    
+//    [self.menuView.layer insertSublayer:gradient atIndex:0];
+
 }
 
 
@@ -57,6 +74,7 @@
     
     self.availableIdentifiers = @[@"mostCommented", @"MyTags"];
     self.tabBarButtons = @[self.mostCommentedButton, self.myTagsButton];
+    
     
 }
 
@@ -121,11 +139,15 @@
 }
 
 //선택된 탭바에 언더바를 넣는다.
+//가로모드일때 사이즈가 그대로이다.(유동적으로 변해야한다)
 -(void) selectedButton:(UIButton *)sender{
     
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0, sender.frame.size.height-3, self.view.frame.size.width/2, 3.0f);
+    bottomBorder.frame = CGRectMake(0, sender.frame.size.height-3, sender.frame.size.width, 3.0f);
+    
     bottomBorder.backgroundColor = [UIColor blackColor].CGColor;
+    
+    
     [sender.layer addSublayer:bottomBorder];
 }
 
@@ -145,10 +167,11 @@
         for(UIButton *selected in self.tabBarButtons){
             if(sender != nil && ![selected isEqual: sender]) {
                 [selected setSelected: NO];
-                [self removeSelectedLine:selected];
+                //[self removeSelectedLine:selected];
             } else if(sender != nil) {
                 [selected setSelected: YES];
-                [self selectedButton:selected];
+                //[self selectedButton:selected];
+                self.targetButton = selected;
             }
         }
     }

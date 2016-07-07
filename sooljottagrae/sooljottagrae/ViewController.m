@@ -120,9 +120,9 @@
  *******************************************/
 -(IBAction)loginButtonAction:(UIButton *)sender{
     
-    if(![self checkLoginParameter]){
-        return;
-    }
+//    if(![self checkLoginParameter]){
+//        return;
+//    }
     
     //[[RequestObject sharedInstance] loginID:self.email_ID.text passwd:self.password.text];
     [self verifiedUser];

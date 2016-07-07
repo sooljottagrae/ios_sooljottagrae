@@ -16,6 +16,9 @@ static NSString *const ServerHost = @"";  //서버 주소
 static NSString *const LoginAPIFacebook = @""; //페이스북 로그인 API
 static NSString *const LoginAPINormal = @""; //일반 로그인 API
 
+@interface RequestObject() <NSURLConnectionDelegate>
+
+@end
 
 
 @implementation RequestObject
@@ -30,12 +33,18 @@ static NSString *const LoginAPINormal = @""; //일반 로그인 API
     
     return object;
 }
+/********************************************************************************
+ * 로그인
+ *********************************************************************************/
+
 
 //로그인(일반)
 -(void) loginID:(NSString *)email passwd:(NSString *)passWord{
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    manager.securityPolicy.allowInvalidCertificates = YES; //SSL
     
     //AFNSerializer를 통한 파라미터 전달법
     NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPINormal];
@@ -121,7 +130,9 @@ static NSString *const LoginAPINormal = @""; //일반 로그인 API
     
     [dataTask resume];
 }
-
+/********************************************************************************
+ * 프로파일
+ *********************************************************************************/
 
 //이미지 보내는 것을 임시로 셋팅한다.
 -(void) sendProfilePhoto:(UIImage *)image email:(NSString *) email_ID session:(NSString *)token{
@@ -171,6 +182,50 @@ static NSString *const LoginAPINormal = @""; //일반 로그인 API
                    }];
     
     [uploadTask resume];
+    
+}
+
+/********************************************************************************
+ * 메인
+ *********************************************************************************/
+
+//가장 많이 본 view 가져오기
+// @param - pageCount : 현재 페이지
+//        - listCount : 페이지당 갯수 (MAX : 50)
+
+-(void) mostCommentedList:(NSInteger)pageCount listCount:(NSInteger)listCount{
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    //AFNSerializer를 통한 파라미터 전달법
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPIFacebook];
+    NSDictionary *parameters = @{@"PAGE":@(pageCount), @"list_count":@(listCount)};
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
+    
+    
+    
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error);
+        } else {
+            NSLog(@"%@ %@", response, responseObject);
+            
+            if([[responseObject objectForKey:@"CODE"]isEqualToString:@"200"]){
+                
+                self.mostCommentedList = [responseObject objectForKey:@"contents"];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:MostCommentdListLoadSuccess
+                                                                    object:nil];
+                
+                
+            }
+        }
+    }];
+    
+    
+    [dataTask resume];
     
 }
 

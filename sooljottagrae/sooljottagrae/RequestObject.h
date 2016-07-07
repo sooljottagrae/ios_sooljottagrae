@@ -9,11 +9,15 @@
 #import <Foundation/Foundation.h>
 
 //Notification을 위한 플래그
-static NSString *const LoginSuccess = @"LOGIN_SUCCESS";
+static NSString *const LoginSuccess = @"LoginSuccess"; //로그인성공시
+static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSuccess";
+
+
 
 
 @interface RequestObject : NSObject
 
+@property (strong, nonatomic) NSArray *mostCommentedList;
 
 + (instancetype) sharedInstance;
 
