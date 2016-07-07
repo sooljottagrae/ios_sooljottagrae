@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E6BE7491D2DD65A0039AB7B /* Icon-App-60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6BE7471D2DD65A0039AB7B /* Icon-App-60x60@2x.png */; };
+		8E6BE74A1D2DD65A0039AB7B /* Icon-App-60x60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6BE7481D2DD65A0039AB7B /* Icon-App-60x60@3x.png */; };
 		8E6E25851D2A136B007799B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25841D2A136B007799B3 /* main.m */; };
 		8E6E25881D2A136B007799B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25871D2A136B007799B3 /* AppDelegate.m */; };
 		8E6E258B1D2A136B007799B3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E258A1D2A136B007799B3 /* ViewController.m */; };
@@ -34,6 +36,8 @@
 
 /* Begin PBXFileReference section */
 		7D328FA704C1AAD3653537A9 /* Pods-sooljottagrae.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sooljottagrae.release.xcconfig"; path = "Pods/Target Support Files/Pods-sooljottagrae/Pods-sooljottagrae.release.xcconfig"; sourceTree = "<group>"; };
+		8E6BE7471D2DD65A0039AB7B /* Icon-App-60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-60x60@2x.png"; sourceTree = "<group>"; };
+		8E6BE7481D2DD65A0039AB7B /* Icon-App-60x60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-60x60@3x.png"; sourceTree = "<group>"; };
 		8E6E25801D2A136A007799B3 /* sooljottagrae.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sooljottagrae.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6E25841D2A136B007799B3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E6E25861D2A136B007799B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 				BFF745331D2CFA3D002E6D0B /* Profile1.png */,
 				8E6E259E1D2A2397007799B3 /* facebook-login.png */,
 				8E6E25B81D2B7C83007799B3 /* facebook-logo.png */,
+				8E6BE7471D2DD65A0039AB7B /* Icon-App-60x60@2x.png */,
+				8E6BE7481D2DD65A0039AB7B /* Icon-App-60x60@3x.png */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -245,7 +251,9 @@
 				8E6E25A81D2AC0DC007799B3 /* add.png in Resources */,
 				8E6E25901D2A136B007799B3 /* Assets.xcassets in Resources */,
 				8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */,
+				8E6BE74A1D2DD65A0039AB7B /* Icon-App-60x60@3x.png in Resources */,
 				BF191C071D2CEF7800FE6A9C /* Main1.storyboard in Resources */,
+				8E6BE7491D2DD65A0039AB7B /* Icon-App-60x60@2x.png in Resources */,
 				8E6E258E1D2A136B007799B3 /* Main.storyboard in Resources */,
 				8E6E25A61D2ABC9C007799B3 /* profile.png in Resources */,
 				BFF745341D2CFA3D002E6D0B /* Profile1.png in Resources */,
