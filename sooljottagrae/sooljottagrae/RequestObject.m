@@ -44,13 +44,23 @@ static NSString *const LoginAPINormal = @""; //일반 로그인 API
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
-    manager.securityPolicy.allowInvalidCertificates = YES; //SSL
+    
+    //SSL을 위한 설정
+    manager.securityPolicy.allowInvalidCertificates = YES;
+    
+    //SSL인증서를 찾아서 적용하는 로직
+    NSString *pathToCert = [[NSBundle mainBundle]pathForResource:@"sooljota.com" ofType:@"cer"];
+    NSData *localCertificate = [NSData dataWithContentsOfFile:pathToCert];
+    manager.securityPolicy.pinnedCertificates = [NSSet setWithObject:localCertificate];
+    
+    
     
     //AFNSerializer를 통한 파라미터 전달법
     NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPINormal];
     NSDictionary *parameters = @{@"email":email, @"password":passWord};
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
+    //JSON형태의 파라미터를 전송한다.
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
     
     
     
@@ -99,7 +109,7 @@ static NSString *const LoginAPINormal = @""; //일반 로그인 API
     NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPIFacebook];
     NSDictionary *parameters = @{@"email":email, @"token":tokenString};
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
     
 
     
@@ -147,7 +157,7 @@ static NSString *const LoginAPINormal = @""; //일반 로그인 API
     [bodyParams setObject:token forKey:@"session"];
     
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
                                                                                                URLString:imageUploadURLString
                                                                                               parameters:bodyParams
                                                                                constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -201,7 +211,7 @@ static NSString *const LoginAPINormal = @""; //일반 로그인 API
     NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPIFacebook];
     NSDictionary *parameters = @{@"PAGE":@(pageCount), @"list_count":@(listCount)};
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
     
     
     

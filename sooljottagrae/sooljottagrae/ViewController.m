@@ -63,22 +63,35 @@
 
 -(void) createView{
     
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    //배경 그라디언트
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.view.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[UIColorFromRGB(0xffffff,1.0) CGColor],
+                       (id)[UIColorFromRGB(0xfdc2ff,1.0) CGColor],nil];
+    gradient.locations =[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.05],
+                         [NSNumber numberWithFloat:0.95], nil];
+    
+    [self.view.layer insertSublayer:gradient atIndex:0];
+
+    
+    //로그인뷰
     self.loginView.backgroundColor = [UIColor clearColor];
     
     //로그인뷰 배경화면 투명화
     self.loginViewBgColor = [[UIView alloc]init];
     self.loginViewBgColor.frame = self.loginView.bounds;
-    self.loginViewBgColor.backgroundColor = UIColorFromRGB(0xFFFFFF, 0.94);
+    self.loginViewBgColor.backgroundColor = UIColorFromRGB(0xFFFFFF, 0.84);
     self.loginViewBgColor.layer.cornerRadius = 10.0f;
     self.loginViewBgColor.layer.masksToBounds = YES;
     
     [self.loginView addSubview:self.loginViewBgColor];
     
-    
+    //그외 버튼 등을 다시 올린다
     [self.loginView addSubview:self.loginTitle];
     [self.loginView addSubview:self.email_ID];
     [self.loginView addSubview:self.password];
-    
     
     
     self.loginButton.layer.cornerRadius = 3.0f;
@@ -89,7 +102,7 @@
     [self.loginView addSubview:self.divTitle];
     
     
-    // Handle clicks on the button
+    //페이스북 로그인 버튼 액션
     [self.facebookLogin addTarget:self
                            action:@selector(loginFacebookButtonClicked)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -100,6 +113,8 @@
     [self.loginView addSubview:self.forgotPassword];
     [self.loginView addSubview:self.signIn];
     
+    //패스워드 찾기 버튼 비활성화
+    self.forgotPassword.enabled = NO;
 
 }
 
@@ -119,7 +134,7 @@
  *  - 값을 전달 받을 것을 가지고 로그인 여부 파악
  *******************************************/
 -(IBAction)loginButtonAction:(UIButton *)sender{
-    
+//    //값 체크
 //    if(![self checkLoginParameter]){
 //        return;
 //    }
@@ -283,6 +298,18 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     [textField resignFirstResponder];
+    return YES;
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    
+    if(textField.tag == 0){
+        if([textField.text length] > 0){
+            self.forgotPassword.enabled = YES;
+        }else{
+            self.forgotPassword.enabled = NO;
+        }
+    }
+    
     return YES;
 }
 

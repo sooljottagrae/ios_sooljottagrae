@@ -27,5 +27,5 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
 
 
 
-
+-(void) mostCommentedList:(NSInteger)pageCount listCount:(NSInteger)listCount;
 @end
