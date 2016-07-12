@@ -28,6 +28,7 @@
 		BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191BFF1D2CEF6C00FE6A9C /* SignInViewController.m */; };
 		BF191C041D2CEF6C00FE6A9C /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191C011D2CEF6C00FE6A9C /* WelcomeViewController.m */; };
 		BF191C071D2CEF7800FE6A9C /* Main1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF191C051D2CEF7800FE6A9C /* Main1.storyboard */; };
+		BFC1510B1D34A36100ACF71B /* EditMyTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */; };
 		BFF745341D2CFA3D002E6D0B /* Profile1.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF745331D2CFA3D002E6D0B /* Profile1.png */; };
 		CE5B5BC248424C1BD86384B1 /* libPods-sooljottagrae.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA01757F81E3F4E5374C06DE /* libPods-sooljottagrae.a */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,8 @@
 		BF191C001D2CEF6C00FE6A9C /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		BF191C011D2CEF6C00FE6A9C /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		BF191C061D2CEF7800FE6A9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main1.storyboard; sourceTree = "<group>"; };
+		BFC151091D34A36100ACF71B /* EditMyTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMyTagsViewController.h; sourceTree = "<group>"; };
+		BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMyTagsViewController.m; sourceTree = "<group>"; };
 		BFF745331D2CFA3D002E6D0B /* Profile1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile1.png; sourceTree = "<group>"; };
 		FA01757F81E3F4E5374C06DE /* libPods-sooljottagrae.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sooljottagrae.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -155,6 +158,8 @@
 				BF191BFF1D2CEF6C00FE6A9C /* SignInViewController.m */,
 				BF191C001D2CEF6C00FE6A9C /* WelcomeViewController.h */,
 				BF191C011D2CEF6C00FE6A9C /* WelcomeViewController.m */,
+				BFC151091D34A36100ACF71B /* EditMyTagsViewController.h */,
+				BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */,
 			);
 			path = sooljottagrae;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 				8E6E25A41D2A3A46007799B3 /* RequestObject.m in Sources */,
 				8E6E25AB1D2AC24C007799B3 /* MainViewController.m in Sources */,
 				BF191C041D2CEF6C00FE6A9C /* WelcomeViewController.m in Sources */,
+				BFC1510B1D34A36100ACF71B /* EditMyTagsViewController.m in Sources */,
 				BF191C021D2CEF6C00FE6A9C /* SettingViewController.m in Sources */,
 				8E6E25B41D2AC703007799B3 /* MostCommentedCollectionViewController.m in Sources */,
 				8E6E25B71D2AC72B007799B3 /* MyTagsCollectionViewController.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "EditMyTagsViewController.h"
 
 @interface SettingViewController ()
 
@@ -22,17 +23,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    
-    [visualEffectView setFrame:CGRectMake(self.view.frame.size.width/2, 0, self.view.frame.size.width/2, self.view.frame.size.height)];
-    
-    [self.view insertSubview:visualEffectView atIndex:0];
-    
-    //[self setModalPresentationStyle:UIModalPresentationCurrentContext];
-    
     
     UIImage *profileImage = [UIImage imageNamed:@"Profile1"];
+    self.profileImageView.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.profileImageView.layer.borderWidth = 2.0;
+    
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height/2;
+    self.profileImageView.layer.masksToBounds = YES;
     [self.profileImageView setImage:profileImage];
     
     [self.profileNameLabel setText:[NSString stringWithFormat:@"%@ 님",self.profileName]];
@@ -58,13 +55,18 @@
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    
 }
 
 - (IBAction)logOUtBtn:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)editTagsBtn:(id)sender {
+    UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
+    EditMyTagsViewController *editMyTagsVC = [stb instantiateViewControllerWithIdentifier:@"EditMyTagsViewController"];
+    
+    [self presentViewController:editMyTagsVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

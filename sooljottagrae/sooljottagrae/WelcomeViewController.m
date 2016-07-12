@@ -19,6 +19,11 @@
     [super viewDidLoad];
     UIImage *profileImage = [UIImage imageNamed:@"Profile1"];
     
+    self.profileImageView.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.profileImageView.layer.borderWidth = 1.0;
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height/2;
+    self.profileImageView.layer.masksToBounds = YES;
+    
     [self.profileImageView setImage:profileImage];
     
     [self.profileNameLabel setText:self.profileNmae];

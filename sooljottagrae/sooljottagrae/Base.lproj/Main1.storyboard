@@ -75,7 +75,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wk4-49-Zds">
-                                        <rect key="frame" x="0.0" y="254" width="182" height="30"/>
+                                        <rect key="frame" x="0.0" y="275" width="182" height="30"/>
                                         <state key="normal" title="프로필 사진 편집"/>
                                         <connections>
                                             <action selector="editProfileImageBtn:" destination="bgi-6a-S6A" eventType="touchUpInside" id="itT-uM-XhR"/>
@@ -88,7 +88,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6d-wS-80T">
-                                        <rect key="frame" x="0.0" y="292" width="182" height="30"/>
+                                        <rect key="frame" x="0.0" y="313" width="182" height="30"/>
                                         <state key="normal" title="로그아웃"/>
                                         <connections>
                                             <action selector="logOUtBtn:" destination="bgi-6a-S6A" eventType="touchUpInside" id="c5e-rI-7ZA"/>
@@ -97,6 +97,13 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UBO-jv-oSc">
                                         <rect key="frame" x="11" y="70" width="152" height="148"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VyB-gk-OJA">
+                                        <rect key="frame" x="0.0" y="237" width="182" height="30"/>
+                                        <state key="normal" title="팔로우 태그 관리"/>
+                                        <connections>
+                                            <action selector="editTagsBtn:" destination="bgi-6a-S6A" eventType="touchUpInside" id="HCL-Wb-Wvb"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -183,6 +190,74 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5k-c1-wsG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="308" y="261"/>
+        </scene>
+        <!--Edit My Tags View Controller-->
+        <scene sceneID="ENP-0e-78R">
+            <objects>
+                <viewController storyboardIdentifier="EditMyTagsViewController" id="TMu-Lg-Eo4" customClass="EditMyTagsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6uc-zR-VJR"/>
+                        <viewControllerLayoutGuide type="bottom" id="pKV-ha-aIA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="u0w-3r-PgI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lK0-kr-Xg0">
+                                <rect key="frame" x="61" y="51" width="30" height="30"/>
+                                <state key="normal" title="술"/>
+                                <connections>
+                                    <action selector="alcoholBtn:" destination="TMu-Lg-Eo4" eventType="touchUpInside" id="2CU-Ft-zZz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qsn-Sz-2Vu">
+                                <rect key="frame" x="249" y="51" width="30" height="30"/>
+                                <state key="normal" title="장소"/>
+                                <connections>
+                                    <action selector="locationBtn:" destination="TMu-Lg-Eo4" eventType="touchUpInside" id="SV2-rE-AgB"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g4o-WF-wAz">
+                                <rect key="frame" x="0.0" y="121" width="600" height="180"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="hYG-QO-dvY">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hYG-QO-dvY" id="e2j-By-8Dg">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="TMu-Lg-Eo4" id="vQZ-2y-1G0"/>
+                                    <outlet property="delegate" destination="TMu-Lg-Eo4" id="9L5-js-ze4"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIC-Ki-tb8">
+                                <rect key="frame" x="154" y="51" width="30" height="30"/>
+                                <state key="normal" title="안주"/>
+                                <connections>
+                                    <action selector="foodBtn:" destination="TMu-Lg-Eo4" eventType="touchUpInside" id="DKV-6d-sug"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="g4o-WF-wAz" firstAttribute="height" secondItem="u0w-3r-PgI" secondAttribute="height" multiplier="0.3" id="goJ-V1-e9n"/>
+                            <constraint firstItem="g4o-WF-wAz" firstAttribute="width" secondItem="u0w-3r-PgI" secondAttribute="width" id="jUX-mu-16S"/>
+                            <constraint firstItem="g4o-WF-wAz" firstAttribute="centerY" secondItem="u0w-3r-PgI" secondAttribute="centerY" multiplier="0.7" constant="1" id="mhJ-04-eEA"/>
+                            <constraint firstItem="g4o-WF-wAz" firstAttribute="centerX" secondItem="u0w-3r-PgI" secondAttribute="centerX" id="wNF-2d-GFF"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="g4o-WF-wAz" id="Mkp-zi-MKH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VJy-VI-Cse" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="240" y="937"/>
         </scene>
     </scenes>
 </document>
