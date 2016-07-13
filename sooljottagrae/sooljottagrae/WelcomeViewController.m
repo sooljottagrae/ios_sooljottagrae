@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImage *profileImage = [UIImage imageNamed:@"Profile1"];
+    UIImage *profileImage = [UIImage imageNamed:@"Profile"];
     
     self.profileImageView.layer.borderColor = [[UIColor grayColor] CGColor];
     self.profileImageView.layer.borderWidth = 1.0;
@@ -49,7 +49,12 @@
     
     [settingVC setModalPresentationStyle:UIModalPresentationCurrentContext];
     [self addChildViewController:settingVC];
-    [self.view addSubview:settingVC.view];
+    
+
+    [UIView transitionWithView:self.view duration:3.0
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^ { [self.view addSubview:settingVC.view]; }
+                    completion:nil];
 }
 
 /*
