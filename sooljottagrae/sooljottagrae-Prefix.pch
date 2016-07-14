@@ -20,3 +20,11 @@
 green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
 blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
 alpha:alphaValue]
+
+
+//테마 컬러
+//배경
+#define THEMA_BG_COLOR UIColorFromRGB(0xfad2dd,1.0f)
+//글
+#define THEMA_FT_COLOR UIColorFromRGB(0x4d92c9,1.0f)
+

@@ -4,8 +4,7 @@
 //
 //  Created by David June Kang on 2016. 7. 4..
 //  Copyright © 2016년 alcoholic. All rights reserved.
-//#90c4fd    #fab0bf    #b35d80
-//#a08fce    #71a2e4
+
 
 #import "ViewController.h"
 #import "RequestObject.h"
@@ -32,6 +31,10 @@
 
 @property (strong, nonatomic) UITextField *targetTextField;         //유형틀린 필드
 
+
+@property (strong, nonatomic) CAGradientLayer *gradient;            //배경그라이언트
+
+
 @end
 
 @implementation ViewController
@@ -42,38 +45,72 @@
     //뷰생성에 관련된 함수
     [self createView];
     
-    //로그인성공시 처리
+    //배경 그라디언트 크기 설정
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(verifiedUser)
-                                                 name:LoginSuccess
-                                               object:nil];
+                                             selector:@selector(backgroundColorGradient)
+                                                 name:UIDeviceOrientationDidChangeNotification object:nil];
     
-    
-    
+#ifdef DEBUG
+    self.email_ID.text = @"sooljotta@sooljotta.com";
+    self.password.text = @"sooljotta";
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"LOGIN"];
+#endif
     
 }
 
 
--(void)viewWillAppear:(BOOL)animated{
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"] == YES){
-        [self verifiedUser];
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    //자동로그인 설정
+    [self autoLogin];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//자동로그인
+-(void)autoLogin{
+   // NSLog(@"%d",[[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"]);
+    
+    BOOL loginKey = [[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"];
+    
+    if(loginKey == YES){
+        NSString *email = nil;
+        NSString *tokenString = nil;
+        
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"EMAIL"] != nil){
+            email = [[NSUserDefaults standardUserDefaults] objectForKey:@"EMAIL"];
+        }
+        
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"TOKEN"] != nil){
+            tokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"TOKEN"];
+        }
+        
+        [self verifiedUser:email token:tokenString];
+        
     }
+
 }
 
-
+//view 기초 설정
 -(void) createView{
     
     self.view.backgroundColor = [UIColor clearColor];
     
     //배경 그라디언트
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = self.view.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[UIColorFromRGB(0xffffff,1.0) CGColor],
-                       (id)[UIColorFromRGB(0xfdc2ff,1.0) CGColor],nil];
-    gradient.locations =[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.05],
-                         [NSNumber numberWithFloat:0.95], nil];
     
+    gradient.frame = self.view.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[UIColorFromRGB(0xffffff,1.0) CGColor],(id)[THEMA_BG_COLOR CGColor],nil];
+    gradient.locations =[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.05], [NSNumber numberWithFloat:0.95], nil];
+    
+    
+    self.gradient = gradient;
     [self.view.layer insertSublayer:gradient atIndex:0];
+    
 
     
     //로그인뷰
@@ -102,7 +139,7 @@
     [self.loginView addSubview:self.divTitle];
     
     
-    //페이스북 로그인 버튼 액션
+    //페이스북 로그인 버튼 액션 설정
     [self.facebookLogin addTarget:self
                            action:@selector(loginFacebookButtonClicked)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -119,36 +156,40 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//배경 그라디언트 설정
+-(void) backgroundColorGradient{
+    self.gradient.frame = self.view.bounds;
 }
 
-//로그인 로직
-/*******************************************
- * 서버에서 전송받는 값에 따라서 처리한다.
- * 틀릴경우)
- *  - 이미 있는 고객 (비밀번호 여부 묻기 )
- *  - 없는 고객 알림창후 회원가입으로 유도
- * 맞을 경우)
- *  - 값을 전달 받을 것을 가지고 로그인 여부 파악
- *******************************************/
+//로그인 버튼 액션
 -(IBAction)loginButtonAction:(UIButton *)sender{
-//    //값 체크
-//    if(![self checkLoginParameter]){
-//        return;
-//    }
+    //값 체크
+    if(![self checkLoginParameter]){
+        return;
+    }
     
-    //[[RequestObject sharedInstance] loginID:self.email_ID.text passwd:self.password.text];
-    [self verifiedUser];
+    //로그인 파라미터설정
+    NSDictionary *parameters = @{@"email":self.email_ID.text, @"password":self.password.text};
+    
+    //로그인
+    [[RequestObject sharedInstance] sendToServer:@"/api/users/login/"
+                                      parameters:parameters
+                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                             [self verifiedUser:self.email_ID.text token:responseObject[@"token"]];
+                                         } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                            
+
+                                         }];
 }
 
+//로그인을 위한 체크함수
 -(BOOL) checkLoginParameter{
     
     NSString *string = self.email_ID.text;
     NSString *expression = @"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$";
     NSError *error = NULL;
     
+    //이메일 형식을 확인 하기 위한 정규식
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression options:NSRegularExpressionCaseInsensitive error:&error];
     
     NSTextCheckingResult *match = [regex firstMatchInString:string options:0 range:NSMakeRange(0, [string length])];
@@ -157,23 +198,27 @@
     
     if(!match){
         
-        [self shoeAlertMessage:@"이메일 형식이 틀립니다"];
-        self.email_ID.backgroundColor = UIColorFromRGB(0xFF0000, 0.5);
+        [self showAlertMessage:@"이메일 형식이 틀립니다"];
+        self.email_ID.backgroundColor = THEMA_BG_COLOR;
         self.targetTextField = self.email_ID;
+        self.targetTextField.selected = YES;
         return NO;
     }
     
     if([self.password.text length] < 8){
-        [self shoeAlertMessage:@"비밀번호는 8자리이상 입력하십시오."];
-        self.password.backgroundColor = UIColorFromRGB(0xFF0000, 0.5);
+        [self showAlertMessage:@"비밀번호는 8자리이상 입력하십시오."];
+        self.password.backgroundColor = THEMA_BG_COLOR;
         self.targetTextField = self.password;
+        self.targetTextField.selected = YES;
         return NO;
     }
     
     
     return YES;
 }
--(void) shoeAlertMessage:(NSString *)message{
+
+//알림창 보여주기
+-(void) showAlertMessage:(NSString *)message{
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"알림창"
                                                                              message:message
@@ -199,7 +244,7 @@
 -(void)loginFacebookButtonClicked
 {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logInWithReadPermissions: @[@"email"]
+    [login logInWithReadPermissions: @[@"public_profile"]
                  fromViewController:self
                             handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                 if (error) {
@@ -207,15 +252,16 @@
                                 } else if (result.isCancelled) {
                                     NSLog(@"Cancelled");
                                 } else {
-                                    NSLog(@"Logged in");
+                                    NSLog(@"Logged in %@",result.grantedPermissions);
                                    
-                                    if ([result.grantedPermissions containsObject:@"email"]) {
-                                        if ([FBSDKAccessToken currentAccessToken]) {
+                                    if ([result.grantedPermissions containsObject:@"public_profile"]) {
+                                        if ([FBSDKAccessToken currentAccessToken] != nil) {
                                             NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
                                             [parameters setValue:@"id,name,email" forKey:@"fields"];
                                             [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters]
                                              startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                                                 if (!error) {
+                                                 NSLog(@"%@", result);
+                                                 if (error != nil) {
                                                      //넘겨온 값을 서버로 전송을 한다.
                                                      [self loginFacebook:result];
                                                  }
@@ -231,14 +277,34 @@
 //사파리로 넘기는 방법을 찾을것
 -(IBAction)clickedForgotPasswordButton:(id)sender{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"비밀번호찾기"
-                                                                             message:@"이메일을 보내서 비밀번호 변경 하시겠습니까?"
+                                                                             message:@"비밀번호를 변경하는 이메일을 보내시겠습니까?"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
     //보내기
     UIAlertAction *send = [UIAlertAction actionWithTitle:@"이메일인증 전송"
-                                                   style:UIAlertActionStyleDefault
+                                                   style:UIAlertActionStyleDestructive
                                                  handler:^(UIAlertAction * _Nonnull action) {
                                                      //코드 구현
+                                                     NSString *string = self.email_ID.text;
+                                                     NSString *expression = @"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$";
+                                                     NSError *error = NULL;
+                                                     
+                                                     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                                                                              error:&error];
+                                                     
+                                                     NSTextCheckingResult *match = [regex firstMatchInString:string options:0 range:NSMakeRange(0, [string length])];
+                                                     
+                                                     self.targetTextField.backgroundColor = [UIColor clearColor];
+                                                     
+                                                     if(!match){
+                                                         [self showAlertMessage:@"이메일 형식이 틀립니다"];
+                                                         self.email_ID.backgroundColor = THEMA_BG_COLOR;
+                                                         self.targetTextField = self.email_ID;
+                                                         self.targetTextField.selected = YES;
+                                                     }
+                                                     
+                                                     
                                                      NSLog(@">>%@",self.email_ID.text);
                                                  }];
     
@@ -249,8 +315,8 @@
                                                        
                                                    }];
     
-    [alertController addAction:cancel];
     [alertController addAction:send];
+    [alertController addAction:cancel];
     [self presentViewController:alertController animated:YES completion:^{
         
     }];
@@ -259,6 +325,7 @@
     
 }
 
+//회원가입 화면으로 넘긴다. - (홍준 최종 수정)
 -(IBAction)clickedSignInButton:(id)sender{
     //회원가입 화면으로 넘어간다.
     UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
@@ -269,39 +336,57 @@
     
 }
 
-//로그인
+//페이스로 로그인 성공시
 -(void) loginFacebook:(id)result{
     
     NSString *email = [result objectForKey:@"email"];
     
     //로그인 호출
     
-    [[RequestObject sharedInstance] loginID:email token:[FBSDKAccessToken currentAccessToken].tokenString];
+    NSDictionary *parameters = @{@"email":email, @"token":[FBSDKAccessToken currentAccessToken].tokenString};
+    
+    
+    
+//    [[RequestObject sharedInstance] sendToServer:@""
+//                                          params:parameters
+//                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
+//                                             [self verifiedUser:email, token:responseObject[@"token"]];
+//                                         } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+//                                             
+//                                         }];
 }
 
 
 //로그인후 메인화면으로 넘어간다
--(void) verifiedUser{
+-(void) verifiedUser:(NSString *)email token:(NSString *)tokenString{
     //메인 화면으로 넘어가는 작업을 실시한다.
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    //인증된 값을 저장한다.
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LOGIN"];
+    [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"EMAIL"];
     
+    if(tokenString != nil || [tokenString length] > 0){
+        [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:@"TOKEN"];
+    }
+    
+    //메인뷰로 넘어간다.
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     MainViewController *mainVC = [storyBoard instantiateViewControllerWithIdentifier:@"MAIN_VIEW"];
     
-    
-    [self presentViewController:mainVC animated:YES completion:nil];
+    [self presentViewController:mainVC animated:NO completion:nil];
 }
 
 
 
 #pragma UITextField - Delegate
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
     [textField resignFirstResponder];
     return YES;
 }
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     
+    //이메일이 입력될 경우 패스워드 찾기가 활성화 된다.
     if(textField.tag == 0){
         if([textField.text length] > 0){
             self.forgotPassword.enabled = YES;

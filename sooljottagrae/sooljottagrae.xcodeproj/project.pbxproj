@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8E6BE7951D2E24210039AB7B /* underline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6BE7941D2E24210039AB7B /* underline.png */; };
-		8E6BE7971D2FB18B0039AB7B /* trolltunga.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E6BE7961D2FB18B0039AB7B /* trolltunga.jpg */; };
 		8E6E25851D2A136B007799B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25841D2A136B007799B3 /* main.m */; };
 		8E6E25881D2A136B007799B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25871D2A136B007799B3 /* AppDelegate.m */; };
 		8E6E258B1D2A136B007799B3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E258A1D2A136B007799B3 /* ViewController.m */; };
@@ -26,6 +25,9 @@
 		8E6E25B41D2AC703007799B3 /* MostCommentedCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25B31D2AC703007799B3 /* MostCommentedCollectionViewController.m */; };
 		8E6E25B71D2AC72B007799B3 /* MyTagsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25B61D2AC72B007799B3 /* MyTagsCollectionViewController.m */; };
 		8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6E25B81D2B7C83007799B3 /* facebook-logo.png */; };
+		8EA4800C1D3321F200512541 /* 1468215464_COCKTAIL.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA4800B1D3321F200512541 /* 1468215464_COCKTAIL.png */; };
+		8EA480101D348E0800512541 /* cocktail-icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA4800F1D348E0800512541 /* cocktail-icon1.png */; };
+		8EA480131D3627E300512541 /* sooljotta.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8EA480121D3627E300512541 /* sooljotta.com.cer */; };
 		BF191C021D2CEF6C00FE6A9C /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191BFD1D2CEF6C00FE6A9C /* SettingViewController.m */; };
 		BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191BFF1D2CEF6C00FE6A9C /* SignInViewController.m */; };
 		BF191C041D2CEF6C00FE6A9C /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191C011D2CEF6C00FE6A9C /* WelcomeViewController.m */; };
@@ -37,7 +39,6 @@
 /* Begin PBXFileReference section */
 		7D328FA704C1AAD3653537A9 /* Pods-sooljottagrae.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sooljottagrae.release.xcconfig"; path = "Pods/Target Support Files/Pods-sooljottagrae/Pods-sooljottagrae.release.xcconfig"; sourceTree = "<group>"; };
 		8E6BE7941D2E24210039AB7B /* underline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underline.png; sourceTree = "<group>"; };
-		8E6BE7961D2FB18B0039AB7B /* trolltunga.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = trolltunga.jpg; sourceTree = "<group>"; };
 		8E6E25801D2A136A007799B3 /* 술조타그래_테스트.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "술조타그래_테스트.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6E25841D2A136B007799B3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E6E25861D2A136B007799B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -65,6 +66,9 @@
 		8E6E25B51D2AC72B007799B3 /* MyTagsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTagsCollectionViewController.h; sourceTree = "<group>"; };
 		8E6E25B61D2AC72B007799B3 /* MyTagsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTagsCollectionViewController.m; sourceTree = "<group>"; };
 		8E6E25B81D2B7C83007799B3 /* facebook-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-logo.png"; sourceTree = "<group>"; };
+		8EA4800B1D3321F200512541 /* 1468215464_COCKTAIL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1468215464_COCKTAIL.png; sourceTree = "<group>"; };
+		8EA4800F1D348E0800512541 /* cocktail-icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cocktail-icon1.png"; sourceTree = "<group>"; };
+		8EA480121D3627E300512541 /* sooljotta.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sooljotta.com.cer; sourceTree = "<group>"; };
 		B15C28FFCD9018C7E98D18E8 /* Pods-sooljottagrae.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sooljottagrae.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sooljottagrae/Pods-sooljottagrae.debug.xcconfig"; sourceTree = "<group>"; };
 		BF191BFC1D2CEF6C00FE6A9C /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		BF191BFD1D2CEF6C00FE6A9C /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
@@ -132,17 +136,18 @@
 		8E6E25821D2A136A007799B3 /* sooljottagrae */ = {
 			isa = PBXGroup;
 			children = (
-				8E6E25A11D2A2F35007799B3 /* sooljottagrae-Prefix.pch */,
+				8EA480121D3627E300512541 /* sooljotta.com.cer */,
 				8E6E25861D2A136B007799B3 /* AppDelegate.h */,
 				8E6E25871D2A136B007799B3 /* AppDelegate.m */,
-				8E6E25891D2A136B007799B3 /* ViewController.h */,
-				8E6E258A1D2A136B007799B3 /* ViewController.m */,
 				8E6E258C1D2A136B007799B3 /* Main.storyboard */,
 				BF191C051D2CEF7800FE6A9C /* Main1.storyboard */,
 				8E6E258F1D2A136B007799B3 /* Assets.xcassets */,
 				8E6E25911D2A136B007799B3 /* LaunchScreen.storyboard */,
 				8E6E25941D2A136B007799B3 /* Info.plist */,
 				8E6E25831D2A136B007799B3 /* Supporting Files */,
+				8E6E25A11D2A2F35007799B3 /* sooljottagrae-Prefix.pch */,
+				8E6E25891D2A136B007799B3 /* ViewController.h */,
+				8E6E258A1D2A136B007799B3 /* ViewController.m */,
 				8E6E25A21D2A3A46007799B3 /* RequestObject.h */,
 				8E6E25A31D2A3A46007799B3 /* RequestObject.m */,
 				8E6E25A91D2AC24C007799B3 /* MainViewController.h */,
@@ -174,13 +179,14 @@
 		8E6E25A01D2A239B007799B3 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				8EA4800F1D348E0800512541 /* cocktail-icon1.png */,
 				8E6BE7941D2E24210039AB7B /* underline.png */,
 				8E6E25A71D2AC0DC007799B3 /* add.png */,
+				8EA4800B1D3321F200512541 /* 1468215464_COCKTAIL.png */,
 				8E6E25A51D2ABC9C007799B3 /* profile.png */,
 				BFF745331D2CFA3D002E6D0B /* Profile1.png */,
 				8E6E259E1D2A2397007799B3 /* facebook-login.png */,
 				8E6E25B81D2B7C83007799B3 /* facebook-logo.png */,
-				8E6BE7961D2FB18B0039AB7B /* trolltunga.jpg */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -249,11 +255,13 @@
 				8E6E25931D2A136B007799B3 /* LaunchScreen.storyboard in Resources */,
 				8E6BE7951D2E24210039AB7B /* underline.png in Resources */,
 				8E6E259F1D2A2397007799B3 /* facebook-login.png in Resources */,
+				8EA480101D348E0800512541 /* cocktail-icon1.png in Resources */,
 				8E6E25A81D2AC0DC007799B3 /* add.png in Resources */,
+				8EA4800C1D3321F200512541 /* 1468215464_COCKTAIL.png in Resources */,
+				8EA480131D3627E300512541 /* sooljotta.com.cer in Resources */,
 				8E6E25901D2A136B007799B3 /* Assets.xcassets in Resources */,
 				8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */,
 				BF191C071D2CEF7800FE6A9C /* Main1.storyboard in Resources */,
-				8E6BE7971D2FB18B0039AB7B /* trolltunga.jpg in Resources */,
 				8E6E258E1D2A136B007799B3 /* Main.storyboard in Resources */,
 				8E6E25A61D2ABC9C007799B3 /* profile.png in Resources */,
 				BFF745341D2CFA3D002E6D0B /* Profile1.png in Resources */,
@@ -446,6 +454,7 @@
 			baseConfigurationReference = B15C28FFCD9018C7E98D18E8 /* Pods-sooljottagrae.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -453,7 +462,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/sooljottagrae-Prefix.pch";
 				INFOPLIST_FILE = sooljottagrae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.alcoholic.sooljottagrae;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljottagrae;
 				PRODUCT_NAME = "술조타그래_테스트";
 			};
 			name = Debug;
@@ -463,6 +472,7 @@
 			baseConfigurationReference = 7D328FA704C1AAD3653537A9 /* Pods-sooljottagrae.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -470,7 +480,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/sooljottagrae-Prefix.pch";
 				INFOPLIST_FILE = sooljottagrae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.alcoholic.sooljottagrae;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljottagrae;
 				PRODUCT_NAME = "술조타그래";
 			};
 			name = Release;

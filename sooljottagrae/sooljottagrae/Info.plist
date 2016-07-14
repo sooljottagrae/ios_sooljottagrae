@@ -32,7 +32,7 @@
 	<key>FacebookAppID</key>
 	<string>1694115497517671</string>
 	<key>FacebookDisplayName</key>
-	<string>net.alcoholic.sooljottagrae</string>
+	<string>com.alcoholic.sooljottagrae</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

@@ -66,3 +66,7 @@ fastlane/screenshots
 /sooljottagrae/Podfile.lock
 /sooljottagrae/Pods/ 
 /sooljottagrae/sooljottagrae.xcworkspace/
+
+
+#certification file
+*.cer

@@ -102,7 +102,7 @@ static NSString * const reuseIdentifier = @"Cell";
     self.refreshLoadingView.backgroundColor = [UIColor clearColor];
     
     // 로딩 이미지
-    //self.loadingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"trolltunga.jpg"]];
+    //self.loadingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cocktail-icon1.png"]];
     
     [self.refreshLoadingView addSubview:self.loadingImg];
     self.refreshLoadingView.clipsToBounds = YES;
@@ -143,9 +143,6 @@ static NSString * const reuseIdentifier = @"Cell";
  * 로딩이미지 위치 계산
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (!isCustom) {
-        return;
-    }
     
     // RefreshControl 크기
     CGRect refreshBounds = refreshControl.bounds;
@@ -177,9 +174,15 @@ static NSString * const reuseIdentifier = @"Cell";
     self.refreshColorView.frame = refreshBounds;
     self.refreshLoadingView.frame = refreshBounds;
     
+    
+    
     if (refreshControl.isRefreshing && !self.isRefreshAnimating) {
+        NSLog(@"Call");
+        NSLog(@"%lf, %lf",refreshControl.frame.origin.y, refreshBounds.size.height);
         [self animateRefreshView];
     }
+    
+   // NSLog(@"scrollViewDidScroll");
 }
 
 /**
@@ -225,20 +228,34 @@ static NSString * const reuseIdentifier = @"Cell";
 
 //Temp Data List
 -(void) setttingDataList{
-    self.dataList = @[@"http://i.imgur.com/fmckBDO.jpg",
-                      @"http://fansta.net/data/editor/1510/3732507908_562f410b7e18b_14459374195165",
-                      @"http://photo.jtbc.joins.com/news/2015/12/30/201512301208328789.jpg",
-                      @"http://file2.instiz.net/data/file2/2016/01/18/c/0/7/c07e8aa653757d742d2f3b043b559592.jpg",
-                      @"https://pbs.twimg.com/profile_images/683106307985903616/_DfSOjZt.jpg",
-                      @"http://file2.instiz.net/data/cached_img/upload/2015/11/12/15/f7ae4cf4ce49c5141e0506b6650812d7.jpg",
-                      @"http://img.danawa.com/images/descFiles/4/23/3022192_1444312249911.jpeg",
-                      @"http://file2.instiz.net/data/cached_img/upload/2015/11/10/18/c0f386660df03e9e1866d7db92ec2a79.jpg",
-                      @"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRPXFMknbeBzqje0Y5SgQSaEaOLIN5oqvcVMhep5XZz9EfmjHbF4w",
-                      @"http://cfile28.uf.tistory.com/image/2721EC3F562795F6312CFB",
-                      @"http://file2.instiz.net/data/file/20151222/d/f/8/df8fe33c1e3f3eb3a0b3d92959be5f25.png"
+
+    self.dataList = @[@{@"postId":@"1", @"thumnail_url":@"http://i.imgur.com/fmckBDO.jpg"},
+                      @{@"postId":@"2", @"thumnail_url":@"http://fansta.net/data/editor/1510/3732507908_562f410b7e18b_14459374195165"},
+                      @{@"postId":@"3", @"thumnail_url":@"http://photo.jtbc.joins.com/news/2015/12/30/201512301208328789.jpg"},
+                      @{@"postId":@"4", @"thumnail_url":@"http://file2.instiz.net/data/file2/2016/01/18/c/0/7/c07e8aa653757d742d2f3b043b559592.jpg"},
+                      @{@"postId":@"5", @"thumnail_url":@"https://pbs.twimg.com/profile_images/683106307985903616/_DfSOjZt.jpg"},
+                      @{@"postId":@"6", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/12/15/f7ae4cf4ce49c5141e0506b6650812d7.jpg"},
+                      @{@"postId":@"7", @"thumnail_url":@"http://img.danawa.com/images/descFiles/4/23/3022192_1444312249911.jpeg"},
+                      @{@"postId":@"8", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/10/18/c0f386660df03e9e1866d7db92ec2a79.jpg"},
+                      @{@"postId":@"11", @"thumnail_url":@"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRPXFMknbeBzqje0Y5SgQSaEaOLIN5oqvcVMhep5XZz9EfmjHbF4w"},
+                      @{@"postId":@"111", @"thumnail_url":@"http://cfile28.uf.tistory.com/image/2721EC3F562795F6312CFB"}
                       
                       ].copy;
+
 }
+
+
+
+
+-(void) didLoadDataList{
+    [[RequestObject sharedInstance] mostCommentedList:self.pageCount++ listCount:30];
+}
+
+-(void) addCellData{
+    [self.dataList addObjectsFromArray: [RequestObject sharedInstance].mostCommentedList];
+    [self.collectionView reloadData];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -275,7 +292,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     // Configure the cell
 
-    NSURL *urlString = [NSURL URLWithString:self.dataList[indexPath.row]];
+    NSURL *urlString = [NSURL URLWithString:self.dataList[indexPath.row][@"thumnail_url"]];
     [cell.imageView sd_setImageWithURL:urlString];
     
     return cell;
@@ -301,15 +318,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
    
-    //[self didLoadDataList];
-
-    NSLog(@"pull up");
-
+    
 }
-
-
-
-
 
 // Uncomment this method to specify if the specified item should be selected
 
@@ -317,7 +327,11 @@ static NSString * const reuseIdentifier = @"Cell";
     
    // UIStoryboard *stroyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
+    NSDictionary *contents = self.dataList[indexPath.row];
     
+    NSString *postId = contents[@"postId"];
+    
+    NSLog(@"postId : %@",postId);
     
     
     return YES;
@@ -340,25 +354,16 @@ static NSString * const reuseIdentifier = @"Cell";
 */
 
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//    CGFloat contentHeight = scrollView.contentSize.height;
-//    if (offsetY > contentHeight - scrollView.frame.size.height)
-//    {
-//        //start loading new images
-//    }
-//}
+#pragma mark - UIScrollView<Delegate>
 
-
-
--(void) didLoadDataList{
-    [[RequestObject sharedInstance] mostCommentedList:self.pageCount++ listCount:30];
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    //샐 가장 하단시 호출
+    float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+    if (bottomEdge >= scrollView.contentSize.height) {
+        //NSLog(@"ended Cell call");
+    }
 }
 
--(void) addCellData{
-    [self.dataList addObjectsFromArray: [RequestObject sharedInstance].mostCommentedList];
-    [self.collectionView reloadData];
-}
+
 
 @end
