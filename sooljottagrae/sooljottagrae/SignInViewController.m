@@ -18,8 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.nameTextField setPlaceholder:@"이름(닉네임)"];
-    [self.emailTextField setPlaceholder:@"이메일"];
+    [self.nameTextField setPlaceholder:@"영어, _를 포함한 12자리 이하"];
+    [self.emailTextField setPlaceholder:@"가입 인증 시 사용할 이메일"];
     [self.pwdTextField setPlaceholder:@"비밀번호"];
     [self.pwdConfirmTextField setPlaceholder:@"비밀번호 확인"];
     

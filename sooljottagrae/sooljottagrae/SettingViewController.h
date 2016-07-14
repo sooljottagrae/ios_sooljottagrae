@@ -11,5 +11,8 @@
 @interface SettingViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) NSString *profileName;
+@property (weak, nonatomic) IBOutlet UIView *menuView;
+
+- (void)addBlurView;
 
 @end

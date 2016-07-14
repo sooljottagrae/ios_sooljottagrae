@@ -29,6 +29,7 @@
 		BF191C041D2CEF6C00FE6A9C /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191C011D2CEF6C00FE6A9C /* WelcomeViewController.m */; };
 		BF191C071D2CEF7800FE6A9C /* Main1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF191C051D2CEF7800FE6A9C /* Main1.storyboard */; };
 		BF227EF01D3628DC0061AE24 /* WritePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF227EEF1D3628DC0061AE24 /* WritePostViewController.m */; };
+		BF94FB401D36AF2000B9FD9F /* alcohols.png in Resources */ = {isa = PBXBuildFile; fileRef = BF94FB3F1D36AF2000B9FD9F /* alcohols.png */; };
 		BFC1510B1D34A36100ACF71B /* EditMyTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */; };
 		BFC1510E1D34E4B700ACF71B /* CircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1510D1D34E4B700ACF71B /* CircleImageView.m */; };
 		BFF745341D2CFA3D002E6D0B /* Profile1.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF745331D2CFA3D002E6D0B /* Profile1.png */; };
@@ -74,6 +75,7 @@
 		BF191C061D2CEF7800FE6A9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main1.storyboard; sourceTree = "<group>"; };
 		BF227EEE1D3628DC0061AE24 /* WritePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WritePostViewController.h; sourceTree = "<group>"; };
 		BF227EEF1D3628DC0061AE24 /* WritePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WritePostViewController.m; sourceTree = "<group>"; };
+		BF94FB3F1D36AF2000B9FD9F /* alcohols.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohols.png; sourceTree = "<group>"; };
 		BFC151091D34A36100ACF71B /* EditMyTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMyTagsViewController.h; sourceTree = "<group>"; };
 		BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMyTagsViewController.m; sourceTree = "<group>"; };
 		BFC1510C1D34E4B700ACF71B /* CircleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleImageView.h; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				8E6E25A71D2AC0DC007799B3 /* add.png */,
+				BF94FB3F1D36AF2000B9FD9F /* alcohols.png */,
 				8E6E25A51D2ABC9C007799B3 /* profile.png */,
 				BFF745331D2CFA3D002E6D0B /* Profile1.png */,
 				8E6E259E1D2A2397007799B3 /* facebook-login.png */,
@@ -228,7 +231,7 @@
 				TargetAttributes = {
 					8E6E257F1D2A136A007799B3 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = ZF89A9Y4JP;
+						DevelopmentTeam = PCLK645HZQ;
 					};
 				};
 			};
@@ -257,6 +260,7 @@
 			files = (
 				8E6E25931D2A136B007799B3 /* LaunchScreen.storyboard in Resources */,
 				8E6E259F1D2A2397007799B3 /* facebook-login.png in Resources */,
+				BF94FB401D36AF2000B9FD9F /* alcohols.png in Resources */,
 				8E6E25A81D2AC0DC007799B3 /* add.png in Resources */,
 				8E6E25901D2A136B007799B3 /* Assets.xcassets in Resources */,
 				8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */,
@@ -456,6 +460,8 @@
 			baseConfigurationReference = B15C28FFCD9018C7E98D18E8 /* Pods-sooljottagrae.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -463,8 +469,9 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/sooljottagrae-Prefix.pch";
 				INFOPLIST_FILE = sooljottagrae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.alcoholic.sooljottagrae;
+				PRODUCT_BUNDLE_IDENTIFIER = net.alcoholic.bibo1992;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -473,6 +480,8 @@
 			baseConfigurationReference = 7D328FA704C1AAD3653537A9 /* Pods-sooljottagrae.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -480,8 +489,9 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/sooljottagrae-Prefix.pch";
 				INFOPLIST_FILE = sooljottagrae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = net.alcoholic.sooljottagrae;
+				PRODUCT_BUNDLE_IDENTIFIER = net.alcoholic.bibo1992;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

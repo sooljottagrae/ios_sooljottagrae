@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *profileNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UIView *tapActionView;
 
 
 
@@ -21,20 +22,22 @@
 @implementation SettingViewController
 
 - (void) viewWillAppear:(BOOL)animated {
-    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    visualEffectView.frame = self.view.bounds;
-    //[self.view addSubview:visualEffectView];
     
-    [self.parentViewController.view addSubview:visualEffectView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.view.backgroundColor = [UIColor clearColor];
+    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    visualEffectView.frame = self.parentViewController.view.bounds;
+    //[self.view addSubview:visualEffectView];
+    
+    [self.view insertSubview:visualEffectView belowSubview:self.menuView];
     
     
-    
-    
+
     UIImage *profileImage = [UIImage imageNamed:@"Profile1"];
     self.profileImageView.layer.borderColor = [[UIColor grayColor] CGColor];
     self.profileImageView.layer.borderWidth = 2.0;
@@ -45,6 +48,13 @@
     [self.profileImageView setImage:profileImage];
     
     [self.profileNameLabel setText:[NSString stringWithFormat:@"%@ 님",self.profileName]];
+    
+    UITapGestureRecognizer *tapGesture;
+    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapped:)];
+    //tapGesture.delegate = self;
+    tapGesture.numberOfTapsRequired = 1;
+    
+    [self.tapActionView addGestureRecognizer:tapGesture];
     
     // 화면이 돌아갔을 때, notification
     // selector에 화면이 돌아갈 때 하고 싶은 메소드를 구현
@@ -87,7 +97,18 @@
 }
 
 - (IBAction)logOUtBtn:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    //[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.view removeFromSuperview];
+    
+    for(UIView *subview in [self.parentViewController.view subviews])
+    {
+        if([subview isKindOfClass:[UIVisualEffectView class]])
+        {
+            [subview removeFromSuperview];
+        }
+    }
+    
+    
 }
 
 - (IBAction)editTagsBtn:(id)sender {
@@ -95,6 +116,59 @@
     EditMyTagsViewController *editMyTagsVC = [stb instantiateViewControllerWithIdentifier:@"EditMyTagsViewController"];
     
     [self presentViewController:editMyTagsVC animated:YES completion:nil];
+}
+
+- (void)addBlurView {
+    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    visualEffectView.frame = self.parentViewController.view.bounds;
+    //[self.view addSubview:visualEffectView];
+    
+    [self.parentViewController.view addSubview:visualEffectView];
+}
+
+- (void) gestureTapped:(UIGestureRecognizer *)sender {
+    NSLog(@"tapped");
+    
+    
+    /*
+    for(UIView *subview in [self.parentViewController.view subviews])
+    {
+        if([subview isKindOfClass:[UIVisualEffectView class]])
+        {
+            [subview removeFromSuperview];
+        }
+    }
+    
+    [UIView transitionWithView:self.view duration:0.5
+                       options:UIViewAnimationOptionCurveEaseInOut
+                    animations:^ {
+                        
+                        self.view.frame = CGRectMake(-self.view.frame.size.width*0.35, 0, self.view.frame.size.width, self.view.frame.size.height);
+                        
+                    }
+                    completion:^(BOOL finished) {
+                        
+                        [self.view removeFromSuperview];
+                        
+                    }];
+    */
+
+    
+    // 이렇게 구현하면 애니메이션은 다른 쓰레드에서 일어나기 때문에 애니메이션이 끝나고 remove되는게 아니라 바로 그냥 사라져버린다.
+    //[self.view removeFromSuperview];
+    
+    [UIView animateWithDuration:0.5
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.menuView.frame = CGRectMake(-self.view.frame.size.width*0.35, 0, self.view.frame.size.width*0.35, self.view.frame.size.height);
+                     }
+                     completion:^(BOOL finished) {
+                         [self.view removeFromSuperview];
+                     }];
+    
+
 }
 
 - (void)didReceiveMemoryWarning {

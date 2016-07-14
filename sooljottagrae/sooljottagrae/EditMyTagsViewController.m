@@ -173,6 +173,10 @@
     
 }
 
+- (IBAction)exitBtn:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 
 - (void)didReceiveMemoryWarning {
