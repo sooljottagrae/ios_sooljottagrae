@@ -10,6 +10,8 @@
 
 @class UIImage;
 
+
+
 //Notification을 위한 플래그
 static NSString *const LoginSuccess = @"LoginSuccess"; //로그인성공시
 static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSuccess";
@@ -41,7 +43,7 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
                image:(UIImage *)image
             fileName:(NSString *)fileName
              success:(void (^)(NSURLResponse *response, id responseObject, NSError *error))success
-            progress:(void (^)(NSProgress * _Nonnull uploadProgress))progress
-                fail:( void (^)(NSURLResponse *response, id responseObject, NSError *error))fail;
+            progress:(void (^)(NSProgress *uploadProgress))progress
+                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail;
 
 @end

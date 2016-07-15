@@ -15,12 +15,9 @@
 static NSString *const ServerHost = @"https://sooljotta.com";  //서버 주소
 static NSString *const CertificationFileName = @"sooljotta.com"; //인증서파일이름
 
-static NSString *const LoginAPIFacebook = @""; //페이스북 로그인 API
-static NSString *const LoginAPINormal = @""; //일반 로그인 API
-
-
+//HTTP 상태코드
 typedef NS_ENUM(NSInteger, ServerResponseCode) {
-    ServerResponseCodeSuccess       = 2,
+    ServerResponseCodeSuccess = 2,
     ServerResponseCodeRedirection,
     ServerResponseCodeFail,
     ServerResponseCodeError
@@ -84,14 +81,14 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     //JSON형태의 파라미터를 전송한다.
     NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
     
-    //NSLog(@"%@", [[NSString alloc] initWithData:[request HTTPBody] encoding:NSUTF8StringEncoding]);
+    NSLog(@"%@", [[NSString alloc] initWithData:[request HTTPBody] encoding:NSUTF8StringEncoding]);
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         if (error) {
-            //NSLog(@"Error: %@", error);
+            NSLog(@"Error: %@", error);
             fail(response, responseObject, error);
         } else {
-            //NSLog(@"%@ %@", response, responseObject);
+            NSLog(@"%@ %@", response, responseObject);
             
             //httpStatusCode를 가져온다
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
@@ -135,7 +132,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
                image:(UIImage *)image
             fileName:(NSString *)fileName
              success:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))success
-            progress:(nullable void (^)(NSProgress * _Nonnull uploadProgress))progress
+            progress:(nullable void (^)(NSProgress *  uploadProgress))progress
                 fail:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))fail{
     
     //URL설정
@@ -285,7 +282,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     //AFNSerializer를 통한 파라미터 전달법
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPIFacebook];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,@""];
     NSDictionary *parameters = @{@"PAGE":@(pageCount), @"list_count":@(listCount)};
     
     NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];

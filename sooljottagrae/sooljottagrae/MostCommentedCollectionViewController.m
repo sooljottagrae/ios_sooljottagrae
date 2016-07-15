@@ -102,13 +102,13 @@ static NSString * const reuseIdentifier = @"Cell";
     self.refreshLoadingView.backgroundColor = [UIColor clearColor];
     
     // 로딩 이미지
-    //self.loadingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cocktail-icon1.png"]];
+    self.loadingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"refresh.png"]];
     
     [self.refreshLoadingView addSubview:self.loadingImg];
     self.refreshLoadingView.clipsToBounds = YES;
     
     // 기존 로딩이미지 icon 숨기기
-    //refreshControl.tintColor = [UIColor clearColor];
+    refreshControl.tintColor = [UIColor clearColor];
     
     [refreshControl addSubview:self.refreshColorView];
     [refreshControl addSubview:self.refreshLoadingView];
@@ -361,6 +361,10 @@ static NSString * const reuseIdentifier = @"Cell";
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height) {
         //NSLog(@"ended Cell call");
+        
+        NSLog(@"추가적으로 내용을 더 넣습니다");
+        
+        //[self.dataList addObjectsFromArray:self.dataList];
     }
 }
 

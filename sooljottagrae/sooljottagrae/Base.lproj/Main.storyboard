@@ -225,20 +225,6 @@
                                             <constraint firstAttribute="height" constant="2.5" id="rgh-D2-HXo"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oO-FN-h0F">
-                                        <rect key="frame" x="300" y="0.0" width="300" height="55"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="My Tags">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="selected" backgroundImage="underline-slicing">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="qYI-T4-mSt" kind="custom" identifier="MyTags" customClass="MainNavigationSegue" id="YNs-OD-de8"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buC-o6-vVr">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="55"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -251,6 +237,20 @@
                                         </state>
                                         <connections>
                                             <segue destination="qOQ-eX-AR5" kind="custom" identifier="mostCommented" customClass="MainNavigationSegue" id="c0u-IJ-GWb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oO-FN-h0F">
+                                        <rect key="frame" x="300" y="0.0" width="300" height="55"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="My Tags">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" backgroundImage="underline-slicing">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="qYI-T4-mSt" kind="custom" identifier="MyTags" customClass="MainNavigationSegue" id="YNs-OD-de8"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -280,7 +280,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6sg-Nz-9wx">
                                 <rect key="frame" x="0.0" y="115" width="600" height="485"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="kZa-uS-JDw"/>
                                 </constraints>
@@ -392,7 +392,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="0Ny-P5-Gok">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="0Ny-P5-Gok" customClass="MyTagCell">
                                 <rect key="frame" x="0.0" y="0.0" width="247" height="176"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -412,6 +412,9 @@
                                     <constraint firstItem="UQa-U5-odU" firstAttribute="leading" secondItem="0Ny-P5-Gok" secondAttribute="leading" id="S02-gW-pTW"/>
                                     <constraint firstAttribute="bottom" secondItem="UQa-U5-odU" secondAttribute="bottom" id="dhh-1P-Wnp"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="UQa-U5-odU" id="Qfz-6i-hHb"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>

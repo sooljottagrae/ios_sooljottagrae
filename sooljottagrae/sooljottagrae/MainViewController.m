@@ -35,6 +35,8 @@
 @property (strong, nonatomic) NSMutableArray *arrayForPages;            //스크롤뷰 페이징을 위한 배열
 @property (weak, nonatomic)IBOutlet UIPageControl *pageControl;
 
+@property (strong, nonatomic) NSMutableArray *pageNames;
+
 
 @end
 
@@ -46,13 +48,18 @@
     [self createView];
     [self settingFoTabbarButton];
     
+    //페이지컨트롤 설정
+//    [self initPageControllerSetting];
+    
     //기본세그 선택
     [self performSegueWithIdentifier:@"mostCommented" sender:self.tabBarButtons[0]];
     
     
 }
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     
+    [self.pageScrollView setFrame:self.placeholderView.bounds];
 }
 
 
@@ -105,8 +112,10 @@
         [self.arrayForPages addObject:[NSNull null]];
     }
     
-    //페이징을 위한 설정
     
+    self.pageNames = @[@"MOST_COMMENTED", @"MY_TAGS"].mutableCopy;
+    
+    //페이징을 위한 설정
     [self.pageScrollView setDelegate:self];     //delegate
     [self.pageScrollView setPagingEnabled:YES]; //페이징여부
     [self.pageScrollView setFrame:self.placeholderView.bounds];
@@ -122,11 +131,16 @@
     [self.pageControl setNumberOfPages:2];
     [self.pageControl setCurrentPage:0];
     
+    [self loadScrollViewDataSourceWithPage:0];
+    [self loadScrollViewDataSourceWithPage:1];
     
+    
+    [self.placeholderView addSubview:self.pageScrollView];
     
 }
-/*
+
 - (void)loadScrollViewDataSourceWithPage:(NSInteger)page{
+
     // 스크롤뷰에서 표시할 뷰를 미리 로드합니다.
     
     // 페이지가 범위를 벗어나면 로드하지않습니다.
@@ -135,42 +149,64 @@
     }
     
     // 페이지의 뷰컨트롤러를 배열에서 읽어옵니다.
-    //PageViewController *controller = [_pageControl objectAtIndex:page];
+    UIViewController *controller = [self.arrayForPages objectAtIndex:page];
     
     // 현재 컨트롤러가 비어있다면, 컨트롤러를 초기화해줍니다.
     // (initScrollViewAndPageControl 참조)
     if((NSNull *)controller == [NSNull null]){
         NSLog(@"Page %ld Controller Init..",page);
-    }
-    // 현재 스토리보드에서 SinglePageView라는 StoryboardIdentifier를 가진 뷰를 읽어옵니다.
-    controller = [[self storyboard] instantiateViewControllerWithIdentifier:@"SinglePageView"];
-    // 현재 컨트롤러의 뷰에 Frame을 초기화해줍니다.
-    [controller.view setFrame:_scrollView.frame];
-    // 컨트롤러에 이미지와 텍스트들을 설정합니다.
-    [controller initPageViewInfo:page];
-    // 현재 컨트롤러와 배열에 들어있는 객체를 교체합니다.
-    [_controllers replaceObjectAtIndex:page withObject:controller];
     
+        
+        NSString *name = self.pageNames[(page>=self.pageNames.count) ? 0 : page];
+        
+        // 현재 스토리보드에서 SinglePageView라는 StoryboardIdentifier를 가진 뷰를 읽어옵니다.
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        
+        controller = [storyBoard instantiateViewControllerWithIdentifier:name];
+        // 현재 컨트롤러의 뷰에 Frame을 초기화해줍니다.
+        [controller.view setFrame:self.pageScrollView.frame];
+        // 컨트롤러에 이미지와 텍스트들을 설정합니다.
+        //[controller initPageViewInfo:page];
+        // 현재 컨트롤러와 배열에 들어있는 객체를 교체합니다.
+        [self.arrayForPages replaceObjectAtIndex:page withObject:controller];
+    }
     
     // 현재 컨트롤러의 뷰가 superview를 가지지 못했을 경우(현재 스크롤뷰의 서브뷰가 아닌 경우)
     // 스크롤 뷰의 서브뷰로 추가해줍니다.
     if(controller.view.superview == nil){
-        NSLog(@"Page %d Controller Add On ScrollView..",page);
+        NSLog(@"Page %ld Controller Add On ScrollView..",page);
         
         // 현재 컨트롤러의 뷰가 위치할 frame을 잡아줍니다.
         // Page에 따라 Origin의 x값이 달라집니다.
-        CGRect curFrame = _scrollView.frame;
+        CGRect curFrame = self.pageScrollView.frame;
         curFrame.origin.x = CGRectGetWidth(curFrame) * page;
         curFrame.origin.y = 0;
         controller.view.frame = curFrame;
         
         // 컨트롤러를 현재 컨트롤러의 ChildViewController로 등록하고 컨트롤러의 뷰를 스크롤뷰에 Subview로 추가해줍니다.
         [self addChildViewController:controller];
-        [_scrollView addSubview:controller.view];
+        [self.pageScrollView addSubview:controller.view];
         [controller didMoveToParentViewController:self];
     }
+ 
 }
-*/
+
+#pragma mark - UIScrollDelegate
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    CGFloat pageWidth = CGRectGetWidth(self.pageScrollView.frame);
+    // 현재 페이지를 구합니다. floor는 소수점 자리를 버리는 함수입니다
+    NSUInteger page = floor((self.pageScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    // 현재 페이지를 계산된 페이지로 설정해줍니다.
+    self.pageControl.currentPage = page;
+    
+    // 보여줄 페이지들을 미리 로드합니다.
+    [self loadScrollViewDataSourceWithPage:page - 1];
+    [self loadScrollViewDataSourceWithPage:page];
+    [self loadScrollViewDataSourceWithPage:page + 1];
+}
+
+
 /****************************************************************
  * 버튼 기능 구현
  ****************************************************************/
