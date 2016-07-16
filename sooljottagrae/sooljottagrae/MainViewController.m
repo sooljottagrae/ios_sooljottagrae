@@ -31,7 +31,7 @@
 
 
 //스크롤 페이징을 위한 셋팅
-@property (strong, nonatomic) UIScrollView *pageScrollView;             //스크롤뷰
+@property (strong, nonatomic)IBOutlet UIScrollView *pageScrollView;             //스크롤뷰
 @property (strong, nonatomic) NSMutableArray *arrayForPages;            //스크롤뷰 페이징을 위한 배열
 @property (weak, nonatomic)IBOutlet UIPageControl *pageControl;
 
@@ -49,17 +49,21 @@
     [self settingFoTabbarButton];
     
     //페이지컨트롤 설정
-//    [self initPageControllerSetting];
+    [self initPageControllerSetting];
+    
+    [self clickedTabButton:self.mostCommentedButton];
     
     //기본세그 선택
-    [self performSegueWithIdentifier:@"mostCommented" sender:self.tabBarButtons[0]];
+//    [self performSegueWithIdentifier:@"mostCommented" sender:self.tabBarButtons[0]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changedFrameSize) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [self.pageScrollView setFrame:self.placeholderView.bounds];
+    [self changedFrameSize];
 }
 
 
@@ -84,6 +88,8 @@
 //    
 //    [self.menuView.layer insertSublayer:gradient atIndex:0];
 
+    self.pageScrollView.backgroundColor = [UIColor clearColor];
+    self.placeholderView.backgroundColor = [UIColor whiteColor];
 }
 
 
@@ -102,23 +108,32 @@
 -(void) initPageControllerSetting{
     
     //보여줄 페이지 맥시멈 갯수
-    NSInteger maxPageCount = 2;
+    NSInteger numbersOfPage = 2;
     
     //보여준 녀석의 초기화
     self.arrayForPages = [[NSMutableArray alloc]init];
     
     //값을 일단 null로 넣는다.
-    for(NSInteger i=0; i<maxPageCount; i++){
+    for(NSInteger i=0; i<numbersOfPage; i++){
         [self.arrayForPages addObject:[NSNull null]];
     }
     
     
     self.pageNames = @[@"MOST_COMMENTED", @"MY_TAGS"].mutableCopy;
     
+    NSLog(@"%ld, %@",self.arrayForPages.count,self.pageNames);
+    
+    
+    // 스크롤 뷰의 컨텐츠 사이즈를 미리 만들어둡니다.
+    CGSize contentSize = self.pageScrollView.frame.size;
+    contentSize.width = self.pageScrollView.frame.size.width * numbersOfPage;
+    
+    // 스크롤 뷰의 컨텐츠 사이즈를 설정합니다.
+    [self.pageScrollView setContentSize:contentSize];
+    
     //페이징을 위한 설정
-    [self.pageScrollView setDelegate:self];     //delegate
+    [self.pageScrollView setDelegate:self];//Delegate
     [self.pageScrollView setPagingEnabled:YES]; //페이징여부
-    [self.pageScrollView setFrame:self.placeholderView.bounds];
     
     [self.pageScrollView setBounces:NO];
     [self.pageScrollView setScrollsToTop:NO];
@@ -128,14 +143,12 @@
     self.pageScrollView.showsVerticalScrollIndicator = NO;
     self.pageScrollView.showsHorizontalScrollIndicator = NO;
     
-    [self.pageControl setNumberOfPages:2];
+    [self.pageControl setNumberOfPages:numbersOfPage];
     [self.pageControl setCurrentPage:0];
     
     [self loadScrollViewDataSourceWithPage:0];
     [self loadScrollViewDataSourceWithPage:1];
     
-    
-    [self.placeholderView addSubview:self.pageScrollView];
     
 }
 
@@ -149,7 +162,7 @@
     }
     
     // 페이지의 뷰컨트롤러를 배열에서 읽어옵니다.
-    UIViewController *controller = [self.arrayForPages objectAtIndex:page];
+    UICollectionViewController *controller = [self.arrayForPages objectAtIndex:page];
     
     // 현재 컨트롤러가 비어있다면, 컨트롤러를 초기화해줍니다.
     // (initScrollViewAndPageControl 참조)
@@ -162,12 +175,10 @@
         // 현재 스토리보드에서 SinglePageView라는 StoryboardIdentifier를 가진 뷰를 읽어옵니다.
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
-        
         controller = [storyBoard instantiateViewControllerWithIdentifier:name];
+        
         // 현재 컨트롤러의 뷰에 Frame을 초기화해줍니다.
-        [controller.view setFrame:self.pageScrollView.frame];
-        // 컨트롤러에 이미지와 텍스트들을 설정합니다.
-        //[controller initPageViewInfo:page];
+        //[controller.view setFrame:self.pageScrollView.frame];
         // 현재 컨트롤러와 배열에 들어있는 객체를 교체합니다.
         [self.arrayForPages replaceObjectAtIndex:page withObject:controller];
     }
@@ -201,9 +212,78 @@
     self.pageControl.currentPage = page;
     
     // 보여줄 페이지들을 미리 로드합니다.
-    [self loadScrollViewDataSourceWithPage:page - 1];
-    [self loadScrollViewDataSourceWithPage:page];
-    [self loadScrollViewDataSourceWithPage:page + 1];
+//    NSLog(@"%ld",page);
+    
+    self.targetButton.selected=NO;
+    
+    
+    if(page == 0){
+        [self loadScrollViewDataSourceWithPage:page];
+        [self loadScrollViewDataSourceWithPage:page + 1];
+        self.mostCommentedButton.selected = YES;
+        self.targetButton = self.mostCommentedButton;
+    }else{
+        [self loadScrollViewDataSourceWithPage:page - 1];
+        [self loadScrollViewDataSourceWithPage:page];
+        
+        self.myTagsButton.selected = YES;
+        self.targetButton = self.myTagsButton;
+    }
+    
+}
+
+- (void)gotoPage:(BOOL)animated AtPage:(NSInteger)page{
+    // 스크롤을 임의로 원하는 페이지로 이동시킵니다.
+    NSLog(@"call gotoPage : %ld",page);
+    
+    
+    // 페이지 컨트롤의 현재 페이지를 넘겨받은 페이지로 설정합니다.
+    [self.pageControl setCurrentPage:page];
+    
+    // 미리 뷰를 로드합니다.
+    
+    if(page == 0){
+        [self loadScrollViewDataSourceWithPage:page];
+        [self loadScrollViewDataSourceWithPage:page + 1];
+    }else{
+        [self loadScrollViewDataSourceWithPage:page - 1];
+        [self loadScrollViewDataSourceWithPage:page];
+    }
+    
+    
+    
+    // 보여줄 스크롤뷰의 ContentOffset을 설정합니다.
+    // 스크롤 뷰의 Width * Page입니다.
+    CGRect bounds = self.pageScrollView.bounds;
+    bounds.origin.x = CGRectGetWidth(bounds) * page;
+    bounds.origin.y = 0;
+    
+    // 정해진 부분으로 스크롤뷰를 스크롤합니다.
+    [self.pageScrollView scrollRectToVisible:bounds animated:animated];
+    
+}
+
+-(void) changedFrameSize{
+    // 스크롤 뷰의 컨텐츠 사이즈를 미리 만들어둡니다.
+    CGSize contentSize = self.pageScrollView.frame.size;
+    contentSize.width = self.pageScrollView.frame.size.width * self.pageNames.count;
+    
+    // 스크롤 뷰의 컨텐츠 사이즈를 설정합니다.
+    [self.pageScrollView setContentSize:contentSize];
+    
+    UICollectionViewController *controller = nil;
+    
+    for(NSInteger i=0; i<self.arrayForPages.count ; i++){
+        controller = [self.arrayForPages objectAtIndex:i];
+        if(controller.view.superview != nil){
+            CGRect curFrame = self.placeholderView.frame;
+            curFrame.origin.x = CGRectGetWidth(curFrame) * i;
+            curFrame.origin.y = 0;
+            controller.view.frame = curFrame;
+            
+       }
+    }
+
 }
 
 
@@ -286,6 +366,24 @@
         layer.backgroundColor = [UIColor clearColor].CGColor;
     }
 }
+
+-(IBAction)clickedTabButton:(UIButton *)sender{
+    NSLog(@"clickedTabButton %ld",sender.tag);
+    [self.targetButton setSelected:NO];
+    
+    if(sender.tag == 0) {
+        self.targetButton = sender;
+        [self.targetButton setSelected:YES];
+        [self gotoPage:YES AtPage:0];
+    }
+    
+    if(sender.tag == 1){
+        self.targetButton = sender;
+        [self.targetButton setSelected:YES];
+        [self gotoPage:YES AtPage:1];
+    }
+}
+
 
 #pragma mark - Navigation
 
