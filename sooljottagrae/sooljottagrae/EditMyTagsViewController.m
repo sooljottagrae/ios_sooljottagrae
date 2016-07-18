@@ -52,13 +52,8 @@
     [self.pickerView setDelegate:self];
     [self.pickerView setDataSource:self];
     
-    [UIView transitionWithView:self.view duration:0.5
-                       options:UIViewAnimationOptionTransitionCurlUp
-                    animations:^ { [self.view addSubview:self.pickerView]; }
-                    completion:nil];
-    
     [self.view addSubview:self.toolbar];
-    //[self.view addSubview:self.pickerView];
+    [self.view addSubview:self.pickerView];
     [self.view addSubview:self.doneBtn];
 }
 - (IBAction)foodBtn:(id)sender {
@@ -91,8 +86,6 @@
     [self.toolbar removeFromSuperview];
     
     [self.tableView reloadData];
-    
-    
     
 }
 

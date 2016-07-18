@@ -1,0 +1,3 @@
+[submodule "lib/navermap"]
+	path = lib/navermap
+	url = https://github.com/navermaps/maps.ios.git

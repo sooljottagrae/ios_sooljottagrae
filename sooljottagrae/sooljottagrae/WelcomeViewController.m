@@ -51,7 +51,7 @@
     //[settingVC addBlurView];
     [self.view addSubview:settingVC.view];
     
-    settingVC.menuView.frame = CGRectMake(-self.view.frame.size.width*0.35, 0, self.view.frame.size.width*0.35, self.view.frame.size.height);
+//    settingVC.menuView.frame = CGRectMake(-self.view.frame.size.width*0.35, 0, self.view.frame.size.width*0.35, self.view.frame.size.height);
     
     /*
     [UIView transitionWithView:self.view duration:10
@@ -61,17 +61,17 @@
                         [self.view addSubview:settingVC.view];
                     }
                     completion:nil];
-     */
     
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:5
      
                      animations:^ {
-//                         settingVC.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+                         settingVC.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
                          settingVC.menuView.frame = CGRectMake(0, 0, self.view.frame.size.width*0.35, self.view.frame.size.height);
                          
                      }
                      completion:nil];
-    
+     */
+
 }
 
 /*

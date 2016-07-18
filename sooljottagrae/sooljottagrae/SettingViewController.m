@@ -36,7 +36,19 @@
     
     [self.view insertSubview:visualEffectView belowSubview:self.menuView];
     
+    self.menuView.frame = CGRectMake(-self.view.frame.size.width*0.35, 0, self.view.frame.size.width*0.35, self.view.frame.size.height);
+
     
+    [UIView animateWithDuration:0.5
+     
+                     animations:^ {
+                         //settingVC.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+                         self.menuView.frame = CGRectMake(0, 0, self.view.frame.size.width*0.35, self.view.frame.size.height);
+                         
+                     }
+                     completion:nil];
+    
+    //NSLog(@"Hi");
 
     UIImage *profileImage = [UIImage imageNamed:@"Profile1"];
     self.profileImageView.layer.borderColor = [[UIColor grayColor] CGColor];

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+#import <AddressBook/AddressBook.h>
 
-@interface WritePostViewController : UIViewController
+
+@interface WritePostViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @end

@@ -23,6 +23,18 @@
     [self.pwdTextField setPlaceholder:@"비밀번호"];
     [self.pwdConfirmTextField setPlaceholder:@"비밀번호 확인"];
     
+    UITapGestureRecognizer *tapGesture;
+    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapped:)];
+    //tapGesture.delegate = self;
+    tapGesture.numberOfTapsRequired = 1;
+    
+    [self.view addGestureRecognizer:tapGesture];
+    
+}
+
+- (void) gestureTapped:(UIGestureRecognizer *)sender {
+    NSLog(@"Tapped");
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning {
