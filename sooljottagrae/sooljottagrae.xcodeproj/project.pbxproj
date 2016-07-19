@@ -35,7 +35,6 @@
 		8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6E25B81D2B7C83007799B3 /* facebook-logo.png */; };
 		8EA4800C1D3321F200512541 /* 1468215464_COCKTAIL.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA4800B1D3321F200512541 /* 1468215464_COCKTAIL.png */; };
 		8EA480101D348E0800512541 /* cocktail-icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA4800F1D348E0800512541 /* cocktail-icon1.png */; };
-		8EA480131D3627E300512541 /* sooljotta.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8EA480121D3627E300512541 /* sooljotta.com.cer */; };
 		8EBD6EFC1D389E96007C1F98 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EBD6EFB1D389E96007C1F98 /* refresh.png */; };
 		BF191C021D2CEF6C00FE6A9C /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191BFD1D2CEF6C00FE6A9C /* SettingViewController.m */; };
 		BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191BFF1D2CEF6C00FE6A9C /* SignInViewController.m */; };
@@ -92,7 +91,6 @@
 		8E6E25B81D2B7C83007799B3 /* facebook-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-logo.png"; sourceTree = "<group>"; };
 		8EA4800B1D3321F200512541 /* 1468215464_COCKTAIL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1468215464_COCKTAIL.png; sourceTree = "<group>"; };
 		8EA4800F1D348E0800512541 /* cocktail-icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cocktail-icon1.png"; sourceTree = "<group>"; };
-		8EA480121D3627E300512541 /* sooljotta.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sooljotta.com.cer; sourceTree = "<group>"; };
 		8EBD6EFB1D389E96007C1F98 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		B15C28FFCD9018C7E98D18E8 /* Pods-sooljottagrae.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sooljottagrae.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sooljottagrae/Pods-sooljottagrae.debug.xcconfig"; sourceTree = "<group>"; };
 		BF191BFC1D2CEF6C00FE6A9C /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -277,7 +275,7 @@
 				TargetAttributes = {
 					8E6E257F1D2A136A007799B3 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = PCLK645HZQ;
+						DevelopmentTeam = ZF89A9Y4JP;
 					};
 				};
 			};
