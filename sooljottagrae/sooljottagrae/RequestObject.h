@@ -22,13 +22,12 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
 
 @property (strong, nonatomic) NSArray *mostCommentedList;
 
+
 + (instancetype) sharedInstance;
 
-////로그인
-//-(void) loginID:(NSString *)email passwd:(NSString *)passWord;
-//-(void) loginID:(NSString *)email token:(NSString *)tokenString;
-//
-//
+-(void) keyChainAccount:(NSString *)email passWord:(NSString *)password;
+-(NSDictionary *)loadKeyChainAccount;
+
 
 -(void) mostCommentedList:(NSInteger)pageCount listCount:(NSInteger)listCount;
 

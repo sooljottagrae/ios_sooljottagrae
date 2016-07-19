@@ -10,6 +10,7 @@
 
 #import "RequestObject.h"
 #import "AFNetworking.h"
+#import "KeychainItemWrapper.h"
 
 //서버정보
 static NSString *const ServerHost = @"https://sooljotta.com";  //서버 주소
@@ -25,6 +26,8 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
 
 
 @interface RequestObject() <NSURLConnectionDelegate>
+
+@property (strong, nonatomic) KeychainItemWrapper *keychainItem;
 
 @end
 
@@ -73,7 +76,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     //SSL설정
-    [self setSSLSetting:manager cerFileName:CertificationFileName];
+   [self setSSLSetting:manager cerFileName:CertificationFileName];
     
     //호출될 서버 URL 정보 설정
     NSString *urlString = [NSString stringWithFormat:@"%@%@", ServerHost, apiPath];
@@ -139,15 +142,15 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     NSString *imageUploadURLString = [NSString stringWithFormat:@"%@%@", ServerHost, apiPath];
     
     //이미지 데이타
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
     
-    //이미지 스케일 줄이기
-    if((imageData.length/1024) >= 1024){
-    
-        while( (imageData.length/1024) >= 1024 ){
+    //이미지 스케일 줄이기( 1MBytes  이하 ) 
+    if((imageData.length) >= 1024000){
+        UIImage *image = [UIImage imageWithData:imageData];
+        while( (imageData.length) >= 1024000 ){
             
-            float resizeWidth = image.size.width/0.8;
-            float resizeHeight = image.size.height/0.8;
+            float resizeWidth = image.size.width - (image.size.width/10);
+            float resizeHeight = image.size.height - (image.size.height/10);
             
             UIGraphicsBeginImageContext(CGSizeMake(resizeWidth, resizeHeight));
             CGContextRef context = UIGraphicsGetCurrentContext();
@@ -159,7 +162,10 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
             UIGraphicsEndImageContext();
             
             
-            imageData = UIImageJPEGRepresentation(scaledImage, 0.8);
+            imageData = UIImageJPEGRepresentation(scaledImage, 1.0);
+            
+            image = nil;
+            image = [UIImage imageWithData:imageData];
         }
     }
        
@@ -213,6 +219,49 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     [uploadTask resume];
 
 }
+
+/****************************************************************************
+ * 키체인 유저정보 저장
+ ****************************************************************************/
+-(void) keyChainAccount:(NSString *)email passWord:(NSString *)password{
+    
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    
+    
+    //because keychain saves password as NSData object
+    NSData *pwdData = [password dataUsingEncoding:NSUTF8StringEncoding];
+    
+    //Save item
+    [keychainItem setObject:email forKey:(__bridge id)(kSecAttrAccount)];
+    [keychainItem setObject:pwdData forKey:(__bridge id)(kSecValueData)];
+    
+}
+
+/****************************************************************************
+ * 키체인 유저정보 불러오기
+ ****************************************************************************/
+-(NSDictionary *)loadKeyChainAccount{
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    
+    
+    NSString *email = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    //because label uses NSString and password is NSData object I convert
+    NSData *pwdData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    NSString *password = [[NSString alloc] initWithData:pwdData encoding:NSUTF8StringEncoding];
+  
+    if([email length] > 0 && [password length] > 0) {
+        return @{@"email":email, @"password":password};
+    }
+    
+    return nil;
+}
+
+
+
+
 
 /********************************************************************************
  * 프로파일
