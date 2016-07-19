@@ -36,6 +36,8 @@
 @property (nonatomic) CGFloat longitude;
 @property (nonatomic, weak) IBOutlet UILabel *adressLabel;
 
+@property (nonatomic, weak) IBOutlet UIView *tapView;
+
 
 
 @end
@@ -74,6 +76,11 @@
     [self.doneBtn addTarget:self action:@selector(doneBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     
+    UITapGestureRecognizer *dismissKeyBoard;
+    dismissKeyBoard = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyBoard:)];
+    //tapGesture.delegate = self;
+    dismissKeyBoard.numberOfTapsRequired = 1;
+    [self.tapView addGestureRecognizer:dismissKeyBoard];
     
     
     // Do any additional setup after loading the view.
@@ -147,6 +154,11 @@
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)dismissKeyBoard:(UIGestureRecognizer *)sender {
+    NSLog(@"dismissKeyBoard");
+    [self.view endEditing:YES];
     
 }
 
@@ -249,6 +261,7 @@
     
     NSString *adress = [NSString stringWithFormat:@"%@ %@ %@", adminisArea, locality, subLocality];
     self.adressLabel.text = adress;
+    NSLog(@"%@", adress);
     
 }
 

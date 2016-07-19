@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "SettingViewController.h"
+#import "WritePostViewController.h"
 #import "RequestObject.h"
 
 
@@ -219,9 +220,14 @@
                           [settingVC didMoveToParentViewController:self];
                      }];
     
-
-    
 }
+
+- (IBAction)clickedAddPostBtn:(id)sender {
+    UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
+    WritePostViewController *writePostVC = [stb instantiateViewControllerWithIdentifier:@"WritePostViewController"];
+    [self presentViewController:writePostVC animated:YES completion:nil];
+}
+
 //어린이뷰를 꺼버린다~~
 -(void) dissmissButton{
     UIViewController *vc = [self.childViewControllers lastObject];

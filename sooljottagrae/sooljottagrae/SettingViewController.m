@@ -39,7 +39,7 @@
     self.menuView.frame = CGRectMake(-self.view.frame.size.width*0.35, 0, self.view.frame.size.width*0.35, self.view.frame.size.height);
 
     
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.3
      
                      animations:^ {
                          //settingVC.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -170,7 +170,7 @@
     // 이렇게 구현하면 애니메이션은 다른 쓰레드에서 일어나기 때문에 애니메이션이 끝나고 remove되는게 아니라 바로 그냥 사라져버린다.
     //[self.view removeFromSuperview];
     
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.3
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{

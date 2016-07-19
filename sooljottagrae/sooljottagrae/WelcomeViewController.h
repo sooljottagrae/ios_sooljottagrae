@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CircleImageView.h"
 
 @interface WelcomeViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet UIImageView *profileImageView;
+@property (nonatomic, weak) IBOutlet CircleImageView *profileImageView;
 @property (nonatomic, weak) IBOutlet UILabel *profileNameLabel;
 @property (nonatomic, strong) NSString *profileNmae;
 

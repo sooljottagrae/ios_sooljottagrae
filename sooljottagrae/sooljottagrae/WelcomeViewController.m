@@ -20,13 +20,13 @@
     UIImage *profileImage = [UIImage imageNamed:@"Profile1"];
     
     self.profileImageView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.profileImageView.layer.borderWidth = 20.0;
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height/2;
+    self.profileImageView.layer.borderWidth = 5.0;
+    //[self.profileImageView layoutSubviews];
     self.profileImageView.layer.masksToBounds = YES;
     
     [self.profileImageView setImage:profileImage];
     
-    [self.profileNameLabel setText:self.profileNmae];
+    [self.profileNameLabel setText:[NSString stringWithFormat:@"''%@'' 님", self.profileNmae]];
 
 }
 
