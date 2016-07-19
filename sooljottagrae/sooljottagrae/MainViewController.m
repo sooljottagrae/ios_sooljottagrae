@@ -51,6 +51,7 @@
     //페이지컨트롤 설정
     [self initPageControllerSetting];
     
+    //초기화면 셋팅 및 버튼 선택
     [self clickedTabButton:self.mostCommentedButton];
     
     //기본세그 선택
@@ -58,6 +59,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changedFrameSize) name:UIDeviceOrientationDidChangeNotification object:nil];
     
+    NSLog(@"%@",[[RequestObject sharedInstance] loadKeyChainAccount]);
     
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -72,24 +74,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+//화면 구성을 위한 기초 설정
 -(void) createView{
     
-    
+    //상단 메뉴뷰
     self.menuView.backgroundColor = THEMA_BG_COLOR;
+    //탭버튼 뷰
     self.tabAreaView.backgroundColor = [UIColor whiteColor];
-    
-//    //상위메뉴 배경 그라디언트
-//    CAGradientLayer *gradient = [CAGradientLayer layer];
-//    gradient.frame = self.menuView.bounds;
-//    gradient.colors = [NSArray arrayWithObjects:(id)[UIColorFromRGB(0xffffff,1.0) CGColor],
-//                       (id)[UIColorFromRGB(0xfdc2ff,1.0) CGColor],nil];
-//    gradient.locations =[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.09],
-//                         [NSNumber numberWithFloat:0.91], nil];
-//    
-//    [self.menuView.layer insertSublayer:gradient atIndex:0];
-
-    self.pageScrollView.backgroundColor = [UIColor clearColor];
+    //표현 될 부분
     self.placeholderView.backgroundColor = [UIColor whiteColor];
+    //스크롤뷰
+    self.pageScrollView.backgroundColor = [UIColor clearColor];
 }
 
 
@@ -98,7 +93,6 @@
     
     self.availableIdentifiers = @[@"mostCommented", @"MyTags"];
     self.tabBarButtons = @[self.mostCommentedButton, self.myTagsButton];
-    
     
 }
 
@@ -118,11 +112,10 @@
         [self.arrayForPages addObject:[NSNull null]];
     }
     
-    
+    //페이지별 스트리보드 indentifier ID
     self.pageNames = @[@"MOST_COMMENTED", @"MY_TAGS"].mutableCopy;
     
-    NSLog(@"%ld, %@",self.arrayForPages.count,self.pageNames);
-    
+    //NSLog(@"%ld, %@",self.arrayForPages.count,self.pageNames);
     
     // 스크롤 뷰의 컨텐츠 사이즈를 미리 만들어둡니다.
     CGSize contentSize = self.pageScrollView.frame.size;
@@ -134,10 +127,9 @@
     //페이징을 위한 설정
     [self.pageScrollView setDelegate:self];//Delegate
     [self.pageScrollView setPagingEnabled:YES]; //페이징여부
-    
-    [self.pageScrollView setBounces:NO];
-    [self.pageScrollView setScrollsToTop:NO];
-    [self.pageScrollView setScrollEnabled:YES];
+    [self.pageScrollView setBounces:NO];//바운스금지
+    [self.pageScrollView setScrollsToTop:NO];//스크롤뷰 상하스크롤금지
+    [self.pageScrollView setScrollEnabled:YES];//스크롤 가능하도록 설정
     
     //스크롤바 안보이게 설정
     self.pageScrollView.showsVerticalScrollIndicator = NO;
@@ -146,12 +138,13 @@
     [self.pageControl setNumberOfPages:numbersOfPage];
     [self.pageControl setCurrentPage:0];
     
+    //표현할 뷰어들 설정
     [self loadScrollViewDataSourceWithPage:0];
     [self loadScrollViewDataSourceWithPage:1];
     
-    
 }
 
+//스크롤뷰 표시할 뷰들에 대한 설정 및 미리 로드
 - (void)loadScrollViewDataSourceWithPage:(NSInteger)page{
 
     // 스크롤뷰에서 표시할 뷰를 미리 로드합니다.
@@ -165,7 +158,6 @@
     UICollectionViewController *controller = [self.arrayForPages objectAtIndex:page];
     
     // 현재 컨트롤러가 비어있다면, 컨트롤러를 초기화해줍니다.
-    // (initScrollViewAndPageControl 참조)
     if((NSNull *)controller == [NSNull null]){
         NSLog(@"Page %ld Controller Init..",page);
     
@@ -174,11 +166,8 @@
         
         // 현재 스토리보드에서 SinglePageView라는 StoryboardIdentifier를 가진 뷰를 읽어옵니다.
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        
         controller = [storyBoard instantiateViewControllerWithIdentifier:name];
         
-        // 현재 컨트롤러의 뷰에 Frame을 초기화해줍니다.
-        //[controller.view setFrame:self.pageScrollView.frame];
         // 현재 컨트롤러와 배열에 들어있는 객체를 교체합니다.
         [self.arrayForPages replaceObjectAtIndex:page withObject:controller];
     }
@@ -204,6 +193,7 @@
 }
 
 #pragma mark - UIScrollDelegate
+
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     CGFloat pageWidth = CGRectGetWidth(self.pageScrollView.frame);
     // 현재 페이지를 구합니다. floor는 소수점 자리를 버리는 함수입니다
@@ -212,14 +202,15 @@
     self.pageControl.currentPage = page;
     
     // 보여줄 페이지들을 미리 로드합니다.
-//    NSLog(@"%ld",page);
     
-    self.targetButton.selected=NO;
-    
-    
+    //현재 선택된 버튼을 선택해제
+    self.targetButton.selected = NO;
+   
+    //페이지 선택에 따른 구현부
     if(page == 0){
         [self loadScrollViewDataSourceWithPage:page];
         [self loadScrollViewDataSourceWithPage:page + 1];
+        
         self.mostCommentedButton.selected = YES;
         self.targetButton = self.mostCommentedButton;
     }else{
@@ -232,9 +223,9 @@
     
 }
 
-- (void)gotoPage:(BOOL)animated AtPage:(NSInteger)page{
     // 스크롤을 임의로 원하는 페이지로 이동시킵니다.
-    NSLog(@"call gotoPage : %ld",page);
+- (void)gotoPage:(BOOL)animated AtPage:(NSInteger)page{
+    NSLog(@"gotoPage : %ld",page);
     
     
     // 페이지 컨트롤의 현재 페이지를 넘겨받은 페이지로 설정합니다.
@@ -263,6 +254,7 @@
     
 }
 
+//각 화면들에 대한 프레임크기 재설정
 -(void) changedFrameSize{
     // 스크롤 뷰의 컨텐츠 사이즈를 미리 만들어둡니다.
     CGSize contentSize = self.pageScrollView.frame.size;
@@ -346,6 +338,7 @@
     [vc removeFromParentViewController];
 }
 
+/* 사용 안함 (강준)
 //선택된 탭바에 언더바를 넣는다.
 //가로모드일때 사이즈가 그대로이다.(유동적으로 변해야한다)
 -(void) selectedButton:(UIButton *)sender{
@@ -366,7 +359,9 @@
         layer.backgroundColor = [UIColor clearColor].CGColor;
     }
 }
+ */
 
+//탭버튼 선택에 따른 화면 설정
 -(IBAction)clickedTabButton:(UIButton *)sender{
     NSLog(@"clickedTabButton %ld",sender.tag);
     [self.targetButton setSelected:NO];
@@ -387,20 +382,19 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([self.availableIdentifiers containsObject: segue.identifier]){
-        for(UIButton *selected in self.tabBarButtons){
-            if(sender != nil && ![selected isEqual: sender]) {
-                [selected setSelected: NO];
-                //[self removeSelectedLine:selected];
-            } else if(sender != nil) {
-                [selected setSelected: YES];
-                //[self selectedButton:selected];
-                self.targetButton = selected;
-            }
-        }
-    }
+//    if([self.availableIdentifiers containsObject: segue.identifier]){
+//        for(UIButton *selected in self.tabBarButtons){
+//            if(sender != nil && ![selected isEqual: sender]) {
+//                [selected setSelected: NO];
+//                //[self removeSelectedLine:selected];
+//            } else if(sender != nil) {
+//                [selected setSelected: YES];
+//                //[self selectedButton:selected];
+//                self.targetButton = selected;
+//            }
+//        }
+//    }
 }
 
 

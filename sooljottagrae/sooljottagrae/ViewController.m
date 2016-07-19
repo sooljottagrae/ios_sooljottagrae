@@ -14,6 +14,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <QuartzCore/CALayer.h>
 
+
 @interface ViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIView *loginView;           //로그인뷰
 @property (strong, nonatomic) IBOutlet UILabel *loginTitle;         //로그인타이틀
@@ -28,11 +29,10 @@
 
 @property (strong, nonatomic) UIView *loginViewBgColor;             //로그인뷰 배경화면
 
-
 @property (strong, nonatomic) UITextField *targetTextField;         //유형틀린 필드
 
-
 @property (strong, nonatomic) CAGradientLayer *gradient;            //배경그라이언트
+
 
 
 @end
@@ -75,13 +75,18 @@
 
 //자동로그인
 -(void)autoLogin{
-   // NSLog(@"%d",[[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"]);
+   
     
     BOOL loginKey = [[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"];
+    
+    NSLog(@"%@",[[RequestObject sharedInstance] loadKeyChainAccount]);
     
     if(loginKey == YES){
         NSString *email = nil;
         NSString *tokenString = nil;
+        
+        //KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"YourAppLogin" accessGroup:nil];
+        
         
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"EMAIL"] != nil){
             email = [[NSUserDefaults standardUserDefaults] objectForKey:@"EMAIL"];
@@ -177,6 +182,8 @@
     [[RequestObject sharedInstance] sendToServer:@"/api/users/login/"
                                       parameters:parameters
                                          success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                             NSLog(@"%@",responseObject);
+                                             
                                              [self verifiedUser:self.email_ID.text token:responseObject[@"token"]];
                                          } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
                                              NSLog(@"%@",error);
@@ -346,7 +353,6 @@
     NSString *email = [result objectForKey:@"email"];
     
     //로그인 호출
-    
     NSDictionary *parameters = @{@"email":email, @"token":[FBSDKAccessToken currentAccessToken].tokenString};
     
     
@@ -374,6 +380,7 @@
     
     if(tokenString != nil || [tokenString length] > 0){
         [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:@"TOKEN"];
+        [[RequestObject sharedInstance] keyChainAccount:email passWord:tokenString];
     }
     
     //메인뷰로 넘어간다.
