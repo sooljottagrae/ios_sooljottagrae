@@ -10,17 +10,15 @@
 
 #import "RequestObject.h"
 #import "AFNetworking.h"
+#import "KeychainItemWrapper.h"
 
 //서버정보
 static NSString *const ServerHost = @"https://sooljotta.com";  //서버 주소
 static NSString *const CertificationFileName = @"sooljotta.com"; //인증서파일이름
 
-static NSString *const LoginAPIFacebook = @""; //페이스북 로그인 API
-static NSString *const LoginAPINormal = @""; //일반 로그인 API
-
-
+//HTTP 상태코드
 typedef NS_ENUM(NSInteger, ServerResponseCode) {
-    ServerResponseCodeSuccess       = 2,
+    ServerResponseCodeSuccess = 2,
     ServerResponseCodeRedirection,
     ServerResponseCodeFail,
     ServerResponseCodeError
@@ -28,6 +26,8 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
 
 
 @interface RequestObject() <NSURLConnectionDelegate>
+
+@property (strong, nonatomic) KeychainItemWrapper *keychainItem;
 
 @end
 
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     //SSL설정
-    [self setSSLSetting:manager cerFileName:CertificationFileName];
+   [self setSSLSetting:manager cerFileName:CertificationFileName];
     
     //호출될 서버 URL 정보 설정
     NSString *urlString = [NSString stringWithFormat:@"%@%@", ServerHost, apiPath];
@@ -84,14 +84,14 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     //JSON형태의 파라미터를 전송한다.
     NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
     
-    //NSLog(@"%@", [[NSString alloc] initWithData:[request HTTPBody] encoding:NSUTF8StringEncoding]);
+    NSLog(@"%@", [[NSString alloc] initWithData:[request HTTPBody] encoding:NSUTF8StringEncoding]);
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         if (error) {
-            //NSLog(@"Error: %@", error);
+            NSLog(@"Error: %@", error);
             fail(response, responseObject, error);
         } else {
-            //NSLog(@"%@ %@", response, responseObject);
+            NSLog(@"%@ %@", response, responseObject);
             
             //httpStatusCode를 가져온다
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
@@ -135,22 +135,22 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
                image:(UIImage *)image
             fileName:(NSString *)fileName
              success:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))success
-            progress:(nullable void (^)(NSProgress * _Nonnull uploadProgress))progress
+            progress:(nullable void (^)(NSProgress *  uploadProgress))progress
                 fail:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))fail{
     
     //URL설정
     NSString *imageUploadURLString = [NSString stringWithFormat:@"%@%@", ServerHost, apiPath];
     
     //이미지 데이타
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
     
-    //이미지 스케일 줄이기
-    if((imageData.length/1024) >= 1024){
-    
-        while( (imageData.length/1024) >= 1024 ){
+    //이미지 스케일 줄이기( 1MBytes  이하 ) 
+    if((imageData.length) >= 1024000){
+        UIImage *image = [UIImage imageWithData:imageData];
+        while( (imageData.length) >= 1024000 ){
             
-            float resizeWidth = image.size.width/0.8;
-            float resizeHeight = image.size.height/0.8;
+            float resizeWidth = image.size.width - (image.size.width/10);
+            float resizeHeight = image.size.height - (image.size.height/10);
             
             UIGraphicsBeginImageContext(CGSizeMake(resizeWidth, resizeHeight));
             CGContextRef context = UIGraphicsGetCurrentContext();
@@ -162,7 +162,10 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
             UIGraphicsEndImageContext();
             
             
-            imageData = UIImageJPEGRepresentation(scaledImage, 0.8);
+            imageData = UIImageJPEGRepresentation(scaledImage, 1.0);
+            
+            image = nil;
+            image = [UIImage imageWithData:imageData];
         }
     }
        
@@ -216,6 +219,49 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     [uploadTask resume];
 
 }
+
+/****************************************************************************
+ * 키체인 유저정보 저장
+ ****************************************************************************/
+-(void) keyChainAccount:(NSString *)email passWord:(NSString *)password{
+    
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    
+    
+    //because keychain saves password as NSData object
+    NSData *pwdData = [password dataUsingEncoding:NSUTF8StringEncoding];
+    
+    //Save item
+    [keychainItem setObject:email forKey:(__bridge id)(kSecAttrAccount)];
+    [keychainItem setObject:pwdData forKey:(__bridge id)(kSecValueData)];
+    
+}
+
+/****************************************************************************
+ * 키체인 유저정보 불러오기
+ ****************************************************************************/
+-(NSDictionary *)loadKeyChainAccount{
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    
+    
+    NSString *email = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    //because label uses NSString and password is NSData object I convert
+    NSData *pwdData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    NSString *password = [[NSString alloc] initWithData:pwdData encoding:NSUTF8StringEncoding];
+  
+    if([email length] > 0 && [password length] > 0) {
+        return @{@"email":email, @"password":password};
+    }
+    
+    return nil;
+}
+
+
+
+
 
 /********************************************************************************
  * 프로파일
@@ -285,7 +331,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     //AFNSerializer를 통한 파라미터 전달법
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,LoginAPIFacebook];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",ServerHost,@""];
     NSDictionary *parameters = @{@"PAGE":@(pageCount), @"list_count":@(listCount)};
     
     NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];

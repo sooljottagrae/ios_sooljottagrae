@@ -17,6 +17,8 @@
 @interface MostCell : UICollectionViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIView *infoView;
+@property (strong, nonatomic) IBOutlet UILabel *commentsCount;
 
 @end
 
@@ -102,13 +104,13 @@ static NSString * const reuseIdentifier = @"Cell";
     self.refreshLoadingView.backgroundColor = [UIColor clearColor];
     
     // 로딩 이미지
-    //self.loadingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cocktail-icon1.png"]];
+    self.loadingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"refresh.png"]];
     
     [self.refreshLoadingView addSubview:self.loadingImg];
     self.refreshLoadingView.clipsToBounds = YES;
     
     // 기존 로딩이미지 icon 숨기기
-    //refreshControl.tintColor = [UIColor clearColor];
+    refreshControl.tintColor = [UIColor clearColor];
     
     [refreshControl addSubview:self.refreshColorView];
     [refreshControl addSubview:self.refreshLoadingView];
@@ -126,16 +128,16 @@ static NSString * const reuseIdentifier = @"Cell";
  */
 - (void)handleRefreshForCustom:(UIRefreshControl *)sender {
     
-    // -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
-    // This is where you'll make requests to an API, reload data, or process information
+    
+    //3초뒤 리프레싱 끝내도록 설정
     double delayInSeconds = 3.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
-        // When done requesting/reloading/processing invoke endRefreshing, to close the control
+    
         [refreshControl endRefreshing];
     });
-    // -- FINISHED SOMETHING AWESOME, WOO! --
+    
 }
 
 /**
@@ -229,18 +231,18 @@ static NSString * const reuseIdentifier = @"Cell";
 //Temp Data List
 -(void) setttingDataList{
 
-    self.dataList = @[@{@"postId":@"1", @"thumnail_url":@"http://i.imgur.com/fmckBDO.jpg"},
-                      @{@"postId":@"2", @"thumnail_url":@"http://fansta.net/data/editor/1510/3732507908_562f410b7e18b_14459374195165"},
-                      @{@"postId":@"3", @"thumnail_url":@"http://photo.jtbc.joins.com/news/2015/12/30/201512301208328789.jpg"},
-                      @{@"postId":@"4", @"thumnail_url":@"http://file2.instiz.net/data/file2/2016/01/18/c/0/7/c07e8aa653757d742d2f3b043b559592.jpg"},
-                      @{@"postId":@"5", @"thumnail_url":@"https://pbs.twimg.com/profile_images/683106307985903616/_DfSOjZt.jpg"},
-                      @{@"postId":@"6", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/12/15/f7ae4cf4ce49c5141e0506b6650812d7.jpg"},
-                      @{@"postId":@"7", @"thumnail_url":@"http://img.danawa.com/images/descFiles/4/23/3022192_1444312249911.jpeg"},
-                      @{@"postId":@"8", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/10/18/c0f386660df03e9e1866d7db92ec2a79.jpg"},
-                      @{@"postId":@"11", @"thumnail_url":@"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRPXFMknbeBzqje0Y5SgQSaEaOLIN5oqvcVMhep5XZz9EfmjHbF4w"},
-                      @{@"postId":@"111", @"thumnail_url":@"http://cfile28.uf.tistory.com/image/2721EC3F562795F6312CFB"}
-                      
-                      ].copy;
+    self.dataList = [[NSMutableArray alloc]initWithObjects:
+                    @{@"postId":@"1", @"thumnail_url":@"http://i.imgur.com/fmckBDO.jpg", @"comments_count":@(2000)},
+                    @{@"postId":@"2", @"thumnail_url":@"http://fansta.net/data/editor/1510/3732507908_562f410b7e18b_14459374195165", @"comments_count":@(250)},
+                    @{@"postId":@"3", @"thumnail_url":@"http://photo.jtbc.joins.com/news/2015/12/30/201512301208328789.jpg",@"comments_count":@(200)},
+                    @{@"postId":@"4", @"thumnail_url":@"http://file2.instiz.net/data/file2/2016/01/18/c/0/7/c07e8aa653757d742d2f3b043b559592.jpg",@"comments_count":@(230)},
+                    @{@"postId":@"5", @"thumnail_url":@"https://pbs.twimg.com/profile_images/683106307985903616/_DfSOjZt.jpg",@"comments_count":@(220)},
+                    @{@"postId":@"6", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/12/15/f7ae4cf4ce49c5141e0506b6650812d7.jpg",@"comments_count":@(220)},
+                    @{@"postId":@"7", @"thumnail_url":@"http://img.danawa.com/images/descFiles/4/23/3022192_1444312249911.jpeg",@"comments_count":@(220)},
+                    @{@"postId":@"8", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/10/18/c0f386660df03e9e1866d7db92ec2a79.jpg",@"comments_count":@(220)},
+                    @{@"postId":@"11", @"thumnail_url":@"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRPXFMknbeBzqje0Y5SgQSaEaOLIN5oqvcVMhep5XZz9EfmjHbF4w",@"comments_count":@(220)},
+                    @{@"postId":@"111", @"thumnail_url":@"http://cfile28.uf.tistory.com/image/2721EC3F562795F6312CFB",@"comments_count":@(220)},
+                    nil];
 
 }
 
@@ -262,31 +264,22 @@ static NSString * const reuseIdentifier = @"Cell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #pragma mark <UICollectionViewDataSource>
 
+//콜렉션뷰 섹션갯수
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
     return 1;
 }
 
-
+//섹션당 표현할 갯수
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
     return self.dataList.count;
 }
 
 
-
+//콜렉션뷰 셀 데이터표현
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MostCell *cell = (MostCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
@@ -294,11 +287,12 @@ static NSString * const reuseIdentifier = @"Cell";
 
     NSURL *urlString = [NSURL URLWithString:self.dataList[indexPath.row][@"thumnail_url"]];
     [cell.imageView sd_setImageWithURL:urlString];
+    [cell.commentsCount setText:[NSString stringWithFormat:@"%@",self.dataList[indexPath.row][@"comments_count"]]];
     
     return cell;
 }
 
-//Cell Size
+//셀 사이즈 설정
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     return CGSizeMake((self.view.frame.size.width/2)-5, 130);
@@ -306,23 +300,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 #pragma mark <UICollectionViewDelegate>
-
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-
-- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath{
-   
-    
-}
-
-// Uncomment this method to specify if the specified item should be selected
-
+//셀선택시 보여준다.
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
    // UIStoryboard *stroyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -337,33 +315,38 @@ static NSString * const reuseIdentifier = @"Cell";
     return YES;
 }
 
+#pragma mark UIScrollView<UIScrollViewDelegate>
 
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
-
-
-#pragma mark - UIScrollView<Delegate>
-
+//셀이 움직이 멈췄을때
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     //샐 가장 하단시 호출
     float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottomEdge >= scrollView.contentSize.height) {
         //NSLog(@"ended Cell call");
+        
+        NSLog(@"추가적으로 내용을 더 넣습니다");
+        NSArray *tempList = [[NSArray alloc] initWithArray:_dataList.copy];
+        [_dataList addObjectsFromArray:tempList];
+        [self.collectionView reloadData];
+        NSUserDefaults *defualts = [NSUserDefaults standardUserDefaults];
+        
+        NSDictionary *parameters = @{@"email":[defualts objectForKey:@"EMAIL"],
+                                     @"auth":[defualts objectForKey:@"TOKEN"],
+                                     @"gubun":@(1),
+                                     @"list_count":@(20)};
+        
+        [[RequestObject sharedInstance] sendToServer:@"/api/post/list/"
+                                          parameters:parameters
+                                             success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                                 
+                                             }
+                                                fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                                    
+                                                }];
+        
+        
     }
 }
-
 
 
 @end

@@ -14,6 +14,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <QuartzCore/CALayer.h>
 
+
 @interface ViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIView *loginView;           //로그인뷰
 @property (strong, nonatomic) IBOutlet UILabel *loginTitle;         //로그인타이틀
@@ -28,11 +29,10 @@
 
 @property (strong, nonatomic) UIView *loginViewBgColor;             //로그인뷰 배경화면
 
-
 @property (strong, nonatomic) UITextField *targetTextField;         //유형틀린 필드
 
-
 @property (strong, nonatomic) CAGradientLayer *gradient;            //배경그라이언트
+
 
 
 @end
@@ -53,6 +53,8 @@
 #ifdef DEBUG
     self.email_ID.text = @"sooljotta@sooljotta.com";
     self.password.text = @"sooljotta";
+    self.forgotPassword.enabled = YES;
+    
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"LOGIN"];
 #endif
     
@@ -73,13 +75,18 @@
 
 //자동로그인
 -(void)autoLogin{
-   // NSLog(@"%d",[[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"]);
+   
     
     BOOL loginKey = [[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"];
+    
+    NSLog(@"%@",[[RequestObject sharedInstance] loadKeyChainAccount]);
     
     if(loginKey == YES){
         NSString *email = nil;
         NSString *tokenString = nil;
+        
+        //KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"YourAppLogin" accessGroup:nil];
+        
         
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"EMAIL"] != nil){
             email = [[NSUserDefaults standardUserDefaults] objectForKey:@"EMAIL"];
@@ -175,10 +182,12 @@
     [[RequestObject sharedInstance] sendToServer:@"/api/users/login/"
                                       parameters:parameters
                                          success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                             NSLog(@"%@",responseObject);
+                                             
                                              [self verifiedUser:self.email_ID.text token:responseObject[@"token"]];
                                          } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                            
-
+                                             NSLog(@"%@",error);
+                                             [self showAlertMessage:@"입력하신 회원정보가 일치하지 않거나 없습니다. 다시확인해주세요"];
                                          }];
 }
 
@@ -199,7 +208,7 @@
     if(!match){
         
         [self showAlertMessage:@"이메일 형식이 틀립니다"];
-        self.email_ID.backgroundColor = THEMA_BG_COLOR;
+        self.email_ID.backgroundColor = UIColorFromRGB(0xfad2dd, 0.6f);
         self.targetTextField = self.email_ID;
         self.targetTextField.selected = YES;
         return NO;
@@ -207,7 +216,7 @@
     
     if([self.password.text length] < 8){
         [self showAlertMessage:@"비밀번호는 8자리이상 입력하십시오."];
-        self.password.backgroundColor = THEMA_BG_COLOR;
+        self.password.backgroundColor = UIColorFromRGB(0xfad2dd, 0.6f);
         self.targetTextField = self.password;
         self.targetTextField.selected = YES;
         return NO;
@@ -252,7 +261,7 @@
                                 } else if (result.isCancelled) {
                                     NSLog(@"Cancelled");
                                 } else {
-                                    NSLog(@"Logged in %@",result.grantedPermissions);
+                                   // NSLog(@"Logged in %@",result.grantedPermissions);
                                    
                                     if ([result.grantedPermissions containsObject:@"public_profile"]) {
                                         if ([FBSDKAccessToken currentAccessToken] != nil) {
@@ -260,9 +269,11 @@
                                             [parameters setValue:@"id,name,email" forKey:@"fields"];
                                             [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters]
                                              startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                                                 NSLog(@"%@", result);
-                                                 if (error != nil) {
+                                                 //NSLog(@"%@", result);
+                                                 if (error) {
                                                      //넘겨온 값을 서버로 전송을 한다.
+                                                     
+                                                 }else{
                                                      [self loginFacebook:result];
                                                  }
                                              }];
@@ -299,7 +310,7 @@
                                                      
                                                      if(!match){
                                                          [self showAlertMessage:@"이메일 형식이 틀립니다"];
-                                                         self.email_ID.backgroundColor = THEMA_BG_COLOR;
+                                                         self.email_ID.backgroundColor = UIColorFromRGB(0xfad2dd, 0.6f);
                                                          self.targetTextField = self.email_ID;
                                                          self.targetTextField.selected = YES;
                                                      }
@@ -342,18 +353,20 @@
     NSString *email = [result objectForKey:@"email"];
     
     //로그인 호출
-    
     NSDictionary *parameters = @{@"email":email, @"token":[FBSDKAccessToken currentAccessToken].tokenString};
     
     
     
-//    [[RequestObject sharedInstance] sendToServer:@""
+//    [[RequestObject sharedInstance] sendToServer:@"/api/user/fblogin"
 //                                          params:parameters
 //                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
-//                                             [self verifiedUser:email, token:responseObject[@"token"]];
+//                                             [self verifiedUser:email token:responseObject[@"token"]];
 //                                         } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
 //                                             
 //                                         }];
+    
+    
+    [self verifiedUser:email token:[FBSDKAccessToken currentAccessToken].tokenString];
 }
 
 
@@ -367,6 +380,7 @@
     
     if(tokenString != nil || [tokenString length] > 0){
         [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:@"TOKEN"];
+        [[RequestObject sharedInstance] keyChainAccount:email passWord:tokenString];
     }
     
     //메인뷰로 넘어간다.

@@ -8,6 +8,26 @@
 
 #import "MyTagsCollectionViewController.h"
 
+/**************************************************
+ * Cell Custom
+ **************************************************/
+
+@interface MyTagCell : UICollectionViewCell
+
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+
+
+@end
+
+@implementation MyTagCell
+
+@end
+
+
+
+/**************************************************
+ * ViewController
+ **************************************************/
 @interface MyTagsCollectionViewController ()
 
 @end
