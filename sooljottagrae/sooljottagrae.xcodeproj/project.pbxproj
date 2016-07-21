@@ -493,7 +493,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sooljottagrae",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alcoholic.sooljottagrae-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljotta;
 				PRODUCT_NAME = "술조타그래_테스트";
 				PROVISIONING_PROFILE = "";
 			};
@@ -517,7 +517,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sooljottagrae",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alcoholic.sooljottagrae-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljotta;
 				PRODUCT_NAME = "술조타그래";
 				PROVISIONING_PROFILE = "";
 			};

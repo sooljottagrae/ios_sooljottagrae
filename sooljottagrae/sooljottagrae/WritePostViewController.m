@@ -7,6 +7,7 @@
 //
 
 #import "WritePostViewController.h"
+#import "RequestObject.h"
 @import ImageIO;
 @import AssetsLibrary;
 
@@ -20,7 +21,7 @@
 @property (nonatomic, weak) IBOutlet UITextView *inputTextView;
 @property (nonatomic) NSDictionary *outputData;
 
-
+@property (nonatomic, strong) UIView *pickerSuperView;
 @property (nonatomic, strong) UIPickerView *pickerView;
 @property (nonatomic, strong) UIButton *doneBtn;
 @property (nonatomic, strong) UIView *toolbar;
@@ -64,16 +65,21 @@
     tapGesture.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:tapGesture];
     
-    
-    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, self.view.frame.size.height/2)];
-    
-    self.toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, 40)];
+    self.pickerSuperView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height/2)];
+    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/2)];
+    //[self.pickerView setBackgroundColor:[UIColor grayColor]];
+    [self.pickerView setDelegate:self];
+    [self.pickerView setDataSource:self];
+    [self.pickerSuperView addSubview:self.pickerView];
+    self.toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     [self.toolbar setBackgroundColor:[UIColor blueColor]];
-    
-    self.doneBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, self.view.frame.size.height/2, 60, 40)];
+    [self.pickerSuperView addSubview:self.toolbar];
+    self.doneBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 40)];
     [self.doneBtn setTitle:@"완료" forState:UIControlStateNormal];
     [self.doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.doneBtn addTarget:self action:@selector(doneBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.pickerSuperView addSubview:self.doneBtn];
+
     
     
     UITapGestureRecognizer *dismissKeyBoard;
@@ -102,30 +108,16 @@
 
 - (IBAction)alcoholBtn:(id)sender {
     self.selectedBtnTitle = @"술";
-    [self.pickerView setDelegate:self];
-    [self.pickerView setDataSource:self];
+    [self addPickerView];
     
-    [self.view addSubview:self.toolbar];
-    [self.view addSubview:self.pickerView];
-    [self.view addSubview:self.doneBtn];
 }
 - (IBAction)foodBtn:(id)sender {
     self.selectedBtnTitle = @"안주";
-    [self.pickerView setDelegate:self];
-    [self.pickerView setDataSource:self];
-    
-    [self.view addSubview:self.toolbar];
-    [self.view addSubview:self.pickerView];
-    [self.view addSubview:self.doneBtn];
+    [self addPickerView];
 }
 - (IBAction)locationBtn:(id)sender {
     self.selectedBtnTitle = @"장소";
-    [self.pickerView setDelegate:self];
-    [self.pickerView setDataSource:self];
-    
-    [self.view addSubview:self.toolbar];
-    [self.view addSubview:self.pickerView];
-    [self.view addSubview:self.doneBtn];
+    [self addPickerView];
 }
 
 - (void) doneBtn:(UIGestureRecognizer *)sender {
@@ -138,9 +130,31 @@
     else if ([self.selectedBtnTitle  isEqual: @"장소"])
         self.selectedLocationTag.text=self.selectedTag;
     
-    [self.pickerView removeFromSuperview];
-    [self.doneBtn removeFromSuperview];
-    [self.toolbar removeFromSuperview];
+    
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^ {
+                         self.pickerSuperView.frame=CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height/2);
+                     }
+                     completion:^(BOOL finished){
+                         [self.pickerSuperView removeFromSuperview];
+                     }];
+    //self.pickerSuperView.frame=CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height/2);
+
+}
+
+- (void)addPickerView {
+    [self.pickerView setDelegate:self];
+    [self.view addSubview:self.pickerSuperView];
+    
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^ {
+                         self.pickerSuperView.frame=CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, self.view.frame.size.height/2);
+                     }
+                     completion:nil];
 }
 
 
@@ -213,14 +227,32 @@
 
 - (IBAction)exitBtn:(id)sender {
     NSData *postingImageData = UIImagePNGRepresentation(self.imageView.image);
-    
+    /*
     self.outputData = [[NSDictionary alloc] initWithObjectsAndKeys:
                        //postingImageData, @"postingImage",
                        self.inputTextView.text, @"postingText",
                        self.selectedAlcoholTag.text, @"alcoholtag",
                        self.selectedFoodTag.text, @"foodtag",
                        self.selectedLocationTag.text, @"locationtag",  nil];
+     */
+    
+    self.outputData = [[NSDictionary alloc] initWithObjectsAndKeys:self.inputTextView.text, @"content", @"Hi", @"title", nil];
     NSLog(@"%@", self.outputData);
+    
+    [[RequestObject sharedInstance] sendToServer:@"/api/posts/create/"
+                                      parameters:self.outputData
+                                           image:self.imageView.image
+                                        fileName:@"filename"
+                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                            NSLog(@"%@",response);
+                                         }
+                                        progress:^(NSProgress * _Nonnull uploadProgress) {
+                                            NSLog(@"sending...");
+                                        }
+                                            fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                            NSLog(@"%@",response);
+                                            }];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

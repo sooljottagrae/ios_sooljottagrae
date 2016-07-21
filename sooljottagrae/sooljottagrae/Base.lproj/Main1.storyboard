@@ -58,7 +58,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.34509803919999998" green="0.91372549020000005" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.43921568630000002" green="0.75686274509999996" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="X0x-P6-ec5" firstAttribute="centerY" secondItem="WSn-Mg-WN4" secondAttribute="centerY" multiplier="1.3" id="1Ja-Ws-6VT"/>
                             <constraint firstItem="0ra-Kx-qHd" firstAttribute="width" secondItem="TZl-kH-GQG" secondAttribute="width" id="2fe-FD-rBD"/>
@@ -107,7 +107,9 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wk4-49-Zds">
                                         <rect key="frame" x="0.0" y="232" width="210" height="30"/>
-                                        <state key="normal" title="프로필 사진 편집"/>
+                                        <state key="normal" title="프로필 사진 편집">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="editProfileImageBtn:" destination="bgi-6a-S6A" eventType="touchUpInside" id="itT-uM-XhR"/>
                                         </connections>
@@ -126,20 +128,33 @@
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6d-wS-80T">
                                         <rect key="frame" x="0.0" y="267" width="210" height="30"/>
-                                        <state key="normal" title="로그아웃"/>
+                                        <state key="normal" title="로그아웃">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="logOUtBtn:" destination="bgi-6a-S6A" eventType="touchUpInside" id="c5e-rI-7ZA"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VyB-gk-OJA">
                                         <rect key="frame" x="0.0" y="197" width="210" height="30"/>
-                                        <state key="normal" title="팔로우 태그 관리"/>
+                                        <state key="normal" title="팔로우 태그 관리">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="editTagsBtn:" destination="bgi-6a-S6A" eventType="touchUpInside" id="HCL-Wb-Wvb"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rMd-Vh-OZJ">
+                                        <rect key="frame" x="0.5" y="302" width="210" height="30"/>
+                                        <state key="normal" title="앱 정보">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="LeP-bA-9eU" kind="show" id="sh4-xD-HY4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.34556989649999997" green="0.91364418359999999" blue="0.54933879190000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.43921568630000002" green="0.75686274509999996" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Wk4-49-Zds" firstAttribute="centerY" secondItem="xw3-p6-Mfd" secondAttribute="centerY" multiplier="0.9" id="0JF-Le-vGC"/>
                                     <constraint firstItem="VyB-gk-OJA" firstAttribute="centerX" secondItem="xw3-p6-Mfd" secondAttribute="centerX" id="0ju-xo-3EO"/>
@@ -153,12 +168,15 @@
                                     <constraint firstItem="Wk4-49-Zds" firstAttribute="top" secondItem="VyB-gk-OJA" secondAttribute="bottom" constant="5" id="NoP-dJ-xzf"/>
                                     <constraint firstItem="cAj-Jn-ARu" firstAttribute="centerX" secondItem="xw3-p6-Mfd" secondAttribute="centerX" id="PYW-uB-Ay3"/>
                                     <constraint firstItem="cAj-Jn-ARu" firstAttribute="top" secondItem="xw3-p6-Mfd" secondAttribute="top" constant="30" id="RHT-6j-gMP"/>
+                                    <constraint firstItem="rMd-Vh-OZJ" firstAttribute="top" secondItem="t6d-wS-80T" secondAttribute="bottom" constant="5" id="W69-h8-B4n"/>
+                                    <constraint firstItem="rMd-Vh-OZJ" firstAttribute="width" secondItem="xw3-p6-Mfd" secondAttribute="width" id="XQ3-rj-1S2"/>
                                     <constraint firstItem="UBO-jv-oSc" firstAttribute="width" secondItem="xw3-p6-Mfd" secondAttribute="width" multiplier="0.6" id="YfX-bv-oWf"/>
                                     <constraint firstItem="VyB-gk-OJA" firstAttribute="width" secondItem="xw3-p6-Mfd" secondAttribute="width" id="ZIH-Zz-VQc"/>
                                     <constraint firstItem="UBO-jv-oSc" firstAttribute="top" secondItem="cAj-Jn-ARu" secondAttribute="bottom" constant="10" id="k4g-Nn-Fwz"/>
                                     <constraint firstItem="t6d-wS-80T" firstAttribute="centerX" secondItem="xw3-p6-Mfd" secondAttribute="centerX" id="keV-my-rnb"/>
                                     <constraint firstItem="UBO-jv-oSc" firstAttribute="centerX" secondItem="xw3-p6-Mfd" secondAttribute="centerX" id="kyg-5P-6fa"/>
                                     <constraint firstItem="Wk4-49-Zds" firstAttribute="width" secondItem="xw3-p6-Mfd" secondAttribute="width" id="nkl-NR-zAP"/>
+                                    <constraint firstItem="rMd-Vh-OZJ" firstAttribute="centerX" secondItem="xw3-p6-Mfd" secondAttribute="centerX" id="rEJ-LA-BHn"/>
                                     <constraint firstItem="UBO-jv-oSc" firstAttribute="height" secondItem="xw3-p6-Mfd" secondAttribute="height" id="sc1-bE-iX9"/>
                                     <constraint firstItem="Wk4-49-Zds" firstAttribute="centerX" secondItem="xw3-p6-Mfd" secondAttribute="centerX" id="xpH-GT-ZDZ"/>
                                 </constraints>
@@ -197,6 +215,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Fy-Do-hU3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-459" y="937"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Fgo-it-io6">
+            <objects>
+                <viewController id="LeP-bA-9eU" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Pv5-QZ-ylA"/>
+                        <viewControllerLayoutGuide type="bottom" id="1IR-6m-l4X"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Fe-jw-eCM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uqX-cQ-8Xw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-459" y="1675"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="aIT-wZ-4gC">
@@ -364,7 +400,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.34509803921568627" green="0.9137254901960784" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.4392156862745098" green="0.75686274509803919" blue="0.25490196078431371" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="cqN-O7-6Gn" firstAttribute="centerY" secondItem="mDF-jE-IER" secondAttribute="centerY" multiplier="0.95" id="07G-Qi-ayw"/>
                             <constraint firstItem="Fjv-OO-mgX" firstAttribute="centerY" secondItem="mDF-jE-IER" secondAttribute="centerY" multiplier="0.4" id="23e-uI-Kfq"/>
@@ -525,20 +561,20 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a03-jJ-wcx">
                                 <rect key="frame" x="9" y="4" width="393" height="523"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="태그를 선택하세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceY-8d-IZE">
-                                        <rect key="frame" x="239" y="141" width="123" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="태그 선택" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceY-8d-IZE">
+                                        <rect key="frame" x="269" y="141" width="64" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="태그를 선택하세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCy-Bz-yT0">
-                                        <rect key="frame" x="239" y="188" width="123" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="태그 선택" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCy-Bz-yT0">
+                                        <rect key="frame" x="269" y="188" width="64" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="태그를 선택하세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIX-Is-znK">
-                                        <rect key="frame" x="239" y="231" width="123" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="태그 선택" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIX-Is-znK">
+                                        <rect key="frame" x="269" y="231" width="64" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>

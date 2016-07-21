@@ -8,6 +8,7 @@
 
 #import "SignInViewController.h"
 #import "WelcomeViewController.h"
+#import "RequestObject.h"
 
 @interface SignInViewController ()
 
@@ -42,9 +43,17 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)signInBtn:(id)sender {
-    self.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys: self.nameTextField.text, @"name", self.emailTextField.text, @"email", self.pwdTextField.text, @"password", nil];
+    
+    self.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys: self.nameTextField.text, @"nickname", self.emailTextField.text, @"email", self.pwdTextField.text, @"password", self.pwdTextField.text, @"password2",nil];
     
     NSLog(@"%@", self.userInfo);
+    
+    [[RequestObject sharedInstance] sendToServer:@"/api/users/signup/"
+                                      parameters:self.userInfo
+                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                             NSLog(@"%@",response);
+                                         } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                         }];
     
     UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
     
