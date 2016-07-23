@@ -16,9 +16,9 @@
 
 @interface MostCell : UICollectionViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
-@property (strong, nonatomic) IBOutlet UIView *infoView;
-@property (strong, nonatomic) IBOutlet UILabel *commentsCount;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;  //Cell 이미지 뷰어
+@property (strong, nonatomic) IBOutlet UIView *infoView;        //하단 표기 섹션
+@property (strong, nonatomic) IBOutlet UILabel *commentsCount;  //하단 표기 섹션 라벨
 
 @end
 
@@ -56,7 +56,7 @@
 
 @implementation MostCommentedCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,6 +111,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     // 기존 로딩이미지 icon 숨기기
     refreshControl.tintColor = [UIColor clearColor];
+
     
     [refreshControl addSubview:self.refreshColorView];
     [refreshControl addSubview:self.refreshLoadingView];
@@ -332,9 +333,10 @@ static NSString * const reuseIdentifier = @"Cell";
         
         NSDictionary *parameters = @{@"email":[defualts objectForKey:@"EMAIL"],
                                      @"auth":[defualts objectForKey:@"TOKEN"],
-                                     @"gubun":@(1),
+                                     @"gubun":@(2),
                                      @"list_count":@(20)};
-        
+       
+        /*
         [[RequestObject sharedInstance] sendToServer:@"/api/post/list/"
                                           parameters:parameters
                                              success:^(NSURLResponse *response, id responseObject, NSError *error) {
@@ -343,6 +345,8 @@ static NSString * const reuseIdentifier = @"Cell";
                                                 fail:^(NSURLResponse *response, id responseObject, NSError *error) {
                                                     
                                                 }];
+        
+        */
         
         
     }

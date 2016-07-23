@@ -7,7 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
+#import "RequestObject.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 
 @interface AppDelegate ()
 
@@ -24,8 +27,31 @@
     
     [NSThread sleepForTimeInterval:2]; //LunchScreen Add Time
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test) name:@"AutoLogin" object:nil];
+    
+      
+    
     return YES;
 }
+
+-(UIWindow *)window{
+    if (!_window) {
+        _window = [[MBFingerTipWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    }
+    return _window;
+}
+
+-(void) test{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    MainViewController *mainViewController = [storyBoard instantiateViewControllerWithIdentifier:@"MAIN_VIEW"];
+    
+    
+    
+    
+    
+}
+
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [[FBSDKApplicationDelegate sharedInstance] application:application
@@ -39,6 +65,8 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
