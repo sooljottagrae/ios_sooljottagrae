@@ -24,7 +24,7 @@ alpha:alphaValue]
 
 //테마 컬러
 //배경
-#define THEMA_BG_COLOR UIColorFromRGB(0x58E98C,1.0f)
+#define THEMA_BG_COLOR UIColorFromRGB(0x71B743,1.0f)
 //글
 #define THEMA_FT_COLOR UIColorFromRGB(0xFFFFFF,1.0f)
 

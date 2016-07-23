@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *myTagsButton;          //내태그들뷰 버튼
 
 
-@property (nonatomic) NSArray *availableIdentifiers;                    //
+@property (nonatomic) NSArray *availableIdentifiers;                    //사용가능한 탭바Segue
 
 
 @property (strong, nonatomic) IBOutlet UIView *menuView;                //상단메뉴 영역
@@ -31,11 +31,11 @@
 
 
 //스크롤 페이징을 위한 셋팅
-@property (strong, nonatomic)IBOutlet UIScrollView *pageScrollView;             //스크롤뷰
+@property (strong, nonatomic)IBOutlet UIScrollView *pageScrollView;     //스크롤뷰
 @property (strong, nonatomic) NSMutableArray *arrayForPages;            //스크롤뷰 페이징을 위한 배열
-@property (weak, nonatomic)IBOutlet UIPageControl *pageControl;
+@property (weak, nonatomic)IBOutlet UIPageControl *pageControl;         //페이지 컨트롤러
 
-@property (strong, nonatomic) NSMutableArray *pageNames;
+@property (strong, nonatomic) NSMutableArray *pageNames;                //페이지 이름들
 
 
 @end
@@ -57,21 +57,21 @@
     //기본세그 선택
 //    [self performSegueWithIdentifier:@"mostCommented" sender:self.tabBarButtons[0]];
     
+    //디바이스가 화면이 변경될 때마다 불러온다
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changedFrameSize) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
-    NSLog(@"%@",[[RequestObject sharedInstance] loadKeyChainAccount]);
     
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
+    //프레임사이즈 변경
     [self changedFrameSize];
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 //화면 구성을 위한 기초 설정
@@ -232,7 +232,6 @@
     [self.pageControl setCurrentPage:page];
     
     // 미리 뷰를 로드합니다.
-    
     if(page == 0){
         [self loadScrollViewDataSourceWithPage:page];
         [self loadScrollViewDataSourceWithPage:page + 1];
@@ -263,8 +262,10 @@
     // 스크롤 뷰의 컨텐츠 사이즈를 설정합니다.
     [self.pageScrollView setContentSize:contentSize];
     
+    //콜렉션뷰 객체 초기화
     UICollectionViewController *controller = nil;
     
+    //배열에 저장 된 객체들을 불러와 화면에 맞도록 조정한다.
     for(NSInteger i=0; i<self.arrayForPages.count ; i++){
         controller = [self.arrayForPages objectAtIndex:i];
         if(controller.view.superview != nil){
@@ -275,6 +276,17 @@
             
        }
     }
+    
+    //현재 선택된 버튼의 따른 보여주기 처리를 한다.
+    //이처리를 안할경우 화면이 정상적으로 보여지지 않는다.
+    if(self.targetButton.tag == 0) {
+        [self gotoPage:NO AtPage:0];
+    }
+    
+    if(self.targetButton.tag == 1){
+        [self gotoPage:NO AtPage:1];
+    }
+
 
 }
 
@@ -338,6 +350,47 @@
     [vc removeFromParentViewController];
 }
 
+//포스트 버튼
+- (IBAction)clickedPostButton:(UIButton *)sender {
+    
+    
+/* 샘플
+ 
+    NSString *fileName = @"main.jpg";
+    
+    UIImage *image = [UIImage imageNamed:@"main.png"];
+    
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
+    
+    [parameters setObject:@"테스트로 올려봅니다:" forKey:@"title"];
+    [parameters setObject:@"테스트인데 이제 잘 돌아가는건가요?" forKey:@"content"];
+    
+   // NSLog(@"%@",parameters);
+    
+    
+    [[RequestObject sharedInstance] sendToServer:@"/api/posts/create/"
+                                      parameters:parameters
+                                           image:image
+                                        fileName:fileName
+                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                             //
+                                             NSLog(@"success : %@",responseObject);
+                                         }
+                                        progress:^(NSProgress *uploadProgress) {
+                                            //
+                                            
+                                        }
+                                            fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                                //
+                                                NSLog(@"fail : %@",responseObject);
+                                            }
+                                         useAuth:YES];
+*/
+
+}
+
+
+
 /* 사용 안함 (강준)
 //선택된 탭바에 언더바를 넣는다.
 //가로모드일때 사이즈가 그대로이다.(유동적으로 변해야한다)
@@ -366,12 +419,14 @@
     NSLog(@"clickedTabButton %ld",sender.tag);
     [self.targetButton setSelected:NO];
     
+    //가장많이 본 글
     if(sender.tag == 0) {
         self.targetButton = sender;
         [self.targetButton setSelected:YES];
         [self gotoPage:YES AtPage:0];
     }
     
+    //내태그
     if(sender.tag == 1){
         self.targetButton = sender;
         [self.targetButton setSelected:YES];
@@ -383,6 +438,7 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//사용안함 (강준)
 //    if([self.availableIdentifiers containsObject: segue.identifier]){
 //        for(UIButton *selected in self.tabBarButtons){
 //            if(sender != nil && ![selected isEqual: sender]) {

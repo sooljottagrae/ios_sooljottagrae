@@ -25,7 +25,7 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
 
 + (instancetype) sharedInstance;
 
--(void) keyChainAccount:(NSString *)email passWord:(NSString *)password;
+-(void) keyChainAccount:(NSString *)email passWord:(NSString *)password token:(NSString *)token;
 -(NSDictionary *)loadKeyChainAccount;
 
 
@@ -35,7 +35,8 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
 -(void) sendToServer:(NSString *)apiPath
           parameters:(NSDictionary *)parameters
              success:(void (^)(NSURLResponse *response, id responseObject, NSError *error))success
-                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail;
+                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail
+             useAuth:(BOOL) useAuth;
 
 -(void) sendToServer:(NSString *)apiPath
           parameters:(NSDictionary *)parameters
@@ -43,6 +44,7 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
             fileName:(NSString *)fileName
              success:(void (^)(NSURLResponse *response, id responseObject, NSError *error))success
             progress:(void (^)(NSProgress *uploadProgress))progress
-                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail;
+                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail
+             useAuth:(BOOL) useAuth;
 
 @end
