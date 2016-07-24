@@ -35,8 +35,16 @@
 		BF3EAB3E1D3C59B900E16A7D /* imageSampleInput.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3EAB3D1D3C59B900E16A7D /* imageSampleInput.png */; };
 		BF94FB401D36AF2000B9FD9F /* alcohols.png in Resources */ = {isa = PBXBuildFile; fileRef = BF94FB3F1D36AF2000B9FD9F /* alcohols.png */; };
 		BFAA690C1D3782CD003758CA /* sooljotta.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = BFAA690B1D3782CD003758CA /* sooljotta.com.cer */; };
+		BFB855D31D43AF6D00A895DA /* editButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D21D43AF6D00A895DA /* editButton.png */; };
+		BFB855D51D43BDD200A895DA /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D41D43BDD200A895DA /* back.png */; };
+		BFB855D71D43C34900A895DA /* delete1.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D61D43C34900A895DA /* delete1.png */; };
+		BFB855D91D43C34D00A895DA /* delete2.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D81D43C34D00A895DA /* delete2.png */; };
 		BFC1510B1D34A36100ACF71B /* EditMyTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */; };
 		BFC1510E1D34E4B700ACF71B /* CircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC1510D1D34E4B700ACF71B /* CircleImageView.m */; };
+		BFC42EF01D42056F00CE919B /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC42EEF1D42056F00CE919B /* CommentsViewController.m */; };
+		BFC42EF21D42ED7400CE919B /* profileSample.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = BFC42EF11D42ED7400CE919B /* profileSample.jpeg */; };
+		BFC42EF81D4300E500CE919B /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC42EF71D4300E500CE919B /* background.png */; };
+		BFC42EFB1D4302B500CE919B /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC42EFA1D4302B500CE919B /* TableViewCell.m */; };
 		BFF745341D2CFA3D002E6D0B /* Profile1.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF745331D2CFA3D002E6D0B /* Profile1.png */; };
 		CE5B5BC248424C1BD86384B1 /* libPods-sooljottagrae.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA01757F81E3F4E5374C06DE /* libPods-sooljottagrae.a */; };
 /* End PBXBuildFile section */
@@ -86,10 +94,20 @@
 		BF3EAB3D1D3C59B900E16A7D /* imageSampleInput.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageSampleInput.png; sourceTree = "<group>"; };
 		BF94FB3F1D36AF2000B9FD9F /* alcohols.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohols.png; sourceTree = "<group>"; };
 		BFAA690B1D3782CD003758CA /* sooljotta.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sooljotta.com.cer; sourceTree = "<group>"; };
+		BFB855D21D43AF6D00A895DA /* editButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editButton.png; sourceTree = "<group>"; };
+		BFB855D41D43BDD200A895DA /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		BFB855D61D43C34900A895DA /* delete1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete1.png; sourceTree = "<group>"; };
+		BFB855D81D43C34D00A895DA /* delete2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete2.png; sourceTree = "<group>"; };
 		BFC151091D34A36100ACF71B /* EditMyTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMyTagsViewController.h; sourceTree = "<group>"; };
 		BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMyTagsViewController.m; sourceTree = "<group>"; };
 		BFC1510C1D34E4B700ACF71B /* CircleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleImageView.h; sourceTree = "<group>"; };
 		BFC1510D1D34E4B700ACF71B /* CircleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleImageView.m; sourceTree = "<group>"; };
+		BFC42EEE1D42056F00CE919B /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
+		BFC42EEF1D42056F00CE919B /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
+		BFC42EF11D42ED7400CE919B /* profileSample.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profileSample.jpeg; sourceTree = "<group>"; };
+		BFC42EF71D4300E500CE919B /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		BFC42EF91D4302B500CE919B /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		BFC42EFA1D4302B500CE919B /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		BFF745331D2CFA3D002E6D0B /* Profile1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile1.png; sourceTree = "<group>"; };
 		FA01757F81E3F4E5374C06DE /* libPods-sooljottagrae.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sooljottagrae.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -183,6 +201,10 @@
 				BFC1510A1D34A36100ACF71B /* EditMyTagsViewController.m */,
 				BF227EEE1D3628DC0061AE24 /* WritePostViewController.h */,
 				BF227EEF1D3628DC0061AE24 /* WritePostViewController.m */,
+				BFC42EEE1D42056F00CE919B /* CommentsViewController.h */,
+				BFC42EEF1D42056F00CE919B /* CommentsViewController.m */,
+				BFC42EF91D4302B500CE919B /* TableViewCell.h */,
+				BFC42EFA1D4302B500CE919B /* TableViewCell.m */,
 			);
 			path = sooljottagrae;
 			sourceTree = "<group>";
@@ -200,6 +222,7 @@
 			children = (
 				8EA4800F1D348E0800512541 /* cocktail-icon1.png */,
 				8E6BE7941D2E24210039AB7B /* underline.png */,
+				BFC42EF11D42ED7400CE919B /* profileSample.jpeg */,
 				BF3EAB3D1D3C59B900E16A7D /* imageSampleInput.png */,
 				8E6E25A71D2AC0DC007799B3 /* add.png */,
 				BF94FB3F1D36AF2000B9FD9F /* alcohols.png */,
@@ -208,6 +231,11 @@
 				BFF745331D2CFA3D002E6D0B /* Profile1.png */,
 				8E6E259E1D2A2397007799B3 /* facebook-login.png */,
 				8E6E25B81D2B7C83007799B3 /* facebook-logo.png */,
+				BFC42EF71D4300E500CE919B /* background.png */,
+				BFB855D21D43AF6D00A895DA /* editButton.png */,
+				BFB855D41D43BDD200A895DA /* back.png */,
+				BFB855D61D43C34900A895DA /* delete1.png */,
+				BFB855D81D43C34D00A895DA /* delete2.png */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -273,6 +301,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFC42EF21D42ED7400CE919B /* profileSample.jpeg in Resources */,
 				8E6E25931D2A136B007799B3 /* LaunchScreen.storyboard in Resources */,
 				8E6BE7951D2E24210039AB7B /* underline.png in Resources */,
 				BF3EAB3E1D3C59B900E16A7D /* imageSampleInput.png in Resources */,
@@ -281,12 +310,17 @@
 				8EA480101D348E0800512541 /* cocktail-icon1.png in Resources */,
 				8E6E25A81D2AC0DC007799B3 /* add.png in Resources */,
 				8EA4800C1D3321F200512541 /* 1468215464_COCKTAIL.png in Resources */,
+				BFB855D91D43C34D00A895DA /* delete2.png in Resources */,
+				BFB855D31D43AF6D00A895DA /* editButton.png in Resources */,
+				BFC42EF81D4300E500CE919B /* background.png in Resources */,
 				8E6E25901D2A136B007799B3 /* Assets.xcassets in Resources */,
 				8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */,
 				BFAA690C1D3782CD003758CA /* sooljotta.com.cer in Resources */,
 				BF191C071D2CEF7800FE6A9C /* Main1.storyboard in Resources */,
+				BFB855D51D43BDD200A895DA /* back.png in Resources */,
 				8E6E258E1D2A136B007799B3 /* Main.storyboard in Resources */,
 				8E6E25A61D2ABC9C007799B3 /* profile.png in Resources */,
+				BFB855D71D43C34900A895DA /* delete1.png in Resources */,
 				BFF745341D2CFA3D002E6D0B /* Profile1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,6 +383,7 @@
 				BFC1510E1D34E4B700ACF71B /* CircleImageView.m in Sources */,
 				BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */,
 				8E6E25B11D2AC39F007799B3 /* MainNavigationSegue.m in Sources */,
+				BFC42EF01D42056F00CE919B /* CommentsViewController.m in Sources */,
 				8E6E258B1D2A136B007799B3 /* ViewController.m in Sources */,
 				BF227EF01D3628DC0061AE24 /* WritePostViewController.m in Sources */,
 				8E6E25881D2A136B007799B3 /* AppDelegate.m in Sources */,
@@ -358,6 +393,7 @@
 				BFC1510B1D34A36100ACF71B /* EditMyTagsViewController.m in Sources */,
 				BF191C021D2CEF6C00FE6A9C /* SettingViewController.m in Sources */,
 				8E6E25B41D2AC703007799B3 /* MostCommentedCollectionViewController.m in Sources */,
+				BFC42EFB1D4302B500CE919B /* TableViewCell.m in Sources */,
 				8E6E25B71D2AC72B007799B3 /* MyTagsCollectionViewController.m in Sources */,
 				8E6E25851D2A136B007799B3 /* main.m in Sources */,
 			);
@@ -493,7 +529,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sooljottagrae",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljotta;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alcoholic.sooljotta-";
 				PRODUCT_NAME = "술조타그래_테스트";
 				PROVISIONING_PROFILE = "";
 			};
@@ -517,7 +553,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/sooljottagrae",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljotta;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alcoholic.sooljotta-";
 				PRODUCT_NAME = "술조타그래";
 				PROVISIONING_PROFILE = "";
 			};

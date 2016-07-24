@@ -22,9 +22,11 @@
 {
     [super layoutSubviews];
     
-    NSLog(@"change!!");
+    //NSLog(@"change!!");
     
     self.layer.cornerRadius = self.frame.size.height/2;
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.masksToBounds = YES;
     
 }
 

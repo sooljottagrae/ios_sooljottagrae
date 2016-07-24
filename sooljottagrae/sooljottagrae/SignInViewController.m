@@ -51,8 +51,9 @@
     [[RequestObject sharedInstance] sendToServer:@"/api/users/signup/"
                                       parameters:self.userInfo
                                          success:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                             NSLog(@"%@",response);
+                                             NSLog(@"%@",responseObject);
                                          } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                             NSLog(@"%@",responseObject[@"email"]);
                                          }];
     
     UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];

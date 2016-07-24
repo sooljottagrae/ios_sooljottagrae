@@ -27,4 +27,8 @@ alpha:alphaValue]
 #define THEMA_BG_COLOR UIColorFromRGB(0x70C141,1.0f)
 //글
 #define THEMA_FT_COLOR UIColorFromRGB(0x4d92c9,1.0f)
+//imageView 테두리
+#define THEMA_CIRCLE_COLOR UIColorFromRGB(0xEFEFF4,1.0f)
+//어두운 테마 컬러
+#define THEMA_BG_DARK_COLOR UIColorFromRGB(0x084A17,1.0f)
 
