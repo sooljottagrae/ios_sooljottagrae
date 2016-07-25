@@ -33,12 +33,14 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
 
 
 -(void) sendToServer:(NSString *)apiPath
+              option:(NSString *)option
           parameters:(NSDictionary *)parameters
              success:(void (^)(NSURLResponse *response, id responseObject, NSError *error))success
                 fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail
              useAuth:(BOOL) useAuth;
 
 -(void) sendToServer:(NSString *)apiPath
+              option:(NSString *)option
           parameters:(NSDictionary *)parameters
                image:(UIImage *)image
             fileName:(NSString *)fileName

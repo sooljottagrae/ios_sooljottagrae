@@ -9,6 +9,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MostCommentedCollectionViewController.h"
 #import "RequestObject.h"
+#import "RFQuiltLayout.h"
+#import "UIButton+indexPath.h"
 
 /**************************************************
  * Cell Custom
@@ -19,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;  //Cell 이미지 뷰어
 @property (strong, nonatomic) IBOutlet UIView *infoView;        //하단 표기 섹션
 @property (strong, nonatomic) IBOutlet UILabel *commentsCount;  //하단 표기 섹션 라벨
+@property (strong, nonatomic) IBOutlet UIButton *moreButton;
 
 @end
 
@@ -30,7 +33,7 @@
  * Controller Implementation
  **************************************************/
 
-@interface MostCommentedCollectionViewController ()
+@interface MostCommentedCollectionViewController () <RFQuiltLayoutDelegate>
 {
     BOOL isCustom;
     NSArray *array;
@@ -73,7 +76,7 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     
     //리스트 로드 노티피
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(addCellData)
+                                             selector:@selector(refreshList)
                                                  name:MostCommentdListLoadSuccess
                                                object:nil];
 
@@ -81,7 +84,68 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     
     [self initCustomRefreshControl];
     
+    
+    ///gm
+    RFQuiltLayout *layout = (id)[self.collectionView collectionViewLayout];
+    layout.delegate = self;
+    layout.direction = UICollectionViewScrollDirectionVertical;
+    layout.blockPixels = CGSizeMake([UIScreen mainScreen].bounds.size.width / 2, 1);
+    //
 }
+
+
+#pragma mark – RFQuiltLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGSize blockSizeForItem = CGSizeZero;
+    
+    blockSizeForItem.width = 1;
+    
+    CGFloat r = indexPath.item % 4;
+    
+    CGFloat height = 200;
+
+    if (r < 1 ) {
+        height = 100;
+    } else if (r < 2) {
+        height = 160;
+    } else if (r < 3) {
+        height = 190;
+    }
+    
+    blockSizeForItem.height = height;
+    
+//    ZZalListItemModel *item = [self getListItemModelAtIndexPath:indexPath];
+//    
+//    if (self.columnType == NWZZalColumnOne) {
+//        blockSizeForItem = [NWZZalOneColumnCell blockSizeForItemModel:item];
+//        UIEdgeInsets insetsForItem = [NWZZalOneColumnCell cellInsetsForItemAtIndex:indexPath.item];
+//        blockSizeForItem.height += (insetsForItem.top + insetsForItem.bottom) / [UIScreen mainScreen].scale;
+//    } else if (self.columnType == NWZZalColumnTwo) {
+//        blockSizeForItem = [NWZZalTwoColumnCell blockSizeForItemModel:item];
+//    }
+//    
+//    if ([item isService] != YES) {
+//        blockSizeForItem.height = 0;
+//    }
+    
+    return blockSizeForItem;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath column:(NSInteger)column
+{
+    UIEdgeInsets insetsForItem = UIEdgeInsetsZero;
+    
+//    if (self.columnType == NWZZalColumnOne) {
+//        insetsForItem = [NWZZalOneColumnCell cellInsetsForItemAtIndex:indexPath.item];
+//    } else if (self.columnType == NWZZalColumnTwo) {
+//        insetsForItem = [NWZZalTwoColumnCell cellInsetsForItemAtColumn:column];
+//    }
+    
+    return insetsForItem;
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -121,6 +185,7 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     // 리프레시 이벤트 연결
     [refreshControl addTarget:self action:@selector(handleRefreshForCustom:) forControlEvents:UIControlEventValueChanged];
     
+    
     [self.collectionView addSubview:refreshControl];
 }
 
@@ -131,12 +196,12 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     
     
     //3초뒤 리프레싱 끝내도록 설정
-    double delayInSeconds = 3.0;
+    double delayInSeconds = 0.8f;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        
+        [self setttingDataList];
     
-        [refreshControl endRefreshing];
+       // [refreshControl endRefreshing];
     });
     
 }
@@ -180,8 +245,8 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     
     
     if (refreshControl.isRefreshing && !self.isRefreshAnimating) {
-        NSLog(@"Call");
-        NSLog(@"%lf, %lf",refreshControl.frame.origin.y, refreshBounds.size.height);
+        //NSLog(@"Call");
+        //NSLog(@"%lf, %lf",refreshControl.frame.origin.y, refreshBounds.size.height);
         [self animateRefreshView];
     }
     
@@ -229,33 +294,54 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 
 
 
-//Temp Data List
+//Data List Setting
 -(void) setttingDataList{
-
+    
     self.dataList = [[NSMutableArray alloc]initWithObjects:
-                    @{@"postId":@"1", @"thumnail_url":@"http://i.imgur.com/fmckBDO.jpg", @"comments_count":@(2000)},
-                    @{@"postId":@"2", @"thumnail_url":@"http://fansta.net/data/editor/1510/3732507908_562f410b7e18b_14459374195165", @"comments_count":@(250)},
-                    @{@"postId":@"3", @"thumnail_url":@"http://photo.jtbc.joins.com/news/2015/12/30/201512301208328789.jpg",@"comments_count":@(200)},
-                    @{@"postId":@"4", @"thumnail_url":@"http://file2.instiz.net/data/file2/2016/01/18/c/0/7/c07e8aa653757d742d2f3b043b559592.jpg",@"comments_count":@(230)},
-                    @{@"postId":@"5", @"thumnail_url":@"https://pbs.twimg.com/profile_images/683106307985903616/_DfSOjZt.jpg",@"comments_count":@(220)},
-                    @{@"postId":@"6", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/12/15/f7ae4cf4ce49c5141e0506b6650812d7.jpg",@"comments_count":@(220)},
-                    @{@"postId":@"7", @"thumnail_url":@"http://img.danawa.com/images/descFiles/4/23/3022192_1444312249911.jpeg",@"comments_count":@(220)},
-                    @{@"postId":@"8", @"thumnail_url":@"http://file2.instiz.net/data/cached_img/upload/2015/11/10/18/c0f386660df03e9e1866d7db92ec2a79.jpg",@"comments_count":@(220)},
-                    @{@"postId":@"11", @"thumnail_url":@"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRPXFMknbeBzqje0Y5SgQSaEaOLIN5oqvcVMhep5XZz9EfmjHbF4w",@"comments_count":@(220)},
-                    @{@"postId":@"111", @"thumnail_url":@"http://cfile28.uf.tistory.com/image/2721EC3F562795F6312CFB",@"comments_count":@(220)},
+                    @{@"pk":@"1", @"image":@"http:i.imgur.com/fmckBDO.jpg", @"comments_number":@(2000)},
+                    @{@"pk":@"2", @"image":@"http:fansta.net/data/editor/1510/3732507908_562f410b7e18b_14459374195165", @"comments_number":@(250)},
+                    @{@"pk":@"3", @"image":@"http:photo.jtbc.joins.com/news/2015/12/30/201512301208328789.jpg",@"comments_number":@(200)},
+                    @{@"pk":@"4", @"image":@"http:file2.instiz.net/data/file2/2016/01/18/c/0/7/c07e8aa653757d742d2f3b043b559592.jpg",@"comments_number":@(230)},
+                    @{@"pk":@"5", @"image":@"https:pbs.twimg.com/profile_images/683106307985903616/_DfSOjZt.jpg",@"comments_number":@(220)},
+                    @{@"pk":@"6", @"image":@"http:file2.instiz.net/data/cached_img/upload/2015/11/12/15/f7ae4cf4ce49c5141e0506b6650812d7.jpg",@"comments_number":@(220)},
+                    @{@"pk":@"7", @"image":@"http:img.danawa.com/images/descFiles/4/23/3022192_1444312249911.jpeg",@"comments_number":@(220)},
+                    @{@"pk":@"8", @"image":@"http:file2.instiz.net/data/cached_img/upload/2015/11/10/18/c0f386660df03e9e1866d7db92ec2a79.jpg",@"comments_number":@(220)},
+                    @{@"pk":@"11", @"image":@"https:encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRPXFMknbeBzqje0Y5SgQSaEaOLIN5oqvcVMhep5XZz9EfmjHbF4w",@"comments_number":@(220)},
+                    @{@"pk":@"111", @"image":@"http:cfile28.uf.tistory.com/image/2721EC3F562795F6312CFB",@"comments_number":@(220)},
                     nil];
+    
+//    [[RequestObject sharedInstance] sendToServer:@"/api/posts/" option:@"GET" parameters:nil success:^(NSURLResponse *response, id responseObject, NSError *error) {
+//        
+//        if(responseObject != nil){
+//            NSLog(@"%@",responseObject);
+//            [self initDataList:[responseObject objectForKey:@"results"]];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:MostCommentdListLoadSuccess object:nil];
+//            
+//        }
+//        
+//        
+//    } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+//        
+//    } useAuth:NO];
+//    
 
 }
 
-
+-(void) initDataList:(id)object{
+    NSMutableArray *temp = object;
+    self.dataList = temp.mutableCopy;
+}
 
 
 -(void) didLoadDataList{
-    [[RequestObject sharedInstance] mostCommentedList:self.pageCount++ listCount:30];
+    //[[RequestObject sharedInstance] mostCommentedList:self.pageCount++ listCount:30];
 }
 
--(void) addCellData{
-    [self.dataList addObjectsFromArray: [RequestObject sharedInstance].mostCommentedList];
+-(void) refreshList{
+    //[self.dataList addObjectsFromArray: [RequestObject sharedInstance].mostCommentedList];
+    if(refreshControl.isRefreshing){
+        [refreshControl endRefreshing];
+    }
     [self.collectionView reloadData];
 }
 
@@ -286,11 +372,72 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     
     // Configure the cell
 
-    NSURL *urlString = [NSURL URLWithString:self.dataList[indexPath.row][@"thumnail_url"]];
-    [cell.imageView sd_setImageWithURL:urlString];
-    [cell.commentsCount setText:[NSString stringWithFormat:@"%@",self.dataList[indexPath.row][@"comments_count"]]];
+    NSString *urlString = self.dataList[indexPath.row][@"image"];
+    //url Null처리
+    
+    if([urlString isKindOfClass:NSString.class] && urlString.length > 0){
+        NSURL *imageUrl = [NSURL URLWithString:self.dataList[indexPath.row][@"image"]];
+        __weak UIImageView *weakImageView = cell.imageView;
+        
+        [cell.imageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage new] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (weakImageView != nil && cacheType == SDImageCacheTypeNone) {
+                __strong UIImageView *strongImageView = weakImageView;
+                strongImageView.alpha = 0;
+                
+                [UIView animateWithDuration:0.2f animations:^{
+                    strongImageView.alpha = 1;
+                } completion:^(BOOL finished) {
+                    strongImageView.alpha = 1;
+                }];
+            }
+        }];
+    }else{
+        cell.imageView.image = nil;
+    }
+    [cell.commentsCount setText:[NSString stringWithFormat:@"%@",self.dataList[indexPath.row][@"comments_number"]]];
+    cell.moreButton.section = indexPath.section;
+    cell.moreButton.item = indexPath.item;
+    
+    if (cell.moreButton.allTargets.count == 0) {
+        [cell.moreButton addTarget:self action:@selector(onTapMore:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     return cell;
+}
+
+- (void)onTapMore:(UIButton *)button
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:button.item inSection:button.section];
+ 
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"차단" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self.dataList removeObjectAtIndex:button.item];
+        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:MostCommentdListLoadSuccess object:nil];
+        
+        [alert dismissViewControllerAnimated:YES completion:^{
+        }];
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"취소" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alert dismissViewControllerAnimated:YES completion:^{
+            //s
+        }];
+        
+    }];
+    
+    [alert addAction:deleteAction];
+    [alert addAction:cancelAction];
+    
+    
+    
+    
+    [self presentViewController:alert animated:YES completion:^{
+        
+    }];
 }
 
 //셀 사이즈 설정
@@ -302,18 +449,23 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 
 #pragma mark <UICollectionViewDelegate>
 //셀선택시 보여준다.
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-   // UIStoryboard *stroyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+//    UIStoryboard *stroyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    
+//    UIViewController *contorller = [stroyBoard instantiateViewControllerWithIdentifier:@""];
     
     NSDictionary *contents = self.dataList[indexPath.row];
     
-    NSString *postId = contents[@"postId"];
+    NSString *apiPath = [NSString stringWithFormat:@"%@%@",@"/api/posts/",contents[@"pk"]];
     
-    NSLog(@"postId : %@",postId);
+    //controller.url = apiPath;
     
-    
-    return YES;
+    NSLog(@"apiPath : %@",apiPath);
+}
+
+-(void) dissmissView{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark UIScrollView<UIScrollViewDelegate>
@@ -321,23 +473,19 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 //셀이 움직이 멈췄을때
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     //샐 가장 하단시 호출
-    float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
-    if (bottomEdge >= scrollView.contentSize.height) {
-        //NSLog(@"ended Cell call");
-        
+   
+
+    CGFloat bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+    
+    if (bottomEdge >= scrollView.contentSize.height ) {
         NSLog(@"추가적으로 내용을 더 넣습니다");
         NSArray *tempList = [[NSArray alloc] initWithArray:_dataList.copy];
         [_dataList addObjectsFromArray:tempList];
-        [self.collectionView reloadData];
-        NSUserDefaults *defualts = [NSUserDefaults standardUserDefaults];
-        
-        NSDictionary *parameters = @{@"email":[defualts objectForKey:@"EMAIL"],
-                                     @"auth":[defualts objectForKey:@"TOKEN"],
-                                     @"gubun":@(2),
-                                     @"list_count":@(20)};
-       
+       // [self refreshList];
+    
         /*
         [[RequestObject sharedInstance] sendToServer:@"/api/post/list/"
+                                              option:@"POST"
                                           parameters:parameters
                                              success:^(NSURLResponse *response, id responseObject, NSError *error) {
                                                  
@@ -348,8 +496,10 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
         
         */
         
-        
+        NSLog(@"--------------------------------");
     }
+    
+    
 }
 
 

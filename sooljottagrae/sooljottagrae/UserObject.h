@@ -10,19 +10,20 @@
 
 @interface UserObject : NSObject
 
-@property (strong, nonatomic) NSString *userName;
-@property (strong, nonatomic) NSString *userEmail;
-@property (strong, nonatomic) NSString *profileUrl;
-@property (strong, nonatomic) NSString *profileThumnailUrl;
-@property BOOL autoLoginYesNo;
+@property (strong, nonatomic) NSString *userName;               //사용자이름
+@property (strong, nonatomic) NSString *userEmail;              //사용자 이메일(ID)
+@property (strong, nonatomic) NSString *profileUrl;             //사용자 프로파일 URL
+@property (strong, nonatomic) NSString *profileThumnailUrl;     //사용자 프로파일 섬네일 URL
 
-@property (strong, nonatomic) NSMutableArray *userTagList;
+@property BOOL autoLoginYesNo;                                  //autoLogin 여부
 
-@property NSInteger tagCount;
+@property (strong, nonatomic) NSMutableArray *userTagList;      //태그 리스트 목록
 
+@property NSInteger tagCount;                                   //태그 리스트 갯수
 
-@property (strong, nonatomic) NSString *token;
-@property (strong, nonatomic) NSString *passWord;
+@property (strong, nonatomic) NSString *serverId;               //서버자체id
+@property (strong, nonatomic) NSString *token;                  //토큰값
+@property (strong, nonatomic) NSString *passWord;               //비밀번호
 
 +(instancetype) sharedInstance;
 
@@ -30,5 +31,7 @@
 -(void)setUserEmail:(NSString *)userEmail;
 -(void)setToken:(NSString *)token;
 
+
+-(NSMutableDictionary *) loadAccountInfoToDictionary;
 
 @end

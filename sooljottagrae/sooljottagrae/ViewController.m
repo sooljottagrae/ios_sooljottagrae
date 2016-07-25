@@ -192,6 +192,7 @@
     
     //로그인
     [[RequestObject sharedInstance] sendToServer:@"/api/users/login/"
+                                          option:@"POST"
                                       parameters:parameters
                                          success:^(NSURLResponse *response, id responseObject, NSError *error) {
                                              NSLog(@"%@",responseObject);
@@ -376,6 +377,7 @@
     
     //서버로 전송
     [[RequestObject sharedInstance] sendToServer:@"/api/users/login/"
+                                          option:@"POST"
                                       parameters:parameters
                                          success:^(NSURLResponse *response, id responseObject, NSError *error) {
                                              //성공시 처리

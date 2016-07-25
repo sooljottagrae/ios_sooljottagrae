@@ -38,6 +38,10 @@
 @property (strong, nonatomic) NSMutableArray *pageNames;                //페이지 이름들
 
 
+//gm
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *selectedBarWidth;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *selectedBarLeftMargin;
+
 @end
 
 @implementation MainViewController
@@ -59,6 +63,7 @@
     
     //디바이스가 화면이 변경될 때마다 불러온다
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changedFrameSize) name:UIDeviceOrientationDidChangeNotification object:nil];
+    self.selectedBarWidth.constant = [UIScreen mainScreen].bounds.size.width / 2;
     
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -194,6 +199,11 @@
 
 #pragma mark - UIScrollDelegate
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    self.selectedBarLeftMargin.constant = scrollView.contentOffset.x / 2;
+}
+
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     CGFloat pageWidth = CGRectGetWidth(self.pageScrollView.frame);
     // 현재 페이지를 구합니다. floor는 소수점 자리를 버리는 함수입니다
@@ -255,6 +265,10 @@
 
 //각 화면들에 대한 프레임크기 재설정
 -(void) changedFrameSize{
+//    self.selectedBarLeftMargin.constant = [UIScreen mainScreen].bounds.size.width / 2;
+    self.selectedBarWidth.constant = [UIScreen mainScreen].bounds.size.width / 2;
+//    [self.view layoutIfNeeded];
+    
     // 스크롤 뷰의 컨텐츠 사이즈를 미리 만들어둡니다.
     CGSize contentSize = self.pageScrollView.frame.size;
     contentSize.width = self.pageScrollView.frame.size.width * self.pageNames.count;
@@ -281,10 +295,12 @@
     //이처리를 안할경우 화면이 정상적으로 보여지지 않는다.
     if(self.targetButton.tag == 0) {
         [self gotoPage:NO AtPage:0];
+        self.selectedBarLeftMargin.constant = 0;
     }
     
     if(self.targetButton.tag == 1){
         [self gotoPage:NO AtPage:1];
+        self.selectedBarLeftMargin.constant = [UIScreen mainScreen].bounds.size.width / 2;
     }
 
 

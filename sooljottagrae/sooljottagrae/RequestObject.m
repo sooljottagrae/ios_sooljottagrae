@@ -67,6 +67,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
  * 데이터 전송시 사용(공통화)
  *************************************************************************************
  * @parameter : apiPath   (api경로)
+ *            : option    (GET, POST)
  *            : parameter (서버에 전송될 파라미터)
  *            : success   (성공시 처리할 block)
  *            : fail      (실패시 처리할 block)
@@ -74,6 +75,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
  *************************************************************************************/
 
 -(void) sendToServer:(NSString *)apiPath
+              option:(NSString *)option
           parameters:(NSDictionary *)parameters
              success:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))success
                 fail:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))fail
@@ -89,6 +91,8 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     //호출될 서버 URL 정보 설정
     NSString *urlString = [NSString stringWithFormat:@"%@%@", ServerHost, apiPath];
     
+    NSLog(@"url : %@",urlString);
+    
     //토큰정보
     NSString *token = nil;
     
@@ -96,17 +100,21 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     //인증 실패시 넘겨줄 파라미터를 생성한다.
     NSMutableDictionary *temp2 = [[NSMutableDictionary alloc]init];
     [temp2 setObject:apiPath forKey:@"apiUrl"];         //apiUrl
-    [temp2 setObject:@"normal" forKey:@"sendType"];
+    [temp2 setObject:option forKey:@"option"];          //option
+    [temp2 setObject:@"normal" forKey:@"sendType"];     //전송구분
     [temp2 setObject:@(0) forKey:@"authCount"];         //인증 시도 횟수
-    [temp2 setObject:parameters forKey:@"contents"];    //넘겨받은 파라미터
     [temp2 setObject:success forKey:@"success"];        //성공시 블록처리
     [temp2 setObject:fail forKey:@"fail"];              //실패시 블록처리
-    
+    if(parameters.count > 0){
+        [temp2 setObject:parameters forKey:@"contents"];    //넘겨받은 파라미터
+    }
+
+
     //토큰값
     token = [[[RequestObject sharedInstance]loadKeyChainAccount] objectForKey:@"token"];
     
     //JSON형태의 파라미터를 전송한다.
-    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:urlString parameters:parameters error:nil];
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:option URLString:urlString parameters:parameters error:nil];
    
     //토큰값이 있다면 HTTP Header에 포함시켜 전송한다.
     if([token length] > 0) {
@@ -165,6 +173,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
  * 데이터 전송시 사용(공통화) - 멀티파트
  *************************************************************************************
  * @parameter : apiPath   (api경로)
+ *            : option    (GET, POST)
  *            : parameter (서버에 전송될 파라미터)
  *            : success   (성공시 처리할 block)
  *            : progress  (업로드시 처리되는 block)
@@ -178,6 +187,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
  *            : fail      (실패시 처리할 block)
  *************************************************************************************/
 -(void) sendToServer:(NSString *)apiPath
+              option:(NSString *)option
           parameters:(NSDictionary *)parameters
                image:(UIImage *)image
             fileName:(NSString *)fileName
@@ -233,6 +243,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     //인증 실패시 넘겨줄 파라미터를 생성한다.
     NSMutableDictionary *temp2 = [[NSMutableDictionary alloc]init];
     [temp2 setObject:apiPath forKey:@"apiUrl"];         //apiUrl
+    [temp2 setObject:option forKey:@"option"];          //option
     [temp2 setObject:@"multipart" forKey:@"sendType"];  //전송구분
     [temp2 setObject:@(0) forKey:@"authCount"];         //인증 시도 횟수
     [temp2 setObject:image forKey:@"image"];            //파일이미지
@@ -246,7 +257,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     token = [[[RequestObject sharedInstance]loadKeyChainAccount] objectForKey:@"token"];
     
     //멀티파트 설정
-    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] multipartFormRequestWithMethod:@"POST"
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] multipartFormRequestWithMethod:option
                                                                                               URLString:imageUploadURLString
                                                                                              parameters:parameters
                                                                               constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -385,19 +396,25 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
 //                NSLog(@"%@ %@", response, responseObject);
                 
                 if([responseObject objectForKey:@"token"] != nil){
-                    [[RequestObject sharedInstance]keyChainAccount:[authParameter objectForKey:@"email"] passWord:[authParameter objectForKey:@"password"] token:[responseObject objectForKey:@"token"]];
+                    [[RequestObject sharedInstance]keyChainAccount:[authParameter objectForKey:@"email"]
+                                                          passWord:[authParameter objectForKey:@"password"]
+                                                             token:[responseObject objectForKey:@"token"]];
                 }
                 
                 if(sendFlag){
                     [self sendToServer:[temp objectForKey:@"apiUrl"]
+                                option:[temp objectForKey:@"option"]
                             parameters:[temp objectForKey:@"contents"]
                                success:^(NSURLResponse *response, id responseObject, NSError *error) {
                                    reUseSuccess(response, responseObject, error);
-                               } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                   reUseFail(response, responseObject, error);
-                               } useAuth:YES];
+                               }
+                                  fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                      reUseFail(response, responseObject, error);
+                                  } useAuth:YES];
+                
                 }else{
                     [self sendToServer:[temp objectForKey:@"apiUrl"]
+                                option:[temp objectForKey:@"option"]
                             parameters:[temp objectForKey:@"contents"]
                                  image:[temp objectForKey:@"image"]
                               fileName:[temp objectForKey:@"fileName"]

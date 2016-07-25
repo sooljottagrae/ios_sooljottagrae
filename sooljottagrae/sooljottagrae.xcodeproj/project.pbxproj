@@ -37,6 +37,8 @@
 		8E6E25B71D2AC72B007799B3 /* MyTagsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25B61D2AC72B007799B3 /* MyTagsCollectionViewController.m */; };
 		8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6E25B81D2B7C83007799B3 /* facebook-logo.png */; };
 		8E85CC081D3F053300508985 /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E85CC071D3F053300508985 /* bang.png */; };
+		8E9955A41D461E700030B0CC /* RFQuiltLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9955A31D461E700030B0CC /* RFQuiltLayout.m */; };
+		8E9955A71D4644120030B0CC /* UIButton+indexPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9955A61D4644120030B0CC /* UIButton+indexPath.m */; };
 		8EA4800C1D3321F200512541 /* 1468215464_COCKTAIL.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA4800B1D3321F200512541 /* 1468215464_COCKTAIL.png */; };
 		8EA480101D348E0800512541 /* cocktail-icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA4800F1D348E0800512541 /* cocktail-icon1.png */; };
 		8EBD6EFC1D389E96007C1F98 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EBD6EFB1D389E96007C1F98 /* refresh.png */; };
@@ -71,7 +73,7 @@
 		8E4DE4FF1D424DCA000094AF /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		8E4DE5001D424DCA000094AF /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		8E6BE7941D2E24210039AB7B /* underline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underline.png; sourceTree = "<group>"; };
-		8E6E25801D2A136A007799B3 /* 술조타그래_테스트.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "술조타그래_테스트.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E6E25801D2A136A007799B3 /* 술조타테스트.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "술조타테스트.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6E25841D2A136B007799B3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E6E25861D2A136B007799B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8E6E25871D2A136B007799B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -98,6 +100,10 @@
 		8E6E25B61D2AC72B007799B3 /* MyTagsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTagsCollectionViewController.m; sourceTree = "<group>"; };
 		8E6E25B81D2B7C83007799B3 /* facebook-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-logo.png"; sourceTree = "<group>"; };
 		8E85CC071D3F053300508985 /* bang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bang.png; path = ../../../../Documents/bang.png; sourceTree = "<group>"; };
+		8E9955A21D461E700030B0CC /* RFQuiltLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFQuiltLayout.h; sourceTree = "<group>"; };
+		8E9955A31D461E700030B0CC /* RFQuiltLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFQuiltLayout.m; sourceTree = "<group>"; };
+		8E9955A51D4644120030B0CC /* UIButton+indexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+indexPath.h"; sourceTree = "<group>"; };
+		8E9955A61D4644120030B0CC /* UIButton+indexPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+indexPath.m"; sourceTree = "<group>"; };
 		8EA4800B1D3321F200512541 /* 1468215464_COCKTAIL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1468215464_COCKTAIL.png; sourceTree = "<group>"; };
 		8EA4800F1D348E0800512541 /* cocktail-icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cocktail-icon1.png"; sourceTree = "<group>"; };
 		8EBD6EFB1D389E96007C1F98 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
@@ -171,6 +177,8 @@
 		8E1599291D3DE5AA0036F337 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				8E9955A21D461E700030B0CC /* RFQuiltLayout.h */,
+				8E9955A31D461E700030B0CC /* RFQuiltLayout.m */,
 				8E6E25A91D2AC24C007799B3 /* MainViewController.h */,
 				8E6E25AA1D2AC24C007799B3 /* MainViewController.m */,
 				8E6E25B21D2AC703007799B3 /* MostCommentedCollectionViewController.h */,
@@ -179,6 +187,8 @@
 				8E6E25B61D2AC72B007799B3 /* MyTagsCollectionViewController.m */,
 				8E6E25AF1D2AC39F007799B3 /* MainNavigationSegue.h */,
 				8E6E25B01D2AC39F007799B3 /* MainNavigationSegue.m */,
+				8E9955A51D4644120030B0CC /* UIButton+indexPath.h */,
+				8E9955A61D4644120030B0CC /* UIButton+indexPath.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -217,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				8E6E25821D2A136A007799B3 /* sooljottagrae */,
-				8E6E25811D2A136A007799B3 /* Products */,
 				5BA2F018FC3D06BD79E0FCDD /* Pods */,
 				5E80DCF8B6E061008AFFF2DC /* Frameworks */,
 			);
@@ -226,9 +235,10 @@
 		8E6E25811D2A136A007799B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8E6E25801D2A136A007799B3 /* 술조타그래_테스트.app */,
+				8E6E25801D2A136A007799B3 /* 술조타테스트.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		8E6E25821D2A136A007799B3 /* sooljottagrae */ = {
@@ -246,6 +256,7 @@
 				8E1599281D3DE5690036F337 /* Login */,
 				8E1599291D3DE5AA0036F337 /* Main */,
 				8E15992A1D3DE5B10036F337 /* Sub */,
+				8E6E25811D2A136A007799B3 /* Products */,
 				8E6E25831D2A136B007799B3 /* Supporting Files */,
 			);
 			path = sooljottagrae;
@@ -308,7 +319,7 @@
 			);
 			name = sooljottagrae;
 			productName = sooljottagrae;
-			productReference = 8E6E25801D2A136A007799B3 /* 술조타그래_테스트.app */;
+			productReference = 8E6E25801D2A136A007799B3 /* 술조타테스트.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -436,6 +447,7 @@
 				8E4DE4FE1D40588D000094AF /* MBFingerTipWindow.m in Sources */,
 				8E6E258B1D2A136B007799B3 /* ViewController.m in Sources */,
 				BF227EF01D3628DC0061AE24 /* WritePostViewController.m in Sources */,
+				8E9955A71D4644120030B0CC /* UIButton+indexPath.m in Sources */,
 				8E6E25881D2A136B007799B3 /* AppDelegate.m in Sources */,
 				8E6E25A41D2A3A46007799B3 /* RequestObject.m in Sources */,
 				8E4DE5011D424DCA000094AF /* KeychainItemWrapper.m in Sources */,
@@ -445,6 +457,7 @@
 				BF191C021D2CEF6C00FE6A9C /* SettingViewController.m in Sources */,
 				8E6E25B41D2AC703007799B3 /* MostCommentedCollectionViewController.m in Sources */,
 				8E4DE4FB1D3F63C6000094AF /* UserObject.m in Sources */,
+				8E9955A41D461E700030B0CC /* RFQuiltLayout.m in Sources */,
 				8E6E25B71D2AC72B007799B3 /* MyTagsCollectionViewController.m in Sources */,
 				8E6E25851D2A136B007799B3 /* main.m in Sources */,
 			);
@@ -568,8 +581,8 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/sooljottagrae-Prefix.pch";
 				INFOPLIST_FILE = sooljottagrae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljotta;
-				PRODUCT_NAME = "술조타그래_테스트";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alcoholic.sooljotta-";
+				PRODUCT_NAME = "술조타테스트";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -588,7 +601,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/sooljottagrae-Prefix.pch";
 				INFOPLIST_FILE = sooljottagrae/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alcoholic.sooljotta;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alcoholic.sooljotta-";
 				PRODUCT_NAME = "술조타그래";
 				PROVISIONING_PROFILE = "";
 			};

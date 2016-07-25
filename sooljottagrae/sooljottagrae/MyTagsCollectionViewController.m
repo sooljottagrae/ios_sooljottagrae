@@ -146,7 +146,7 @@ static NSString * const reuseIdentifier = @"Cell1";
     
     
     //3초뒤 리프레싱 끝내도록 설정
-    double delayInSeconds = 3.0;
+    double delayInSeconds = 0.8f;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
@@ -263,8 +263,21 @@ static NSString * const reuseIdentifier = @"Cell1";
     
     //썸네일 url
     NSURL *urlString = [NSURL URLWithString:self.tagDataList[indexPath.row][@"thumnail_url"]];
-    [cell.imageView sd_setImageWithURL:urlString];
-    
+    __weak UIImageView *weakImageView = cell.imageView;
+
+    [cell.imageView sd_setImageWithURL:urlString placeholderImage:[UIImage new] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (weakImageView != nil && cacheType == SDImageCacheTypeNone) {
+            __strong UIImageView *strongImageView = weakImageView;
+            strongImageView.alpha = 0;
+            
+            [UIView animateWithDuration:0.2f animations:^{
+                strongImageView.alpha = 1;
+            } completion:^(BOOL finished) {
+                strongImageView.alpha = 1;
+            }];
+        }
+    }];
+
     //셀 코멘트 갯수
     cell.commentsCount.text = [NSString stringWithFormat:@"%@", self.tagDataList[indexPath.row][@"comments_count"]];
     
@@ -276,7 +289,7 @@ static NSString * const reuseIdentifier = @"Cell1";
 
 //셀 사이즈 설정
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake((self.view.frame.size.width/2)-5, 130);
+    return CGSizeMake((self.view.frame.size.width/2), 130);
 }
 
 
