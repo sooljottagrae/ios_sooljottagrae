@@ -48,6 +48,9 @@
 @property (assign) BOOL isRefreshAnimating;
 
 
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGesture;
+
+
 @end
 
 @implementation MyTagsCollectionViewController
@@ -81,24 +84,24 @@ static NSString * const reuseIdentifier = @"Cell1";
 //데이터 초기 불러오기 설정
 -(void) dataList{
     self.tagDataList = [NSMutableArray arrayWithObjects:
-                        @{@"post_id":@(1), @"thumnail_url":@"http://m.modoonews.com/data/image/jjalbang/20160422/jjalbang_mn_1461268951_62.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(2), @"thumnail_url":@"http://cfile1.uf.tistory.com/image/232C2B3556E1686F2478D7", @"comments_count":@(1000)},
-                        @{@"post_id":@(3), @"thumnail_url":@"http://res.heraldm.com/content/image/2016/01/15/20160115000217_0.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(4), @"thumnail_url":@"https://4.bp.blogspot.com/-acnIluVb--U/VuQBvUBctXI/AAAAAAAAAhk/nW-fS45EY4MUsku6ty6W5pvLrxLcpmzUQ/s1600/5.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(5), @"thumnail_url":@"https://4.bp.blogspot.com/--yCBnaJYbs0/VuQBtd6NV8I/AAAAAAAAAhA/akTgcpMUxz0omgSqQbZZvWzH6-Kqpf1PQ/s1600/11.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(6), @"thumnail_url":@"http://cfile25.uf.tistory.com/image/2246F24856E648D62CA343", @"comments_count":@(1000)},
-                        @{@"post_id":@(7), @"thumnail_url":@"http://cdnweb01.wikitree.co.kr/webdata/editor/201601/25/img_20160125132327_7546820a.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(8), @"thumnail_url":@"https://i.ytimg.com/vi/rnm-6-J-Cqs/maxresdefault.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(9), @"thumnail_url":@"http://cfile29.uf.tistory.com/image/213C6A4E56DD78F0230478", @"comments_count":@(1000)},
-                        @{@"post_id":@(10), @"thumnail_url":@"http://thumbnail.egloos.net/600x0/http://pds27.egloos.com/pds/201606/05/47/b0041247_57541177121ae.jpeg", @"comments_count":@(1000)},
-                        @{@"post_id":@(11), @"thumnail_url":@"https://ncache.ilbe.com/files/attach/new/20160323/377678/7722287414/7751417684/3046848873ccc4dafe3772154d966bca.png", @"comments_count":@(1000)},
-                        @{@"post_id":@(12), @"thumnail_url":@"http://cfile4.uf.tistory.com/image/24213C3B56D03E95452B2A", @"comments_count":@(1000)},
-                        @{@"post_id":@(13), @"thumnail_url":@"http://cfile27.uf.tistory.com/image/2641B83A56F3E1B5108765", @"comments_count":@(1000)},
-                        @{@"post_id":@(14), @"thumnail_url":@"http://pds.joins.com/news/component/newsen/201604/11/201604111048292810_1.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(15), @"thumnail_url":@"https://pbs.twimg.com/media/Cfj7uddUMAA003p.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(16), @"thumnail_url":@"http://i2.imgtong.com/1605/e18725d3ef3169a54ac51aa6cfcea3fe_ijjEolJ1CouHYESD.jpg", @"comments_count":@(1000)},
-                        @{@"post_id":@(17), @"thumnail_url":@"http://cfile8.uf.tistory.com/image/2570A63A5786E2B00F3F8E", @"comments_count":@(1000)},
-                        @{@"post_id":@(18), @"thumnail_url":@"https://pbs.twimg.com/profile_images/751973265195667456/LrigwC37.jpg", @"comments_count":@(1000)},
+                        @{@"pk":@(1), @"image":@"http://m.modoonews.com/data/image/jjalbang/20160422/jjalbang_mn_1461268951_62.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(2), @"image":@"http://cfile1.uf.tistory.com/image/232C2B3556E1686F2478D7", @"comments_number":@(1000)},
+                        @{@"pk":@(3), @"image":@"http://res.heraldm.com/content/image/2016/01/15/20160115000217_0.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(4), @"image":@"https://4.bp.blogspot.com/-acnIluVb--U/VuQBvUBctXI/AAAAAAAAAhk/nW-fS45EY4MUsku6ty6W5pvLrxLcpmzUQ/s1600/5.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(5), @"image":@"https://4.bp.blogspot.com/--yCBnaJYbs0/VuQBtd6NV8I/AAAAAAAAAhA/akTgcpMUxz0omgSqQbZZvWzH6-Kqpf1PQ/s1600/11.jpg", @"comments_count":@(1000)},
+                        @{@"pk":@(6), @"image":@"http://cfile25.uf.tistory.com/image/2246F24856E648D62CA343", @"comments_number":@(1000)},
+                        @{@"pk":@(7), @"image":@"http://cdnweb01.wikitree.co.kr/webdata/editor/201601/25/img_20160125132327_7546820a.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(8), @"image":@"https://i.ytimg.com/vi/rnm-6-J-Cqs/maxresdefault.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(9), @"image":@"http://cfile29.uf.tistory.com/image/213C6A4E56DD78F0230478", @"comments_number":@(1000)},
+                        @{@"pk":@(10), @"image":@"http://thumbnail.egloos.net/600x0/http://pds27.egloos.com/pds/201606/05/47/b0041247_57541177121ae.jpeg", @"comments_number":@(1000)},
+                        @{@"post_id":@(11), @"image":@"https://ncache.ilbe.com/files/attach/new/20160323/377678/7722287414/7751417684/3046848873ccc4dafe3772154d966bca.png", @"comments_number":@(1000)},
+                        @{@"pk":@(12), @"image":@"http://cfile4.uf.tistory.com/image/24213C3B56D03E95452B2A", @"comments_number":@(1000)},
+                        @{@"pk":@(13), @"image":@"http://cfile27.uf.tistory.com/image/2641B83A56F3E1B5108765", @"comments_number":@(1000)},
+                        @{@"pk":@(14), @"image":@"http://pds.joins.com/news/component/newsen/201604/11/201604111048292810_1.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(15), @"image":@"https://pbs.twimg.com/media/Cfj7uddUMAA003p.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(16), @"image":@"http://i2.imgtong.com/1605/e18725d3ef3169a54ac51aa6cfcea3fe_ijjEolJ1CouHYESD.jpg", @"comments_number":@(1000)},
+                        @{@"pk":@(17), @"image":@"http://cfile8.uf.tistory.com/image/2570A63A5786E2B00F3F8E", @"comments_number":@(1000)},
+                        @{@"pk":@(18), @"image":@"http://cfile29.uf.tistory.com/image/2255344056F509E6336A78", @"comments_number":@(1000)},
                         nil];
 }
 
@@ -258,28 +261,55 @@ static NSString * const reuseIdentifier = @"Cell1";
     return self.tagDataList.count;
 }
 
+- (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    // 요청된 Supplementary View가 헤더인지 확인
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        
+        // 재사용 큐에서 뷰를 가져온다
+        UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
+        
+        NSArray* titles = [[NSArray alloc] initWithObjects:@"Grils", @"Cars", @"Movies", nil];
+        
+        UILabel* lbl = (UILabel*)[view viewWithTag:100];
+        if (lbl) lbl.text = titles[indexPath.section];
+        
+        return view;
+    }
+    
+    return nil;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MyTagCell *cell = (MyTagCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    //썸네일 url
-    NSURL *urlString = [NSURL URLWithString:self.tagDataList[indexPath.row][@"thumnail_url"]];
-    __weak UIImageView *weakImageView = cell.imageView;
-
-    [cell.imageView sd_setImageWithURL:urlString placeholderImage:[UIImage new] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        if (weakImageView != nil && cacheType == SDImageCacheTypeNone) {
-            __strong UIImageView *strongImageView = weakImageView;
-            strongImageView.alpha = 0;
-            
-            [UIView animateWithDuration:0.2f animations:^{
-                strongImageView.alpha = 1;
-            } completion:^(BOOL finished) {
-                strongImageView.alpha = 1;
-            }];
-        }
-    }];
+    NSString *urlString = self.tagDataList[indexPath.row][@"image"];
+    //url Null처리
+    
+    if([urlString isKindOfClass:NSString.class] && urlString.length > 0){
+        NSURL *imageUrl = [NSURL URLWithString:self.tagDataList[indexPath.row][@"image"]];
+        __weak UIImageView *weakImageView = cell.imageView;
+        
+        [cell.imageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage new] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            //이미지캐싱이 안되있을경우에 대한 애니메이션 셋티
+            if (weakImageView != nil && cacheType == SDImageCacheTypeNone) {
+                __strong UIImageView *strongImageView = weakImageView;
+                strongImageView.alpha = 0;
+                
+                [UIView animateWithDuration:0.2f animations:^{
+                    strongImageView.alpha = 1;
+                } completion:^(BOOL finished) {
+                    strongImageView.alpha = 1;
+                }];
+            }
+        }];
+    }else{
+        cell.imageView.image = [UIImage imageNamed:@"NoImageAvailable"];
+        [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    }
 
     //셀 코멘트 갯수
-    cell.commentsCount.text = [NSString stringWithFormat:@"%@", self.tagDataList[indexPath.row][@"comments_count"]];
+    cell.commentsCount.text = [NSString stringWithFormat:@"%@", self.tagDataList[indexPath.row][@"comments_number"]];
     
     return cell;
 }
@@ -289,7 +319,7 @@ static NSString * const reuseIdentifier = @"Cell1";
 
 //셀 사이즈 설정
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake((self.view.frame.size.width/2), 130);
+    return CGSizeMake((self.view.frame.size.width/2)-3, 130);
 }
 
 
@@ -301,9 +331,9 @@ static NSString * const reuseIdentifier = @"Cell1";
     
     NSDictionary *contents = self.tagDataList[indexPath.row];
     
-    NSString *postId = contents[@"post_id"];
+    NSString *postId = contents[@"pk"];
     
-    NSLog(@"postId : %@",postId);
+    NSLog(@"/api/posts/%@",postId);
     
     
     return YES;
