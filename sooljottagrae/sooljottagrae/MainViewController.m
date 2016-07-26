@@ -10,6 +10,8 @@
 #import "SettingViewController.h"
 #import "WritePostViewController.h"
 #import "RequestObject.h"
+#import "MostCommentedCollectionViewController.h"
+#import "MyTagsCollectionViewController.h"
 
 
 @interface MainViewController () <UIScrollViewDelegate>
@@ -64,7 +66,15 @@
     
     //디바이스가 화면이 변경될 때마다 불러온다
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changedFrameSize) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    //스테이터스바 터치시 작동
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarHit) name:@"touchStatusBarClick" object:nil];
+
+    
+    //셀렉트바 사이즈 설정
     self.selectedBarWidth.constant = [UIScreen mainScreen].bounds.size.width / 2;
+    
+    
     
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -196,6 +206,14 @@
         [controller didMoveToParentViewController:self];
     }
  
+}
+
+//스테이터스바 탭시 탑으로 스크롤된다.
+-(void)statusBarHit{
+    
+    UICollectionViewController *controller = [self.arrayForPages objectAtIndex:self.targetButton.tag];
+    [controller.collectionView setContentOffset:CGPointZero animated:YES];
+    
 }
 
 #pragma mark - UIScrollDelegate

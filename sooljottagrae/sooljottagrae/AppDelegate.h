@@ -17,6 +17,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+-(void) touchStatusBar;
 
 @end
 

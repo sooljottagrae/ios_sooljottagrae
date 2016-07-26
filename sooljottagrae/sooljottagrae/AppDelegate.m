@@ -27,7 +27,7 @@
     
     [NSThread sleepForTimeInterval:2]; //LunchScreen Add Time
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test) name:@"AutoLogin" object:nil];
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test) name:@"AutoLogin" object:nil];
     
       
     
@@ -42,9 +42,9 @@
 }
 
 -(void) test{
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    MainViewController *mainViewController = [storyBoard instantiateViewControllerWithIdentifier:@"MAIN_VIEW"];
+//    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    
+//    MainViewController *mainViewController = [storyBoard instantiateViewControllerWithIdentifier:@"MAIN_VIEW"];
     
     
     
@@ -86,5 +86,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark TouchEvent
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:[self window]];
+    if(location.y > 0 && location.y < 20) {
+        [self touchStatusBar];
+    }
+}
 
+-(void) touchStatusBar{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"touchStatusBarClick" object:nil];
+}
 @end
