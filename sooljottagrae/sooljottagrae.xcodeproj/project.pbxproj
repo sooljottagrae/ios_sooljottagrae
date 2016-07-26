@@ -17,7 +17,6 @@
 		8E2376E91D3CB28400C7CD80 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E23767B1D3BE45000C7CD80 /* Security.framework */; };
 		8E4DE4F71D3F1A89000094AF /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4DE4F61D3F1A89000094AF /* Launch Screen.storyboard */; };
 		8E4DE4FB1D3F63C6000094AF /* UserObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE4FA1D3F63C6000094AF /* UserObject.m */; };
-		8E4DE4FE1D40588D000094AF /* MBFingerTipWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE4FD1D40588D000094AF /* MBFingerTipWindow.m */; };
 		8E4DE5011D424DCA000094AF /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4DE5001D424DCA000094AF /* KeychainItemWrapper.m */; };
 		8E6BE7951D2E24210039AB7B /* underline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6BE7941D2E24210039AB7B /* underline.png */; };
 		8E6E25851D2A136B007799B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6E25841D2A136B007799B3 /* main.m */; };
@@ -50,6 +49,7 @@
 		BF3EAB3E1D3C59B900E16A7D /* imageSampleInput.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3EAB3D1D3C59B900E16A7D /* imageSampleInput.png */; };
 		BF94FB401D36AF2000B9FD9F /* alcohols.png in Resources */ = {isa = PBXBuildFile; fileRef = BF94FB3F1D36AF2000B9FD9F /* alcohols.png */; };
 		BFAA690C1D3782CD003758CA /* sooljotta.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = BFAA690B1D3782CD003758CA /* sooljotta.com.cer */; };
+		BFB46FE21D475B9C00D67304 /* MBFingerTipWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB46FE11D475B9C00D67304 /* MBFingerTipWindow.m */; };
 		BFB855D31D43AF6D00A895DA /* editButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D21D43AF6D00A895DA /* editButton.png */; };
 		BFB855D51D43BDD200A895DA /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D41D43BDD200A895DA /* back.png */; };
 		BFB855D71D43C34900A895DA /* delete1.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D61D43C34900A895DA /* delete1.png */; };
@@ -77,8 +77,6 @@
 		8E4DE4F61D3F1A89000094AF /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
 		8E4DE4F91D3F63C6000094AF /* UserObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserObject.h; sourceTree = "<group>"; };
 		8E4DE4FA1D3F63C6000094AF /* UserObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserObject.m; sourceTree = "<group>"; };
-		8E4DE4FC1D40588D000094AF /* MBFingerTipWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBFingerTipWindow.h; path = "../../../../../Downloads/Fingertips-master/Fingertips-master/MBFingerTipWindow.h"; sourceTree = "<group>"; };
-		8E4DE4FD1D40588D000094AF /* MBFingerTipWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBFingerTipWindow.m; path = "../../../../../Downloads/Fingertips-master/Fingertips-master/MBFingerTipWindow.m"; sourceTree = "<group>"; };
 		8E4DE4FF1D424DCA000094AF /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		8E4DE5001D424DCA000094AF /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		8E6BE7941D2E24210039AB7B /* underline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underline.png; sourceTree = "<group>"; };
@@ -129,6 +127,8 @@
 		BF3EAB3D1D3C59B900E16A7D /* imageSampleInput.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageSampleInput.png; sourceTree = "<group>"; };
 		BF94FB3F1D36AF2000B9FD9F /* alcohols.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohols.png; sourceTree = "<group>"; };
 		BFAA690B1D3782CD003758CA /* sooljotta.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sooljotta.com.cer; sourceTree = "<group>"; };
+		BFB46FE11D475B9C00D67304 /* MBFingerTipWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFingerTipWindow.m; sourceTree = "<group>"; };
+		BFB46FE31D475BA300D67304 /* MBFingerTipWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBFingerTipWindow.h; sourceTree = "<group>"; };
 		BFB855D21D43AF6D00A895DA /* editButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editButton.png; sourceTree = "<group>"; };
 		BFB855D41D43BDD200A895DA /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		BFB855D61D43C34900A895DA /* delete1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete1.png; sourceTree = "<group>"; };
@@ -289,8 +289,8 @@
 		8E6E25831D2A136B007799B3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8E4DE4FC1D40588D000094AF /* MBFingerTipWindow.h */,
-				8E4DE4FD1D40588D000094AF /* MBFingerTipWindow.m */,
+				BFB46FE31D475BA300D67304 /* MBFingerTipWindow.h */,
+				BFB46FE11D475B9C00D67304 /* MBFingerTipWindow.m */,
 				8E6E25841D2A136B007799B3 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -392,7 +392,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFC42EF21D42ED7400CE919B /* profileSample.jpeg in Resources */,
-				8E6E25931D2A136B007799B3 /* LaunchScreen.storyboard in Resources */,
 				8E2376871D3C6E4800C7CD80 /* Pen_32x32.png in Resources */,
 				8E85CC081D3F053300508985 /* bang.png in Resources */,
 				8E15992C1D3E98E60036F337 /* main.png in Resources */,
@@ -484,8 +483,8 @@
 				BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */,
 				8E6E25B11D2AC39F007799B3 /* MainNavigationSegue.m in Sources */,
 				BFC42EF01D42056F00CE919B /* CommentsViewController.m in Sources */,
-				8E4DE4FE1D40588D000094AF /* MBFingerTipWindow.m in Sources */,
 				8E6E258B1D2A136B007799B3 /* ViewController.m in Sources */,
+				BFB46FE21D475B9C00D67304 /* MBFingerTipWindow.m in Sources */,
 				BF227EF01D3628DC0061AE24 /* WritePostViewController.m in Sources */,
 				8E9955A71D4644120030B0CC /* UIButton+indexPath.m in Sources */,
 				8E6E25881D2A136B007799B3 /* AppDelegate.m in Sources */,

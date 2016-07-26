@@ -239,19 +239,19 @@
     self.outputData = [[NSDictionary alloc] initWithObjectsAndKeys:self.inputTextView.text, @"content", @"Hi", @"title", nil];
     NSLog(@"%@", self.outputData);
     
-    [[RequestObject sharedInstance] sendToServer:@"/api/posts/create/"
-                                      parameters:self.outputData
-                                           image:self.imageView.image
-                                        fileName:@"filename"
-                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                            NSLog(@"%@",response);
-                                         }
-                                        progress:^(NSProgress * _Nonnull uploadProgress) {
-                                            NSLog(@"sending...");
-                                        }
-                                            fail:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                            NSLog(@"%@",response);
-                                            }];
+//    [[RequestObject sharedInstance] sendToServer:@"/api/posts/create/"
+//                                      parameters:self.outputData
+//                                           image:self.imageView.image
+//                                        fileName:@"filename"
+//                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
+//                                            NSLog(@"%@",response);
+//                                         }
+//                                        progress:^(NSProgress * _Nonnull uploadProgress) {
+//                                            NSLog(@"sending...");
+//                                        }
+//                                            fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+//                                            NSLog(@"%@",response);
+//                                            }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
