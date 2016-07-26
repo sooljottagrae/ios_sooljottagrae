@@ -10,6 +10,8 @@
 
 @class UIImage;
 
+
+
 //Notification을 위한 플래그
 static NSString *const LoginSuccess = @"LoginSuccess"; //로그인성공시
 static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSuccess";
@@ -20,28 +22,31 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
 
 @property (strong, nonatomic) NSArray *mostCommentedList;
 
+
 + (instancetype) sharedInstance;
 
-////로그인
-//-(void) loginID:(NSString *)email passwd:(NSString *)passWord;
-//-(void) loginID:(NSString *)email token:(NSString *)tokenString;
-//
-//
+-(void) keyChainAccount:(NSString *)email passWord:(NSString *)password token:(NSString *)token;
+-(NSDictionary *)loadKeyChainAccount;
+
 
 -(void) mostCommentedList:(NSInteger)pageCount listCount:(NSInteger)listCount;
 
 
 -(void) sendToServer:(NSString *)apiPath
+              option:(NSString *)option
           parameters:(NSDictionary *)parameters
              success:(void (^)(NSURLResponse *response, id responseObject, NSError *error))success
-                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail;
+                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail
+             useAuth:(BOOL) useAuth;
 
 -(void) sendToServer:(NSString *)apiPath
+              option:(NSString *)option
           parameters:(NSDictionary *)parameters
                image:(UIImage *)image
             fileName:(NSString *)fileName
              success:(void (^)(NSURLResponse *response, id responseObject, NSError *error))success
-            progress:(void (^)(NSProgress * _Nonnull uploadProgress))progress
-                fail:( void (^)(NSURLResponse *response, id responseObject, NSError *error))fail;
+            progress:(void (^)(NSProgress *uploadProgress))progress
+                fail:(void (^)(NSURLResponse *response, id responseObject, NSError *error))fail
+             useAuth:(BOOL) useAuth;
 
 @end
