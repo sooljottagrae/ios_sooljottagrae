@@ -10,4 +10,6 @@
 
 @interface CommentsViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableArray *commentList;
+
 @end

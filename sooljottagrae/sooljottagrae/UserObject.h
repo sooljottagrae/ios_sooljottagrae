@@ -21,7 +21,7 @@
 
 @property NSInteger tagCount;                                   //태그 리스트 갯수
 
-@property (strong, nonatomic) NSString *serverId;               //서버자체id
+@property (strong, nonatomic) NSString *pk;                     //서버자체id
 @property (strong, nonatomic) NSString *token;                  //토큰값
 @property (strong, nonatomic) NSString *passWord;               //비밀번호
 
@@ -33,5 +33,5 @@
 
 
 -(NSMutableDictionary *) loadAccountInfoToDictionary;
-
+-(void) updateEmail:(NSString *)email passWord:(NSString *)passWord token:(NSString *)token pk:(NSString *)pk;
 @end

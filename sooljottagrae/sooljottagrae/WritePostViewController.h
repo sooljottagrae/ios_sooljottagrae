@@ -14,4 +14,8 @@
 
 @interface WritePostViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
+@property (strong, nonatomic) NSString *url;
+
+@property (strong, nonatomic) NSString *postId;
+
 @end

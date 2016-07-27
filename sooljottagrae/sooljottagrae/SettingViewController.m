@@ -8,6 +8,8 @@
 
 #import "SettingViewController.h"
 #import "EditMyTagsViewController.h"
+#import "AppInfoViewController.h"
+#import "UserObject.h"
 
 @interface SettingViewController ()
 
@@ -72,8 +74,21 @@
     // selector에 화면이 돌아갈 때 하고 싶은 메소드를 구현
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged) name:UIDeviceOrientationDidChangeNotification object:nil];
     
+    
+    
+    //강준 20160727
+    [self loadUserInfo];
+    
+    
 }
 
+-(void) loadUserInfo{
+    NSString *userName = [UserObject sharedInstance].userName;
+    
+    if([userName length] > 0 && [userName isKindOfClass:NSString.class]){
+        self.profileNameLabel.text = [UserObject sharedInstance].userName;
+    }
+}
 
 - (void) orientationChanged {
 //    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height/2;
@@ -120,6 +135,9 @@
         }
     }
     
+    
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"LOGIN"];
     
 }
 
@@ -186,6 +204,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//강준
+//앱정보를 보여준다.
+- (IBAction)appInfoButton:(id)sender {
+
+    
+    UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    AppInfoViewController *controller = [stb instantiateViewControllerWithIdentifier:@"AppInfoView"];
+    
+    [self presentViewController:controller animated:YES completion:nil];
+
+    
 }
 
 

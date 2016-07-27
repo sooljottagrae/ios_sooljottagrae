@@ -10,7 +10,7 @@
 #import "CircleImageView.h"
 #import "TableViewCell.h"
 
-@interface CommentsViewController ()
+@interface CommentsViewController () <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic) NSArray *comments;
@@ -57,7 +57,30 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillShowNotification object:nil];
     
     
-
+    //강준
+    self.navigationController.view.hidden  = YES;
+    
+    [self.tableView setFrame:CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60)];
+    
+    UIView *naviView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    naviView.backgroundColor = THEMA_BG_COLOR;
+    
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 100, 40)];
+    [backButton setTitle:@"< Back" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    
+    [backButton addTarget:self action:@selector(clickedBackButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [naviView addSubview:backButton];
+    
+    [self.view addSubview:naviView];
+    
+    if(self.commentList.count > 0) {
+        self.comments = self.commentList;
+    }
+    
+    
     
     /*
     self.profileThumbnailView = [[CircleImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
@@ -66,6 +89,13 @@
     */
     //UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showEditAndDeleteBtn:)];
 }
+
+//강준
+
+-(IBAction)clickedBackButton:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)keyboardWillChangeFrame:(NSNotification *)notification
 {
@@ -178,4 +208,104 @@
 }
 */
 
+/////// 강준
+
+#define kOFFSET_FOR_KEYBOARD 80.0
+
+-(void)keyboardWillShow {
+     CGFloat height = self.view.frame.size.height - self.inputCommentView.frame.size.height;
+    // Animate the current view out of the way
+    if (self.inputCommentView.frame.origin.y >= height)
+    {
+        [self setViewMovedUp:YES];
+    }
+    else if (self.view.frame.origin.y < height)
+    {
+        [self setViewMovedUp:NO];
+    }
+}
+
+-(void)keyboardWillHide {
+    CGFloat height = self.view.frame.size.height - self.inputCommentView.frame.size.height;
+    if (self.inputCommentView.frame.origin.y >= height)
+    {
+        [self setViewMovedUp:YES];
+    }
+    else if (self.inputCommentView.frame.origin.y < height)
+    {
+        [self setViewMovedUp:NO];
+    }
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)sender
+{
+    if ([sender isEqual:self.inputComment])
+    {
+        
+        //move the main view, so that the keyboard does not hide it.
+        CGFloat heigth = self.view.frame.size.height - self.inputCommentView.frame.size.height;
+        if  (self.inputCommentView.frame.origin.y >= heigth)
+        {
+            [self setViewMovedUp:YES];
+        }
+    }
+}
+
+//method to move the view up/down whenever the keyboard is shown/dismissed
+-(void)setViewMovedUp:(BOOL)movedUp
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
+    
+    CGRect rect = self.inputCommentView.frame;
+    if (movedUp)
+    {
+        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+        // 2. increase the size of the view so that the area behind the keyboard is covered up.
+        rect.origin.y -= kOFFSET_FOR_KEYBOARD;
+        rect.size.height += kOFFSET_FOR_KEYBOARD;
+    }
+    else
+    {
+        // revert back to the normal state.
+        rect.origin.y += kOFFSET_FOR_KEYBOARD;
+        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+    }
+    [self.inputCommentView setFrame:rect];
+    
+    [UIView commitAnimations];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
 @end

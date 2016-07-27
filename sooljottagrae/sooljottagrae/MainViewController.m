@@ -375,8 +375,9 @@
                      }];
     
 }
-
-- (IBAction)clickedAddPostBtn:(id)sender {
+//포스트 버튼
+- (IBAction)clickedAddPostBtn:(UIButton *)sender {
+    NSLog(@"Clicked");
     UIStoryboard *stb = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
     WritePostViewController *writePostVC = [stb instantiateViewControllerWithIdentifier:@"WritePostViewController"];
     [self presentViewController:writePostVC animated:YES completion:nil];

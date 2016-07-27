@@ -34,12 +34,12 @@
     return YES;
 }
 
--(UIWindow *)window{
-    if (!_window) {
-        _window = [[MBFingerTipWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    }
-    return _window;
-}
+//-(UIWindow *)window{
+//    if (!_window) {
+//        _window = [[MBFingerTipWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    }
+//    return _window;
+//}
 
 -(void) test{
 //    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

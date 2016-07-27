@@ -10,6 +10,7 @@
 
 #import "ViewController.h"
 #import "RequestObject.h"
+#import "UserObject.h"
 #import "MainViewController.h"
 #import "SignInViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -59,7 +60,7 @@
     self.forgotPassword.enabled = YES;
     
     
-    //[[NSUserDefaults standardUserDefaults]removeObjectForKey:@"LOGIN"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"LOGIN"];
     //NSLog(@"%@",[[RequestObject sharedInstance] loadKeyChainAccount]);
 #endif
     
@@ -92,7 +93,7 @@
         NSString *passWord = nil;
         NSString *tokenString = nil;
         
-        NSDictionary *userInfo = [[RequestObject sharedInstance]loadKeyChainAccount];
+        NSDictionary *userInfo = [[UserObject sharedInstance] loadAccountInfoToDictionary];
         
         //nil 처리
         if([userInfo objectForKey:@"email"] != nil){
@@ -107,7 +108,7 @@
         
         
         //회원정보 다시 저장하고 메인화면으로 보낸다.
-        [self verifiedUser:email passWord:passWord token:tokenString];
+        [self verifiedUserInfo:userInfo];
         
     }
 
@@ -198,7 +199,20 @@
                                              NSLog(@"%@",responseObject);
                                              
                                              NSString *token = [responseObject objectForKey:@"token"];
-                                             [self verifiedUser:self.email_ID.text passWord:self.password.text  token:token];
+                                             
+                                             NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[responseObject objectForKey:@"user"]];
+                                             NSLog(@"%@", dict);
+                                             
+                                             [dict setObject:token forKey:@"token"];
+                                             [dict setObject:[dict objectForKey:@"id"] forKey:@"pk"];
+                                             [dict removeObjectForKey:@"id"];
+                                             [dict setObject:[dict objectForKey:@"nickname"] forKey:@"userName"];
+                                             [dict removeObjectForKey:@"nickname"];
+                                             
+                                             NSLog(@"%@", dict);
+                                             if(responseObject != nil){
+                                                 [self verifiedUserInfo:dict];
+                                             }
                                          } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
                                              NSLog(@"%@",error);
                                              [self showAlertMessage:@"입력하신 회원정보가 일치하지 않거나 없습니다. 다시확인해주세요"];
@@ -381,8 +395,9 @@
                                       parameters:parameters
                                          success:^(NSURLResponse *response, id responseObject, NSError *error) {
                                              //성공시 처리
-                                             [self verifiedUser:email passWord:nil token:nil];
-                                             return;
+                                             if(responseObject != nil){
+                                                 //[self verifiedUserInfo:responseObject];
+                                             }
                                          }
                                             fail:^(NSURLResponse *response, id responseObject, NSError *error) {
                                                 //실패시 처리
@@ -393,15 +408,21 @@
 
 
 //로그인후 메인화면으로 넘어간다
--(void) verifiedUser:(NSString *)email passWord:(NSString *)password token:(NSString *)tokenString{
+-(void) verifiedUserInfo:(id) data{
     //메인 화면으로 넘어가는 작업을 실시한다.
     
+   
     //인증된 값을 저장한다.
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LOGIN"];
     
     //인증값 다시 저장
-    if(tokenString != nil || [tokenString length] > 0){
-        [[RequestObject sharedInstance] keyChainAccount:email passWord:password token:tokenString];
+    if(data != nil){
+        //[[RequestObject sharedInstance] keyChainAccount:email passWord:password token:tokenString];
+        [[UserObject sharedInstance] updateEmail:[data objectForKey:@"email"]
+                                        passWord:[data objectForKey:@"password"]
+                                           token:[data objectForKey:@"token"]
+                                              pk:[data objectForKey:@"pk"]];
+        [[UserObject sharedInstance] setUserName:[data objectForKey:@"userName"]];
     }
     
     //메인뷰로 넘어간다.

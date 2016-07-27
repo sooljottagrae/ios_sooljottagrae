@@ -377,7 +377,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     void (^reUseProgress)(NSProgress *uploadProgress) = [temp objectForKey:@"progressBlock"];
     
     //재인증을 값을 셋팅한다.
-    NSMutableDictionary *authParameter = [[RequestObject sharedInstance]loadKeyChainAccount].mutableCopy;
+    NSMutableDictionary *authParameter = [[UserObject sharedInstance]loadAccountInfoToDictionary].mutableCopy;
     [authParameter removeObjectForKey:@"token"];
     
     //JSON형태의 파라미터를 전송한다.
@@ -396,9 +396,18 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
 //                NSLog(@"%@ %@", response, responseObject);
                 
                 if([responseObject objectForKey:@"token"] != nil){
-                    [[RequestObject sharedInstance]keyChainAccount:[authParameter objectForKey:@"email"]
-                                                          passWord:[authParameter objectForKey:@"password"]
-                                                             token:[responseObject objectForKey:@"token"]];
+//                    [[RequestObject sharedInstance]keyChainAccount:[authParameter objectForKey:@"email"]
+//                                                          passWord:[authParameter objectForKey:@"password"]
+//                                                             token:[responseObject objectForKey:@"token"]];
+                    
+                    NSString *token = [responseObject objectForKey:@"token"];
+                    
+                    
+                    [[UserObject sharedInstance] updateEmail:[authParameter objectForKey:@"eamil"]
+                                                    passWord:[authParameter objectForKey:@"password"]
+                                                       token:token
+                                                          pk:[authParameter objectForKey:@"pk"]];
+
                 }
                 
                 if(sendFlag){

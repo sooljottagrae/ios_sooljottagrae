@@ -8,6 +8,7 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MostCommentedCollectionViewController.h"
+#import "WritePostViewController.h"
 #import "RequestObject.h"
 #import "RFQuiltLayout.h"
 #import "UIButton+indexPath.h"
@@ -422,8 +423,9 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
                 }];
             }
         }];
+        [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
     }else{
-        cell.imageView.image = [UIImage imageNamed:@"NoImageAvailable"];
+        cell.imageView.image = [UIImage imageNamed:@"No_Image_Available.png"];
         [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
     }
     [cell.commentsCount setText:[NSString stringWithFormat:@"%@",self.dataList[indexPath.row][@"comments_number"]]];
@@ -480,17 +482,24 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 //셀선택시 보여준다.
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UIStoryboard *stroyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    
-//    UIViewController *contorller = [stroyBoard instantiateViewControllerWithIdentifier:@""];
+    UIStoryboard *stroyBoard = [UIStoryboard storyboardWithName:@"Main1" bundle:nil];
     
+    WritePostViewController *contorller = [stroyBoard instantiateViewControllerWithIdentifier:@"WritePostViewController"];
+    
+
     NSDictionary *contents = self.dataList[indexPath.row];
     
-    NSString *apiPath = [NSString stringWithFormat:@"%@%@",@"/api/posts/",contents[@"pk"]];
+    NSString *apiPath = [NSString stringWithFormat:@"%@%@/",@"/api/posts/",contents[@"pk"]];
     
-    //controller.url = apiPath;
+    contorller.url = apiPath;
+    contorller.postId = contents[@"pk"];
     
     NSLog(@"apiPath : %@",apiPath);
+    
+    [self presentViewController:contorller animated:YES completion:^{
+       
+    }];
+    
 }
 
 -(void) dissmissView{

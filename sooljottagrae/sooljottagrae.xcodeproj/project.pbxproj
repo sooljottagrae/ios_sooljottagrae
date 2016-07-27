@@ -43,6 +43,10 @@
 		8ED493DF1D475CA6002663EA /* bang.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493DE1D475CA6002663EA /* bang.png */; };
 		8ED493E11D475CEF002663EA /* Pen_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493E01D475CEF002663EA /* Pen_16x16.png */; };
 		8ED493E41D47656F002663EA /* MBFingerTipWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED493E31D47656F002663EA /* MBFingerTipWindow.m */; };
+		8ED493EC1D47CF15002663EA /* AppInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED493EB1D47CF15002663EA /* AppInfoViewController.m */; };
+		8ED493F01D48D580002663EA /* trash_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493ED1D48D580002663EA /* trash_64x64.png */; };
+		8ED493F11D48D580002663EA /* trash_48x48.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493EE1D48D580002663EA /* trash_48x48.png */; };
+		8ED493F21D48D580002663EA /* trash_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493EF1D48D580002663EA /* trash_32x32.png */; };
 		BF191C021D2CEF6C00FE6A9C /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191BFD1D2CEF6C00FE6A9C /* SettingViewController.m */; };
 		BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191BFF1D2CEF6C00FE6A9C /* SignInViewController.m */; };
 		BF191C041D2CEF6C00FE6A9C /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF191C011D2CEF6C00FE6A9C /* WelcomeViewController.m */; };
@@ -51,7 +55,6 @@
 		BF3EAB3E1D3C59B900E16A7D /* imageSampleInput.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3EAB3D1D3C59B900E16A7D /* imageSampleInput.png */; };
 		BF94FB401D36AF2000B9FD9F /* alcohols.png in Resources */ = {isa = PBXBuildFile; fileRef = BF94FB3F1D36AF2000B9FD9F /* alcohols.png */; };
 		BFAA690C1D3782CD003758CA /* sooljotta.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = BFAA690B1D3782CD003758CA /* sooljotta.com.cer */; };
-		BFB46FE21D475B9C00D67304 /* MBFingerTipWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB46FE11D475B9C00D67304 /* MBFingerTipWindow.m */; };
 		BFB855D31D43AF6D00A895DA /* editButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D21D43AF6D00A895DA /* editButton.png */; };
 		BFB855D51D43BDD200A895DA /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D41D43BDD200A895DA /* back.png */; };
 		BFB855D71D43C34900A895DA /* delete1.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB855D61D43C34900A895DA /* delete1.png */; };
@@ -119,6 +122,11 @@
 		8ED493E01D475CEF002663EA /* Pen_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pen_16x16.png; sourceTree = "<group>"; };
 		8ED493E21D47656F002663EA /* MBFingerTipWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBFingerTipWindow.h; sourceTree = "<group>"; };
 		8ED493E31D47656F002663EA /* MBFingerTipWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFingerTipWindow.m; sourceTree = "<group>"; };
+		8ED493EA1D47CF15002663EA /* AppInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfoViewController.h; sourceTree = "<group>"; };
+		8ED493EB1D47CF15002663EA /* AppInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInfoViewController.m; sourceTree = "<group>"; };
+		8ED493ED1D48D580002663EA /* trash_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_64x64.png; sourceTree = "<group>"; };
+		8ED493EE1D48D580002663EA /* trash_48x48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_48x48.png; sourceTree = "<group>"; };
+		8ED493EF1D48D580002663EA /* trash_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_32x32.png; sourceTree = "<group>"; };
 		B15C28FFCD9018C7E98D18E8 /* Pods-sooljottagrae.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sooljottagrae.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sooljottagrae/Pods-sooljottagrae.debug.xcconfig"; sourceTree = "<group>"; };
 		BF191BFC1D2CEF6C00FE6A9C /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		BF191BFD1D2CEF6C00FE6A9C /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
@@ -132,7 +140,6 @@
 		BF3EAB3D1D3C59B900E16A7D /* imageSampleInput.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageSampleInput.png; sourceTree = "<group>"; };
 		BF94FB3F1D36AF2000B9FD9F /* alcohols.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohols.png; sourceTree = "<group>"; };
 		BFAA690B1D3782CD003758CA /* sooljotta.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = sooljotta.com.cer; sourceTree = "<group>"; };
-		BFB46FE11D475B9C00D67304 /* MBFingerTipWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFingerTipWindow.m; sourceTree = "<group>"; };
 		BFB855D21D43AF6D00A895DA /* editButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editButton.png; sourceTree = "<group>"; };
 		BFB855D41D43BDD200A895DA /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		BFB855D61D43C34900A895DA /* delete1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete1.png; sourceTree = "<group>"; };
@@ -236,6 +243,8 @@
 				BFC42EEF1D42056F00CE919B /* CommentsViewController.m */,
 				BFC42EF91D4302B500CE919B /* TableViewCell.h */,
 				BFC42EFA1D4302B500CE919B /* TableViewCell.m */,
+				8ED493EA1D47CF15002663EA /* AppInfoViewController.h */,
+				8ED493EB1D47CF15002663EA /* AppInfoViewController.m */,
 			);
 			name = Sub;
 			sourceTree = "<group>";
@@ -303,8 +312,11 @@
 		8E6E25A01D2A239B007799B3 /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				8ED493CB1D47522E002663EA /* No_Image_Available.png */,
 				8E6E258F1D2A136B007799B3 /* Assets.xcassets */,
+				8ED493ED1D48D580002663EA /* trash_64x64.png */,
+				8ED493EE1D48D580002663EA /* trash_48x48.png */,
+				8ED493EF1D48D580002663EA /* trash_32x32.png */,
+				8ED493CB1D47522E002663EA /* No_Image_Available.png */,
 				8ED493DC1D475C4B002663EA /* main.png */,
 				8EBD6EFB1D389E96007C1F98 /* refresh.png */,
 				8ED493DE1D475CA6002663EA /* bang.png */,
@@ -410,8 +422,10 @@
 				8EA4800C1D3321F200512541 /* 1468215464_COCKTAIL.png in Resources */,
 				BFB855D91D43C34D00A895DA /* delete2.png in Resources */,
 				BFB855D31D43AF6D00A895DA /* editButton.png in Resources */,
+				8ED493F01D48D580002663EA /* trash_64x64.png in Resources */,
 				BFC42EF81D4300E500CE919B /* background.png in Resources */,
 				8E6E25901D2A136B007799B3 /* Assets.xcassets in Resources */,
+				8ED493F11D48D580002663EA /* trash_48x48.png in Resources */,
 				8E6E25B91D2B7C83007799B3 /* facebook-logo.png in Resources */,
 				8ED493DA1D475C36002663EA /* Pen_32x32.png in Resources */,
 				8ED493D41D475C15002663EA /* Message_32x32.png in Resources */,
@@ -419,6 +433,7 @@
 				8ED493DD1D475C4B002663EA /* main.png in Resources */,
 				8ED493D51D475C15002663EA /* Message_64x64.png in Resources */,
 				BF191C071D2CEF7800FE6A9C /* Main1.storyboard in Resources */,
+				8ED493F21D48D580002663EA /* trash_32x32.png in Resources */,
 				BFB855D51D43BDD200A895DA /* back.png in Resources */,
 				8ED493D31D475C15002663EA /* Message_16x16.png in Resources */,
 				8E4DE4F71D3F1A89000094AF /* Launch Screen.storyboard in Resources */,
@@ -485,13 +500,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ED493EC1D47CF15002663EA /* AppInfoViewController.m in Sources */,
 				BFC1510E1D34E4B700ACF71B /* CircleImageView.m in Sources */,
 				BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */,
 				8E6E25B11D2AC39F007799B3 /* MainNavigationSegue.m in Sources */,
 				BFC42EF01D42056F00CE919B /* CommentsViewController.m in Sources */,
 				8E6E258B1D2A136B007799B3 /* ViewController.m in Sources */,
 				8ED493E41D47656F002663EA /* MBFingerTipWindow.m in Sources */,
-				BFB46FE21D475B9C00D67304 /* MBFingerTipWindow.m in Sources */,
 				BF227EF01D3628DC0061AE24 /* WritePostViewController.m in Sources */,
 				8E9955A71D4644120030B0CC /* UIButton+indexPath.m in Sources */,
 				8E6E25881D2A136B007799B3 /* AppDelegate.m in Sources */,

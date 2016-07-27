@@ -13,12 +13,15 @@
 static NSString *const AppLoginKeyId = @"AppLoginAccount";
 
 
+
 @interface UserObject()
 
 @end
 
 
 @implementation UserObject
+
+@synthesize userName = _userName;
 
 +(instancetype) sharedInstance{
     static UserObject *userObject = nil;
@@ -41,19 +44,21 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
         
         NSData *pwdData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
         
-        NSMutableDictionary *dict = (NSMutableDictionary *)[NSJSONSerialization JSONObjectWithData:pwdData options:NSJSONReadingMutableContainers error:nil];
+        NSMutableDictionary *dict;
+        dict = (NSMutableDictionary *)[NSJSONSerialization JSONObjectWithData:pwdData
+                                                                      options:NSJSONReadingMutableContainers error:nil];
         
         
         NSString *passWord = [dict objectForKey:@"password"];
         NSString *tokenString = [dict objectForKey:@"token"];
-        NSString *serverId = [dict objectForKey:@"serverId"];
+        NSString *pk = [dict objectForKey:@"pk"];
         
         
         
         _userEmail = email;
         _passWord = passWord;
         _token = tokenString;
-        _serverId = serverId;
+        _pk = pk;
         
         
         
@@ -61,10 +66,28 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
     return self;
 }
 
--(void) updateEmail:(NSString *)email passWord:(NSString *)passWord token:(NSString *) token serverId:(NSString *)serverId{
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginAccount" accessGroup:nil];
+-(void)setUserName:(NSString *)userName{
     
-    NSDictionary *dict = @{@"password":passWord, @"token":token, @"serverId":serverId};
+    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"userName"];
+    
+    _userName = userName;
+}
+
+
+
+-(NSString *)userName{
+    if(_userName == nil){
+        _userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    }
+    return _userName;
+}
+
+-(void) updateEmail:(NSString *)email passWord:(NSString *)passWord token:(NSString *)token pk:(NSString *)pk{
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginAccount" accessGroup:nil];
+    [keychainItem setObject:@"Myappstring" forKey: (id)kSecAttrService];
+  
+    
+    NSDictionary *dict = @{@"password":passWord, @"token":token, @"pk":pk};
     
     NSData *pwdData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     
@@ -72,10 +95,10 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
     [keychainItem setObject:email forKey:(__bridge id)(kSecAttrAccount)];   //email
     [keychainItem setObject:pwdData forKey:(__bridge id)(kSecValueData)];   //비밀번호
     
-    self.userEmail = email;
-    self.passWord = passWord;
-    self.token = token;
-    self.serverId = serverId;
+    _userEmail = email;
+    _passWord = passWord;
+    _token = token;
+    _pk = pk;
 
 }
 
@@ -95,6 +118,7 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
     _userEmail = userEmail;
 
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    [keychainItem setObject:@"Myappstring" forKey: (id)kSecAttrService];
     //Save item
     [keychainItem setObject:userEmail forKey:(__bridge id)(kSecAttrAccount)];
     
@@ -105,8 +129,9 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
     _passWord = passWord;
     
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    [keychainItem setObject:@"Myappstring" forKey: (id)kSecAttrService];
     
-    NSDictionary *dict = @{@"password":passWord, @"token":self.token, @"serverId":self.serverId};
+    NSDictionary *dict = @{@"password":passWord, @"token":self.token, @"pk":self.pk};
     
     NSData *pwdData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     [keychainItem setObject:pwdData forKey:(__bridge id)kSecValueData];
@@ -119,23 +144,37 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
     _token = token;
     
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    [keychainItem setObject:@"Myappstring" forKey: (id)kSecAttrService];
     
-    NSDictionary *dict = @{@"password":self.passWord, @"token":token, @"serverId":self.serverId};
+    NSDictionary *dict = @{@"password":self.passWord, @"token":token, @"pk":self.pk};
     
     NSData *pwdData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     [keychainItem setObject:pwdData forKey:(__bridge id)kSecValueData];
 
 }
 
--(void) setServerId:(NSString *)serverId{
-    _serverId = serverId;
+//-(void) setServerId:(NSString *)serverId{
+//    _serverId = serverId;
+//    
+//    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+//    
+//    NSDictionary *dict = @{@"password":self.passWord, @"token":self.token, @"serverId":serverId};
+//    
+//    NSData *pwdData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+//    [keychainItem setObject:pwdData forKey:(__bridge id)kSecValueData];
+//}
+
+-(void) setPk:(NSString *)pk{
+    _pk  = pk;
     
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    [keychainItem setObject:@"Myappstring" forKey: (id)kSecAttrService];
     
-    NSDictionary *dict = @{@"password":self.passWord, @"token":self.token, @"serverId":serverId};
+    NSDictionary *dict = @{@"password":self.passWord, @"token":self.token, @"pk":pk};
     
     NSData *pwdData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     [keychainItem setObject:pwdData forKey:(__bridge id)kSecValueData];
+
 }
 
 
@@ -219,8 +258,8 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
         [userInfos setObject:self.profileThumnailUrl forKey:@"thumnail"];
     }
     
-    if(self.serverId != nil){
-        [userInfos setObject:self.serverId forKey:@"serverId"];
+    if(self.pk != nil){
+        [userInfos setObject:self.pk forKey:@"pk"];
     }
     
     return userInfos;

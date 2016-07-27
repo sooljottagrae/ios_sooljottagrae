@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -144,7 +144,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="gXo-mV-Be2" kind="show" id="Ate-yj-SVt"/>
+                                            <action selector="appInfoButton:" destination="bgi-6a-S6A" eventType="touchUpInside" id="01r-3x-Una"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UBO-jv-oSc" customClass="CircleImageView">
@@ -237,7 +237,7 @@
         <!--Comments View Controller-->
         <scene sceneID="g9c-Tt-8vQ">
             <objects>
-                <viewController id="gXo-mV-Be2" customClass="CommentsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentsViewController" id="gXo-mV-Be2" customClass="CommentsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fNl-jH-TdF"/>
                         <viewControllerLayoutGuide type="bottom" id="mIo-If-u2f"/>
@@ -246,6 +246,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLc-bK-CCf">
+                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qpx-WX-Ehl">
+                                        <rect key="frame" x="555" y="10" width="30" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="확인"/>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="댓글 달기..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5PO-hc-HQ6">
+                                        <rect key="frame" x="20" y="15" width="520" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gXo-mV-Be2" id="Jz7-KG-eQ7"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Qpx-WX-Ehl" firstAttribute="centerY" secondItem="SLc-bK-CCf" secondAttribute="centerY" id="MKN-O1-r02"/>
+                                    <constraint firstItem="5PO-hc-HQ6" firstAttribute="leading" secondItem="SLc-bK-CCf" secondAttribute="leading" constant="20" id="Qnd-nW-kGM"/>
+                                    <constraint firstAttribute="height" constant="50" id="bgL-gq-H4f"/>
+                                    <constraint firstItem="5PO-hc-HQ6" firstAttribute="width" secondItem="SLc-bK-CCf" secondAttribute="width" constant="-80" id="mfz-um-H8w"/>
+                                    <constraint firstItem="5PO-hc-HQ6" firstAttribute="centerY" secondItem="SLc-bK-CCf" secondAttribute="centerY" id="n3v-YX-TDb"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qpx-WX-Ehl" secondAttribute="trailing" constant="15" id="nWR-4O-B5d"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1a-3L-YcI">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="54"/>
                                 <subviews>
@@ -299,30 +326,6 @@
                                     <outlet property="delegate" destination="gXo-mV-Be2" id="pVk-OU-ADg"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLc-bK-CCf">
-                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5PO-hc-HQ6">
-                                        <rect key="frame" x="20" y="15" width="520" height="20"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qpx-WX-Ehl">
-                                        <rect key="frame" x="555" y="10" width="30" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                        <state key="normal" title="확인"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="Qpx-WX-Ehl" firstAttribute="centerY" secondItem="SLc-bK-CCf" secondAttribute="centerY" id="MKN-O1-r02"/>
-                                    <constraint firstItem="5PO-hc-HQ6" firstAttribute="leading" secondItem="SLc-bK-CCf" secondAttribute="leading" constant="20" id="Qnd-nW-kGM"/>
-                                    <constraint firstAttribute="height" constant="50" id="bgL-gq-H4f"/>
-                                    <constraint firstItem="5PO-hc-HQ6" firstAttribute="width" secondItem="SLc-bK-CCf" secondAttribute="width" constant="-80" id="mfz-um-H8w"/>
-                                    <constraint firstItem="5PO-hc-HQ6" firstAttribute="centerY" secondItem="SLc-bK-CCf" secondAttribute="centerY" id="n3v-YX-TDb"/>
-                                    <constraint firstAttribute="trailing" secondItem="Qpx-WX-Ehl" secondAttribute="trailing" constant="15" id="nWR-4O-B5d"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -754,8 +757,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tp1-bX-Ama">
-                                <rect key="frame" x="178" y="459" width="30" height="30"/>
-                                <state key="normal" title="Exit"/>
+                                <rect key="frame" x="178" y="459" width="55" height="30"/>
+                                <state key="normal" title="Post"/>
                                 <connections>
                                     <action selector="exitBtn:" destination="ta6-CX-WP6" eventType="touchUpInside" id="Vmf-ph-BH3"/>
                                 </connections>
@@ -765,8 +768,12 @@
                     </view>
                     <connections>
                         <outlet property="adressLabel" destination="y9O-04-fK1" id="beI-Z5-kar"/>
+                        <outlet property="alcoholBtn" destination="09s-Un-vuC" id="Ef2-hQ-LWC"/>
+                        <outlet property="exitBtn" destination="Tp1-bX-Ama" id="z77-6f-XoU"/>
+                        <outlet property="foodBtn" destination="JTo-9A-gYf" id="MQn-FY-GmE"/>
                         <outlet property="imageView" destination="961-JS-1db" id="cJE-S5-40a"/>
                         <outlet property="inputTextView" destination="2dW-e5-fc2" id="Rlh-G6-k4s"/>
+                        <outlet property="locationBtn" destination="ee8-mB-4yu" id="aQG-Xx-Ccu"/>
                         <outlet property="selectedAlcoholTag" destination="ceY-8d-IZE" id="vvY-8h-KMc"/>
                         <outlet property="selectedFoodTag" destination="VCy-Bz-yT0" id="1dT-dL-fHq"/>
                         <outlet property="selectedLocationTag" destination="jIX-Is-znK" id="tn8-4S-bAE"/>
