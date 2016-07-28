@@ -136,6 +136,7 @@
 - (IBAction)deleteBtn:(id)sender {
     NSLog(@"Tap Delete Button");
     [self.delegate deleteButtonTouched:self.cellInfo];
+    
 }
 
 
