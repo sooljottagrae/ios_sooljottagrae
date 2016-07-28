@@ -59,7 +59,6 @@
 //롱프레스 레코그 나이져
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGesture;
 
-
 @end
 
 @implementation MostCommentedCollectionViewController
@@ -98,6 +97,7 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     //롱프레스인식자 설정
     [self.longPressGesture addTarget:self action:@selector(longPressRecognized:)];
     [self.collectionView addGestureRecognizer:self.longPressGesture];
+
     
     
     
@@ -324,7 +324,9 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     [[RequestObject sharedInstance] sendToServer:@"/api/posts/" option:@"GET" parameters:nil success:^(NSURLResponse *response, id responseObject, NSError *error) {
         
         if(responseObject != nil){
+
             //NSLog(@"%@",responseObject);
+
             [self initDataList:[responseObject objectForKey:@"results"]];   //데이터셋팅
             [self currentPageCount:[responseObject objectForKey:@"next"]];  //현재불러온 페이지 설정
             
@@ -338,7 +340,9 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     } useAuth:NO];
     
 
+
 }
+
 
 -(void) currentPageCount:(id)sender{
     NSString *nextUrl = sender;
@@ -470,6 +474,40 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 //    [self presentViewController:alert animated:YES completion:nil];
 //}
 
+//
+//- (void)onTapMore:(UIButton *)button
+//{
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:button.item inSection:button.section];
+// 
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"차단여부알림창"
+//                                                                   message:@"선택된 게시글을 삭제 하시겠습니까?"
+//                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+//    
+//    
+//    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"차단" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+//        [self.dataList removeObjectAtIndex:button.item];
+//        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+//
+//        [[NSNotificationCenter defaultCenter] postNotificationName:MostCommentdListLoadSuccess object:nil];
+//        
+//        [alert dismissViewControllerAnimated:YES completion:nil];;
+//    }];
+//    
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"취소" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        [alert dismissViewControllerAnimated:YES completion:nil];
+//        
+//    }];
+//    
+//    [alert addAction:cancelAction];
+//    [alert addAction:deleteAction];
+//    
+//    
+//    
+//    
+//    [self presentViewController:alert animated:YES completion:nil];
+//}
+//
+
 ////셀 사이즈 설정
 //- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 //    
@@ -571,7 +609,7 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 #pragma mark UILongPressGestureRecognizer
 
 -(void) longPressRecognized:(UILongPressGestureRecognizer *) sender{
-    
+
     if (sender.state == UIGestureRecognizerStateBegan){
         
         // 해당 뷰의 선택된 영역의 CGPoint를 가져온다.

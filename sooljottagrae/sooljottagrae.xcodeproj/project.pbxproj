@@ -34,6 +34,8 @@
 		8EA480101D348E0800512541 /* cocktail-icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA4800F1D348E0800512541 /* cocktail-icon1.png */; };
 		8EBD6EFC1D389E96007C1F98 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EBD6EFB1D389E96007C1F98 /* refresh.png */; };
 		8ED493CC1D47522E002663EA /* No_Image_Available.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493CB1D47522E002663EA /* No_Image_Available.png */; };
+		8ED493CF1D475BE3002663EA /* MBFingerTipWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED493CE1D475BE3002663EA /* MBFingerTipWindow.m */; };
+
 		8ED493D31D475C15002663EA /* Message_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493D01D475C15002663EA /* Message_16x16.png */; };
 		8ED493D41D475C15002663EA /* Message_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493D11D475C15002663EA /* Message_32x32.png */; };
 		8ED493D51D475C15002663EA /* Message_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED493D21D475C15002663EA /* Message_64x64.png */; };
@@ -112,6 +114,8 @@
 		8EA4800F1D348E0800512541 /* cocktail-icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cocktail-icon1.png"; sourceTree = "<group>"; };
 		8EBD6EFB1D389E96007C1F98 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		8ED493CB1D47522E002663EA /* No_Image_Available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = No_Image_Available.png; sourceTree = "<group>"; };
+		8ED493CD1D475BE3002663EA /* MBFingerTipWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBFingerTipWindow.h; sourceTree = "<group>"; };
+		8ED493CE1D475BE3002663EA /* MBFingerTipWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFingerTipWindow.m; sourceTree = "<group>"; };
 		8ED493D01D475C15002663EA /* Message_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Message_16x16.png; sourceTree = "<group>"; };
 		8ED493D11D475C15002663EA /* Message_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Message_32x32.png; sourceTree = "<group>"; };
 		8ED493D21D475C15002663EA /* Message_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Message_64x64.png; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 		8ED493ED1D48D580002663EA /* trash_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_64x64.png; sourceTree = "<group>"; };
 		8ED493EE1D48D580002663EA /* trash_48x48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_48x48.png; sourceTree = "<group>"; };
 		8ED493EF1D48D580002663EA /* trash_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_32x32.png; sourceTree = "<group>"; };
+
+
 		B15C28FFCD9018C7E98D18E8 /* Pods-sooljottagrae.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sooljottagrae.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sooljottagrae/Pods-sooljottagrae.debug.xcconfig"; sourceTree = "<group>"; };
 		BF191BFC1D2CEF6C00FE6A9C /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		BF191BFD1D2CEF6C00FE6A9C /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
@@ -302,8 +308,9 @@
 		8E6E25831D2A136B007799B3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8ED493E21D47656F002663EA /* MBFingerTipWindow.h */,
-				8ED493E31D47656F002663EA /* MBFingerTipWindow.m */,
+
+				8ED493CD1D475BE3002663EA /* MBFingerTipWindow.h */,
+				8ED493CE1D475BE3002663EA /* MBFingerTipWindow.m */,
 				8E6E25841D2A136B007799B3 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -312,11 +319,15 @@
 		8E6E25A01D2A239B007799B3 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				8ED493CB1D47522E002663EA /* No_Image_Available.png */,
 				8E6E258F1D2A136B007799B3 /* Assets.xcassets */,
+
 				8ED493ED1D48D580002663EA /* trash_64x64.png */,
 				8ED493EE1D48D580002663EA /* trash_48x48.png */,
 				8ED493EF1D48D580002663EA /* trash_32x32.png */,
 				8ED493CB1D47522E002663EA /* No_Image_Available.png */,
+
+
 				8ED493DC1D475C4B002663EA /* main.png */,
 				8EBD6EFB1D389E96007C1F98 /* refresh.png */,
 				8ED493DE1D475CA6002663EA /* bang.png */,
@@ -331,11 +342,13 @@
 				8E6E25A51D2ABC9C007799B3 /* profile.png */,
 				8E6E259E1D2A2397007799B3 /* facebook-login.png */,
 				8E6E25B81D2B7C83007799B3 /* facebook-logo.png */,
+
 				BFC42EF71D4300E500CE919B /* background.png */,
 				BFB855D21D43AF6D00A895DA /* editButton.png */,
 				BFB855D41D43BDD200A895DA /* back.png */,
 				BFB855D61D43C34900A895DA /* delete1.png */,
 				BFB855D81D43C34D00A895DA /* delete2.png */,
+
 				8ED493E01D475CEF002663EA /* Pen_16x16.png */,
 				8ED493D71D475C36002663EA /* Pen_32x32.png */,
 				8ED493D81D475C36002663EA /* Pen_64x64.png */,
@@ -408,7 +421,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
 				BFC42EF21D42ED7400CE919B /* profileSample.jpeg in Resources */,
+
+
 				8ED493DF1D475CA6002663EA /* bang.png in Resources */,
 				8E6BE7951D2E24210039AB7B /* underline.png in Resources */,
 				BF3EAB3E1D3C59B900E16A7D /* imageSampleInput.png in Resources */,
@@ -433,8 +449,11 @@
 				8ED493DD1D475C4B002663EA /* main.png in Resources */,
 				8ED493D51D475C15002663EA /* Message_64x64.png in Resources */,
 				BF191C071D2CEF7800FE6A9C /* Main1.storyboard in Resources */,
+
 				8ED493F21D48D580002663EA /* trash_32x32.png in Resources */,
 				BFB855D51D43BDD200A895DA /* back.png in Resources */,
+
+
 				8ED493D31D475C15002663EA /* Message_16x16.png in Resources */,
 				8E4DE4F71D3F1A89000094AF /* Launch Screen.storyboard in Resources */,
 				8EBD6EFC1D389E96007C1F98 /* refresh.png in Resources */,
@@ -500,11 +519,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
 				8ED493EC1D47CF15002663EA /* AppInfoViewController.m in Sources */,
 				BFC1510E1D34E4B700ACF71B /* CircleImageView.m in Sources */,
 				BF191C031D2CEF6C00FE6A9C /* SignInViewController.m in Sources */,
 				8E6E25B11D2AC39F007799B3 /* MainNavigationSegue.m in Sources */,
 				BFC42EF01D42056F00CE919B /* CommentsViewController.m in Sources */,
+
 				8E6E258B1D2A136B007799B3 /* ViewController.m in Sources */,
 				8ED493E41D47656F002663EA /* MBFingerTipWindow.m in Sources */,
 				BF227EF01D3628DC0061AE24 /* WritePostViewController.m in Sources */,
