@@ -391,45 +391,6 @@
     [vc removeFromParentViewController];
 }
 
-//포스트 버튼
-- (IBAction)clickedPostButton:(UIButton *)sender {
-    
-    
-/* 샘플
- 
-    NSString *fileName = @"main.jpg";
-    
-    UIImage *image = [UIImage imageNamed:@"main.png"];
-    
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]init];
-    
-    [parameters setObject:@"테스트로 올려봅니다:" forKey:@"title"];
-    [parameters setObject:@"테스트인데 이제 잘 돌아가는건가요?" forKey:@"content"];
-    
-   // NSLog(@"%@",parameters);
-    
-    
-    [[RequestObject sharedInstance] sendToServer:@"/api/posts/create/"
-                                      parameters:parameters
-                                           image:image
-                                        fileName:fileName
-                                         success:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                             //
-                                             NSLog(@"success : %@",responseObject);
-                                         }
-                                        progress:^(NSProgress *uploadProgress) {
-                                            //
-                                            
-                                        }
-                                            fail:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                                //
-                                                NSLog(@"fail : %@",responseObject);
-                                            }
-                                         useAuth:YES];
-*/
-
-}
-
 
 
 /* 사용 안함 (강준)
