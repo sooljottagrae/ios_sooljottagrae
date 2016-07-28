@@ -9,8 +9,10 @@
 #import "CommentsViewController.h"
 #import "CircleImageView.h"
 #import "TableViewCell.h"
+#import "RequestObject.h"
+#import "UserObject.h"
 
-@interface CommentsViewController () <UITextFieldDelegate>
+@interface CommentsViewController () <UITextFieldDelegate, TableViewCellDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic) NSArray *comments;
@@ -23,7 +25,17 @@
 @property (nonatomic, weak) IBOutlet UITextField *inputComment;
 @property (nonatomic, weak) IBOutlet UIView *inputCommentView;
 
+@property (strong, nonatomic) NSDictionary *selectedCommentInfo; //선택된 코멘트 id;
+
 @end
+
+
+typedef NS_ENUM(NSInteger, CustomAlertType){
+    CustomAlertTypeEdit,
+    CustomAlertTypeConfirm,
+    CustomAlertTypeCancel,
+    CustomAlertTypeConfirmCancel
+};
 
 @implementation CommentsViewController
 
@@ -37,7 +49,7 @@
     NSDictionary *comment5 = @{@"content" : @"비오는날엔 막걸리죠~"};
     NSDictionary *comment6 = @{@"content" : @"ㅇㅇ나도 막걸리 좋아함"};
     NSDictionary *comment7 = @{@"content" : @"머라는거냐 자아가 도대체 몇개냐 홍준아ㅡㅡ안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"};
-    self.comments = @[comment1, comment2, comment3, comment4, comment5, comment6, comment7];
+    //self.comments = @[comment1, comment2, comment3, comment4, comment5, comment6, comment7];
     
     CALayer *border = [CALayer layer];
     border.backgroundColor = [[UIColor grayColor] CGColor];
@@ -62,10 +74,10 @@
     
     [self.tableView setFrame:CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60)];
     
-    UIView *naviView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    UIView *naviView = [[UIView alloc]initWithFrame:CGRectMake(-10, 0, self.view.frame.size.width+10, 60)];
     naviView.backgroundColor = THEMA_BG_COLOR;
     
-    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 100, 40)];
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(8, 20, 100, 40)];
     [backButton setTitle:@"< Back" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
@@ -129,7 +141,8 @@
     
     //섹션에 맞는 배열을 가져와서 줄에 출력해
     NSString *text = [self.comments[indexPath.row] objectForKey:@"content"];
-    cell.textLabel.text = @"Heo";
+    NSString *nick = [self.comments[indexPath.row] objectForKey:@"user"];
+    cell.textLabel.text = nick;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0];
     
     cell.detailTextLabel.text = text;
@@ -141,7 +154,10 @@
     self.profileThumbnailView.contentMode = UIViewContentModeScaleAspectFill;
     cell.imageView.image =[UIImage imageNamed:@"background"];
     
+    //강준 - Delegate 연결
+    cell.delegate = self;
     
+    cell.cellInfo = self.comments[indexPath.row];
     
     cell.imageView.backgroundColor = [UIColor clearColor];
     
@@ -190,6 +206,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"%@",[self tableView:self.tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text);
+    
+    NSDictionary *dict = self.comments[indexPath.row];
+    
+    self.selectedCommentInfo = dict;
+    
+    //NSLog(@"%@", dict);
+    
 }
 
 
@@ -210,7 +233,7 @@
 
 /////// 강준
 
-#define kOFFSET_FOR_KEYBOARD 80.0
+#define kOFFSET_FOR_KEYBOARD 320.0
 
 -(void)keyboardWillShow {
      CGFloat height = self.view.frame.size.height - self.inputCommentView.frame.size.height;
@@ -308,4 +331,121 @@
                                                     name:UIKeyboardWillHideNotification
                                                   object:nil];
 }
+
+
+-(void) showMessageTitle:(NSString *)title message:(NSString *)msg data:(id)object type:(CustomAlertType)type handler:(void (^)(NSInteger object))handler completion:(void (^)())block{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+    
+    NSMutableDictionary *dict = object;
+    UIAlertAction *edit = [UIAlertAction actionWithTitle:@"수정" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *inputText = alertController.textFields.lastObject;
+        if([inputText.text length] != 0){
+            [dict setObject:inputText.text forKey:@"newcontent"];
+            [self editCommentsToServer:dict];
+        }else{
+            [self showMessageTitle:@"알림창" message:@"새로운 내용이 입력되지 않았습니다. 다시 입력해주세요" data:nil type:CustomAlertTypeEdit handler:nil completion:^{
+                [self showMessageTitle:title message:msg data:object type:CustomAlertTypeEdit handler:nil completion:block];
+            }];
+        }
+        
+        //실행완료 블럭
+        handler(CustomAlertTypeEdit);
+    }];
+    
+    UIAlertAction *confrim = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //실행완료 블럭
+        handler(CustomAlertTypeConfirm);
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"취소" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        //실행완료 블럭
+        handler(CustomAlertTypeCancel);
+    }];
+    
+    //수정창 혹은 알림창
+    if(type == CustomAlertTypeEdit){
+        [alertController addAction:edit];
+        [alertController addAction:cancel];
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            NSString *content = [object objectForKey:@"content"];
+            if([content isKindOfClass:NSString.class] && [content length] > 0 ){
+                textField.text = content;
+            }
+            textField.placeholder = @"댓글 입력...";
+        }];
+    }else if(type == CustomAlertTypeConfirm){
+        [alertController addAction:confrim];
+    }else if(type == CustomAlertTypeConfirmCancel){
+        [alertController addAction:confrim];
+        [alertController addAction:cancel];
+    }
+    
+    
+    [self presentViewController:alertController animated:YES completion:^{}];
+}
+
+//댓글 수정
+-(void) editCommentsToServer:(NSMutableDictionary *)dict{
+    NSDictionary *parameter = @{
+                                @"id":[dict objectForKey:@"id"] ,
+                                @"content": [dict objectForKey:@"newcontent"]
+                                };
+    NSString *urlString = [NSString stringWithFormat:@"/api/comments/%@/edit/", [dict objectForKey:@"id"]];
+    [[RequestObject sharedInstance] sendToServer:urlString option:@"PUT" parameters:parameter success:^(NSURLResponse *response, id responseObject, NSError *error) {
+        //성공시
+        [self showMessageTitle:@"알림창" message:@"수정 성공! 확인시 댓글창이 닫힙니다." data:nil type:CustomAlertTypeConfirm handler:nil  completion:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+        //실패시
+        [self showMessageTitle:@"알림창" message:@"수정 실패! 다시 확인 해주세요." data:nil type:CustomAlertTypeConfirm handler:nil completion:^{
+            
+        }];
+    } useAuth:YES];
+
+}
+
+#pragma mark TableVeiwCell<TableViwCellDelegate> Custom
+-(void)editButtonTouched:(NSDictionary *)dict{
+    NSString *commentUser = [dict objectForKey:@"user"];
+    if([[UserObject sharedInstance].userName isEqualToString:commentUser]){
+        [self showMessageTitle:@"수정창" message:@"내용을 수정해 주세요." data:dict type:CustomAlertTypeEdit handler:^(NSInteger object) {
+            //핸들러
+            if(object == CustomAlertTypeEdit){
+                
+            }else if(object == CustomAlertTypeCancel){
+                
+            }else if(object == CustomAlertTypeConfirm){
+                
+            }
+        } completion:^{
+            //완료시
+        }];
+    }
+}
+
+-(void)deleteButtonTouched:(NSDictionary *)dict{
+    NSString *commentUser = [dict objectForKey:@"user"];
+    if([[UserObject sharedInstance].userName isEqualToString:commentUser]){
+        [self showMessageTitle:@"삭제 확인창" message:@"댓글 정말로 삭제 하시겠습니까?" data:nil type:CustomAlertTypeConfirmCancel handler:^(NSInteger object) {
+            //핸들러
+            if(object == CustomAlertTypeEdit){
+                
+            }else if(object == CustomAlertTypeCancel){
+                
+            }else if(object == CustomAlertTypeConfirm){
+                NSString *apiUrl = [NSString stringWithFormat:@"/api/comments/%@/edit/",[dict objectForKey:@"id"]];
+                [[RequestObject sharedInstance] sendToServer:apiUrl option:@"DELETE" parameters:dict success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                    //
+                } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                    //
+                } useAuth:YES];
+            }
+        } completion:^{
+            //완료시
+        }];
+    }
+}
+
 @end

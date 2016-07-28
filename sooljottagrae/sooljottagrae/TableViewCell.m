@@ -8,6 +8,8 @@
 
 #import "TableViewCell.h"
 
+
+
 @interface TableViewCell()
 
 @property NSInteger addCount;
@@ -128,13 +130,20 @@
 
 - (IBAction)editBtn:(id)sender {
     NSLog(@"Tap Edit Button");
+    [self.delegate editButtonTouched:self.cellInfo];
 }
 
 - (IBAction)deleteBtn:(id)sender {
     NSLog(@"Tap Delete Button");
+    [self.delegate deleteButtonTouched:self.cellInfo];
 }
 
 
+
+//강준
+/******************************************************
+ *  Delegate Action
+ *****************************************************/
 
 /*
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

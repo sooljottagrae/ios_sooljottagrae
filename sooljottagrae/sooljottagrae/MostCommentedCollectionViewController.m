@@ -60,7 +60,6 @@
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGesture;
 
 
-
 @end
 
 @implementation MostCommentedCollectionViewController
@@ -325,7 +324,7 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     [[RequestObject sharedInstance] sendToServer:@"/api/posts/" option:@"GET" parameters:nil success:^(NSURLResponse *response, id responseObject, NSError *error) {
         
         if(responseObject != nil){
-            NSLog(@"%@",responseObject);
+            //NSLog(@"%@",responseObject);
             [self initDataList:[responseObject objectForKey:@"results"]];   //데이터셋팅
             [self currentPageCount:[responseObject objectForKey:@"next"]];  //현재불러온 페이지 설정
             
@@ -572,6 +571,7 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
 #pragma mark UILongPressGestureRecognizer
 
 -(void) longPressRecognized:(UILongPressGestureRecognizer *) sender{
+    
     if (sender.state == UIGestureRecognizerStateBegan){
         
         // 해당 뷰의 선택된 영역의 CGPoint를 가져온다.

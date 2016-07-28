@@ -278,9 +278,11 @@
                     </collectionView>
                     <connections>
                         <outlet property="collectionView" destination="KYC-r8-vYY" id="Ll8-ru-fR2"/>
+                        <outlet property="longPressGesture" destination="eJw-b8-8WC" id="0gr-iB-SwN"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9N-cu-fip" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="eJw-b8-8WC"/>
             </objects>
             <point key="canvasLocation" x="985" y="1172"/>
         </scene>
@@ -395,8 +397,12 @@
                             <outlet property="delegate" destination="qYI-T4-mSt" id="NML-Ji-P7y"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <outlet property="longPressGesture" destination="syb-TC-rUr" id="pJ5-tL-aRt"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3g8-ra-L9S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="syb-TC-rUr"/>
             </objects>
             <point key="canvasLocation" x="1661" y="1172"/>
         </scene>

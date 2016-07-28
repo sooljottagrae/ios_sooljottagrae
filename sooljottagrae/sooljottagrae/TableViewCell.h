@@ -8,9 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol TableViewCellDelegate <NSObject>
+
+
+@optional
+- (void) editButtonTouched:(NSDictionary *)info;
+- (void) deleteButtonTouched:(NSDictionary *)info;
+
+
+@end
+
 @interface TableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIView *deleteBtnView;
 @property (nonatomic, strong) UIImageView *editImageView;
 
+@property (nonatomic, strong) NSDictionary *cellInfo;
+
+@property (nonatomic, weak) id<TableViewCellDelegate> delegate;
 @end
