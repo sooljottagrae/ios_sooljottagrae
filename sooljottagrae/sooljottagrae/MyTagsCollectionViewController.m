@@ -79,6 +79,13 @@ static NSString * const reuseIdentifier = @"Cell1";
 //화면기초설정
 -(void) createView{
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    //롱프레스 설정
+    
+    [self.longPressGesture addTarget:self action:@selector(longPressRecognized:)];
+    [self.collectionView addGestureRecognizer:self.longPressGesture];
+
+    
 }
 
 //데이터 초기 불러오기 설정
@@ -376,5 +383,13 @@ static NSString * const reuseIdentifier = @"Cell1";
     }
 }
 
+
+#pragma mark UILongPressGustureRcongnizer
+
+-(void) longPressRecognized:(UILongPressGestureRecognizer *)sender{
+    if(sender.state == UIGestureRecognizerStateBegan){
+        
+    }
+}
 
 @end

@@ -24,10 +24,10 @@ static NSString *const MostCommentdListLoadSuccess = @"MostCommentdListLoadSucce
 
 
 + (instancetype) sharedInstance;
-
+/*사용 안함
 -(void) keyChainAccount:(NSString *)email passWord:(NSString *)password token:(NSString *)token;
 -(NSDictionary *)loadKeyChainAccount;
-
+*/
 
 -(void) mostCommentedList:(NSInteger)pageCount listCount:(NSInteger)listCount;
 

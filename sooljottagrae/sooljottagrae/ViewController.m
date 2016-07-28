@@ -60,7 +60,7 @@
     self.forgotPassword.enabled = YES;
     
     
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"LOGIN"];
+    //[[NSUserDefaults standardUserDefaults]removeObjectForKey:@"LOGIN"];
     //NSLog(@"%@",[[RequestObject sharedInstance] loadKeyChainAccount]);
 #endif
     

@@ -125,19 +125,33 @@
 
 - (IBAction)logOUtBtn:(id)sender {
     //[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    [self.view removeFromSuperview];
+//    [self.view removeFromSuperview];
+//    
+//    for(UIView *subview in [self.parentViewController.view subviews])
+//    {
+//        if([subview isKindOfClass:[UIVisualEffectView class]])
+//        {
+//            [subview removeFromSuperview];
+//        }
+//    }
     
-    for(UIView *subview in [self.parentViewController.view subviews])
-    {
-        if([subview isKindOfClass:[UIVisualEffectView class]])
-        {
-            [subview removeFromSuperview];
-        }
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //  강준
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     
-    
-    
+    //자동로그인 해제
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"LOGIN"];
+    
+    //TODO
+    /*
+     1. 로그인 뷰로 가는 방법?
+     2. 삭제삭제
+     
+    */
+    
+    [self.view.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    
     
 }
 
