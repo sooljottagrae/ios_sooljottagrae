@@ -31,7 +31,7 @@
 -(void)setUserEmail:(NSString *)userEmail;
 -(void)setToken:(NSString *)token;
 
-
+-(void)loadFromKeyChain;
 -(NSMutableDictionary *) loadAccountInfoToDictionary;
 -(void) updateEmail:(NSString *)email passWord:(NSString *)passWord token:(NSString *)token pk:(NSString *)pk;
 @end

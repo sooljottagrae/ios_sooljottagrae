@@ -128,6 +128,16 @@ typedef NS_ENUM(NSInteger, CustomAlertType){
 // Override to support conditional editing of the table view.
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    if(self.commentList.count == 0)
+    {
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height)];
+        noDataLabel.text             = @"검색 된 데이터가 없습니다.";
+        noDataLabel.textColor        = [UIColor blackColor];
+        noDataLabel.textAlignment    = NSTextAlignmentCenter;
+        self.tableView.backgroundView = noDataLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
     return 1;
 }
 
@@ -336,7 +346,15 @@ typedef NS_ENUM(NSInteger, CustomAlertType){
 -(void) showMessageTitle:(NSString *)title message:(NSString *)msg data:(id)object type:(CustomAlertType)type handler:(void (^)(NSInteger object))handler completion:(void (^)())block{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
     
-    NSMutableDictionary *dict = object;
+    
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    if(object != nil){
+        dict = [NSDictionary dictionaryWithDictionary:object].mutableCopy;
+        
+    }
+    
+    
     UIAlertAction *edit = [UIAlertAction actionWithTitle:@"수정" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *inputText = alertController.textFields.lastObject;
@@ -355,7 +373,7 @@ typedef NS_ENUM(NSInteger, CustomAlertType){
     
     UIAlertAction *confrim = [UIAlertAction actionWithTitle:@"확인" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //실행완료 블럭
-        handler(CustomAlertTypeConfirm);
+        //handler(CustomAlertTypeConfirm);
     }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"취소" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -391,6 +409,7 @@ typedef NS_ENUM(NSInteger, CustomAlertType){
                                 @"id":[dict objectForKey:@"id"] ,
                                 @"content": [dict objectForKey:@"newcontent"]
                                 };
+    
     NSString *urlString = [NSString stringWithFormat:@"/api/comments/%@/edit/", [dict objectForKey:@"id"]];
     [[RequestObject sharedInstance] sendToServer:urlString option:@"PUT" parameters:parameter success:^(NSURLResponse *response, id responseObject, NSError *error) {
         //성공시
@@ -445,6 +464,33 @@ typedef NS_ENUM(NSInteger, CustomAlertType){
         } completion:^{
             //완료시
         }];
+    }
+}
+- (IBAction)addCommentsBtn:(id)sender {
+    NSLog(@"%@",self.url);
+    
+    if([self.inputComment.text isKindOfClass:NSString.class] && [self.inputComment.text length] > 0){
+        NSMutableDictionary *parameter = [[NSMutableDictionary alloc]init];
+        
+        [parameter setObject:self.inputComment.text forKey:@"content"];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@comments/create/",self.url];
+        NSString *urlString2 = [NSString stringWithFormat:@"%@comments/",self.url];
+        [[RequestObject sharedInstance] sendToServer:urlString option:@"POST" parameters:parameter success:^(NSURLResponse *response, id responseObject, NSError *error) {
+            
+            [[RequestObject sharedInstance]sendToServer:urlString2 option:@"GET" parameters:nil success:^(NSURLResponse *response, id responseObject, NSError *error) {
+                if([responseObject objectForKey:@"result"]){
+                    
+                    self.commentList =[responseObject objectForKey:@"result"];
+                }
+            } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                //
+            } useAuth:YES];
+        } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+            //
+            NSLog(@"%@, %@, %@", response, responseObject, error);
+            [self showMessageTitle:@"에러메세지" message:@"잠시후에 시도해주세요" data:nil type:CustomAlertTypeConfirm handler:nil completion:nil];
+        } useAuth:YES];
     }
 }
 

@@ -109,9 +109,15 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
         [temp2 setObject:parameters forKey:@"contents"];    //넘겨받은 파라미터
     }
 
-
-    //토큰값
-    token = [[[RequestObject sharedInstance]loadKeyChainAccount] objectForKey:@"token"];
+    //키체인에서 가장 중요한 값을 불러온다.
+    [[UserObject sharedInstance] loadFromKeyChain];
+    
+    //토큰
+    token = [UserObject sharedInstance].token;
+    if(token == nil){
+        token = [[[RequestObject sharedInstance]loadKeyChainAccount] objectForKey:@"token"];
+    }
+    
     
     //JSON형태의 파라미터를 전송한다.
     NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:option URLString:urlString parameters:parameters error:nil];
@@ -125,26 +131,26 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         
-        //NSLog(@"%@ %@", response, responseObject);
+        NSLog(@"%@ %@", response, responseObject);
         
         //httpStatusCode를 가져온다
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         NSInteger returnCode = httpResponse.statusCode;
-        
+        NSInteger returnCode2 = returnCode / 100;
         //2xx - 성공
-        if((returnCode/100) >= ServerResponseCodeSuccess){
+        if((returnCode2) == ServerResponseCodeSuccess){
             success(response, responseObject, error);
         }
         
         //3xx - 리다이렉션
-        if((returnCode/100) >= ServerResponseCodeRedirection){
+        if((returnCode2) == ServerResponseCodeRedirection){
             success(response, responseObject, error);
         }
         
         //4xx - 실패
-        if((returnCode/100) >= ServerResponseCodeFail){
+        if((returnCode2) == ServerResponseCodeFail){
             //인증실패시
-            if([[responseObject objectForKey:@"detail"] isEqualToString:ExpriedMessage] && useAuth){
+            if([[responseObject objectForKey:@"detail"] isEqualToString:ExpriedMessage] && useAuth == YES){
                 [self verifiedAuthToken:VerifiedAuthorization
                              parameters:temp2
                                    fail:^(NSURLResponse *response, id responseObject, NSError *error) {
@@ -159,7 +165,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
         }
         
         //5xx - 서버오류
-        if((returnCode/100) > ServerResponseCodeError){
+        if((returnCode2) == ServerResponseCodeError){
             fail(response, responseObject, error);
         }
         
@@ -253,8 +259,30 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     [temp2 setObject:fail forKey:@"failBlock"];         //실패시 블록처리
     [temp2 setObject:progress forKey:@"progressBlock"]; //프로세스 블록처리
 
+    //avatar parameter 처리
+    NSString *nameOfImageParam = @"image";
+    if([parameters objectForKey:@"avatar"]){
+        nameOfImageParam = @"avatar";
+        NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:parameters];
+        [temp removeObjectForKey:@"avatar"];
+        parameters = temp.copy;
+    }else{
+        nameOfImageParam = @"image";
+    }
+    
+    //fileName nil처리
+    if(fileName == nil){
+        fileName = @"tempImage.jpg";
+    }
+    
+    //키체인에서 가장 중요한 값을 불러온다.
+    [[UserObject sharedInstance] loadFromKeyChain];
+    
     //토큰
-    token = [[[RequestObject sharedInstance]loadKeyChainAccount] objectForKey:@"token"];
+    token = [UserObject sharedInstance].token;
+    if(token == nil){
+        token = [[[RequestObject sharedInstance]loadKeyChainAccount] objectForKey:@"token"];
+    }
     
     //멀티파트 설정
     NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] multipartFormRequestWithMethod:option
@@ -262,7 +290,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
                                                                                              parameters:parameters
                                                                               constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                                                                   [formData appendPartWithFileData:imageData
-                                                                                                              name:@"image"
+                                                                                                              name:nameOfImageParam
                                                                                                           fileName:fileName
                                                                                                           mimeType:@"image/jpeg"];
                                                                               } error:nil];
@@ -302,7 +330,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
                       //4xx - 실패
                       if((returnCode/100) == ServerResponseCodeFail){
                           //인증실패시
-                          if([[responseObject objectForKey:@"detail"] isEqualToString:ExpriedMessage] && useAuth){
+                          if([[responseObject objectForKey:@"detail"] isEqualToString:ExpriedMessage] && useAuth == YES){
                               [self verifiedAuthToken:VerifiedAuthorization
                                            parameters:temp2
                                                  fail:^(NSURLResponse *response, id responseObject, NSError *error) {
@@ -372,12 +400,27 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     }
     
     //성공시 block처리문을 다시 실행 시켜주기 위한 파라미터를 선언한다
-    void (^reUseSuccess)(NSURLResponse *response, id responseObject, NSError *error) = [temp objectForKey:@"successBlock"];
-    void (^reUseFail)(NSURLResponse *response, id responseObject, NSError *error) = [temp objectForKey:@"failBlock"];
-    void (^reUseProgress)(NSProgress *uploadProgress) = [temp objectForKey:@"progressBlock"];
+    id useSuccess=nil, useFail=nil, useProgress=nil;
+    
+    if([temp objectForKey:@"successBlock"] != nil){
+        useSuccess =[temp objectForKey:@"successBlock"];
+    }
+    if([temp objectForKey:@"failBlock"] != nil){
+        useFail = [temp objectForKey:@"failBlock"];
+    }
+    if([temp objectForKey:@"progressBlock"] != nil){
+        useProgress = [temp objectForKey:@"progressBlock"];
+    }
+    void (^reUseSuccess)(NSURLResponse *response, id responseObject, NSError *error) = useSuccess;
+    void (^reUseFail)(NSURLResponse *response, id responseObject, NSError *error) = useFail;
+    void (^reUseProgress)(NSProgress *uploadProgress) = useProgress;
     
     //재인증을 값을 셋팅한다.
     NSMutableDictionary *authParameter = [[UserObject sharedInstance]loadAccountInfoToDictionary].mutableCopy;
+    if(authParameter == nil){
+        authParameter = [self loadKeyChainAccount].mutableCopy;
+    }
+    
     [authParameter removeObjectForKey:@"token"];
     
     //JSON형태의 파라미터를 전송한다.
@@ -385,7 +428,8 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
     
     
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-        
+                NSLog(@"%@ %@", response, responseObject);
+
             
             //httpStatusCode를 가져온다
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
@@ -445,6 +489,7 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
                 //토큰이 Expired  되었을경우
 //                NSLog(@">> %@ %@", response, responseObject);
                 NSArray *test = responseObject[@"non_field_errors"];
+                
                 if([test[0] isEqualToString:ExpriedMessage]){
                     
                     [self verifiedAuthToken:VerifiedAuthorization
@@ -454,6 +499,16 @@ typedef NS_ENUM(NSInteger, ServerResponseCode) {
                                            [self verifiedAuthToken:apiPath parameters:temp fail:nil];
                                        }];
                 
+                }
+                if([[responseObject objectForKey:@"detail"] isEqualToString:ExpriedMessage]){
+                    [self verifiedAuthToken:VerifiedAuthorization
+                                 parameters:temp
+                                       fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+                                           //재인증 다시 시도
+                                           [self verifiedAuthToken:apiPath parameters:temp fail:nil];
+                                       }];
+                    
+
                 }
             }
         }];

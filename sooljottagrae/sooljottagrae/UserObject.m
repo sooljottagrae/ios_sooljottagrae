@@ -177,6 +177,29 @@ static NSString *const AppLoginKeyId = @"AppLoginAccount";
 
 }
 
+-(void) loadFromKeyChain{
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc]initWithIdentifier:@"AppLoginAccount" accessGroup:nil];
+    NSString *email = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    NSData *pwdData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    
+    NSMutableDictionary *dict;
+    dict = (NSMutableDictionary *)[NSJSONSerialization JSONObjectWithData:pwdData
+                                                                  options:NSJSONReadingMutableContainers error:nil];
+    
+    
+    NSString *passWord = [dict objectForKey:@"password"];
+    NSString *tokenString = [dict objectForKey:@"token"];
+    NSString *pk = [dict objectForKey:@"pk"];
+    
+    
+    
+    _userEmail = email;
+    _passWord = passWord;
+    _token = tokenString;
+    _pk = pk;
+
+}
 
 //서버로부터 오는 정보를 UserObject에 셋팅한다.
 -(void) setttingUserInfoFromServer:(NSString *) serverId{

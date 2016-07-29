@@ -10,6 +10,11 @@
 #import "EditMyTagsViewController.h"
 #import "AppInfoViewController.h"
 #import "UserObject.h"
+#import "RequestObject.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
+@import ImageIO;
+@import AssetsLibrary;
 
 @interface SettingViewController ()
 
@@ -17,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UIView *tapActionView;
 
+@property (strong, nonatomic) NSString *fileName;
 
 
 @end
@@ -83,10 +89,31 @@
 }
 
 -(void) loadUserInfo{
+    
+    
+    //유저이름
     NSString *userName = [UserObject sharedInstance].userName;
     
     if([userName length] > 0 && [userName isKindOfClass:NSString.class]){
         self.profileNameLabel.text = [UserObject sharedInstance].userName;
+    }
+    
+    //유저아바타
+    if([[UserObject sharedInstance].profileUrl isKindOfClass:NSString.class] && [[UserObject sharedInstance].profileUrl length] > 0){
+        NSURL *imageUrl = [NSURL URLWithString:[UserObject sharedInstance].profileUrl];
+        [self.profileImageView  sd_setImageWithURL:imageUrl placeholderImage:[UIImage new]
+                                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                             if(cacheType == SDImageCacheTypeNone){
+                                                 self.profileImageView.alpha = 0;
+                                                 
+                                                 [UIView animateWithDuration:0.2f animations:^{
+                                                     self.profileImageView.alpha = 1;
+                                                 } completion:^(BOOL finished) {
+                                                     self.profileImageView.alpha = 1;
+                                                 }];
+                                                 
+                                             }
+                                         }];
     }
 }
 
@@ -115,7 +142,48 @@
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.profileImageView.image = chosenImage;
     
+    NSURL *referenceURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+    if(referenceURL) {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:referenceURL resultBlock:^(ALAsset *asset) {
+            ALAssetRepresentation *rep = [asset defaultRepresentation];
+            
+        
+            
+            
+            
+            
+        } failureBlock:^(NSError *error) {
+            // error handling
+        }];
+    }
+    
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+-(void) sendProfileToServer:(NSString *) fileName{
+    NSMutableDictionary *parameter = [[NSMutableDictionary alloc]init];
+    UserObject *userObject =[UserObject sharedInstance];
+    [parameter setObject:userObject.pk forKey:@"id"];
+    [parameter setObject:userObject.userName forKey:@"nickname"];
+    [parameter setObject:@[] forKey:@"alcohol_tags"];
+    [parameter setObject:@[] forKey:@"food_tags"];
+    [parameter setObject:@[] forKey:@"place_tags"];
+    [parameter setObject:self.profileImageView.image forKey:@"avatar"];
+    [parameter setObject: userObject.userEmail forKey:@"email"];
+    [parameter setObject:userObject.passWord forKey:@"password"];
+    
+    
+    NSString *url = [NSString stringWithFormat:@"/api/users/%@/edit/",userObject.pk];
+    
+    [[RequestObject sharedInstance] sendToServer:url option:@"PUT" parameters:parameter image:self.profileImageView.image fileName:self.fileName success:^(NSURLResponse *response, id responseObject, NSError *error) {
+        //성공시
+    } progress:^(NSProgress *uploadProgress) {
+        //프로세스
+    } fail:^(NSURLResponse *response, id responseObject, NSError *error) {
+        //실패
+    } useAuth:YES];
     
 }
 
@@ -124,17 +192,7 @@
 }
 
 - (IBAction)logOUtBtn:(id)sender {
-    //[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    [self.view removeFromSuperview];
-//    
-//    for(UIView *subview in [self.parentViewController.view subviews])
-//    {
-//        if([subview isKindOfClass:[UIVisualEffectView class]])
-//        {
-//            [subview removeFromSuperview];
-//        }
-//    }
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //  강준
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,16 +200,8 @@
     //자동로그인 해제
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"LOGIN"];
     
-    //TODO
-    /*
-     1. 로그인 뷰로 가는 방법?
-     2. 삭제삭제
-     
-    */
-    
+    //RootViewController 로 간다 (로그인화면으로)
     [self.view.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-    
-    
     
 }
 

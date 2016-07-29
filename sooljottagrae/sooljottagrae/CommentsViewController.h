@@ -12,4 +12,5 @@
 
 @property (strong, nonatomic) NSMutableArray *commentList;
 
+@property (strong, nonatomic) NSString *url;
 @end

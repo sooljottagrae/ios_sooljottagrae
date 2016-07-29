@@ -253,6 +253,9 @@
                                         <rect key="frame" x="555" y="10" width="30" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <state key="normal" title="확인"/>
+                                        <connections>
+                                            <action selector="addCommentsBtn:" destination="gXo-mV-Be2" eventType="touchUpInside" id="pVE-8A-fvm"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="댓글 달기..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5PO-hc-HQ6">
                                         <rect key="frame" x="20" y="15" width="520" height="20"/>

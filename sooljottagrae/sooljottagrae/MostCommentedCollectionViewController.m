@@ -600,6 +600,26 @@ static NSString * const reuseIdentifier = @"Cell";  //셀재사용식별자
     tempList = sender;
     NSLog(@"%ld개에서 %ld개를 추가적으로 내용을 넣었습니다. ",self.dataList.count, tempList.count);
     
+//    for(NSDictionary *item in tempList){
+//        for(NSDictionary *item2 in self.dataList){
+//            if([[item2 objectForKey:@"pk"] isEqual:[item objectForKey:@"pk"]]){
+//                
+//                [tempList removeObject:item];
+//            }
+//        }
+//    }
+//    
+    for(NSInteger i=0; i<tempList.count; i++){
+        for(NSDictionary *item2 in self.dataList){
+            NSDictionary *item = tempList[i];
+            if([[item2 objectForKey:@"pk"] isEqual:[item objectForKey:@"pk"]]){
+                NSLog(@"%ld",i);
+                
+                [tempList removeObjectAtIndex:i];
+            }
+        }
+    }
+    
     //Array Appended
     [self.dataList addObjectsFromArray:tempList];
     NSLog(@"> 현재 data 갯수 : %ld", self.dataList.count);

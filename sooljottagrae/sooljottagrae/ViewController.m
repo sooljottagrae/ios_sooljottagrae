@@ -55,8 +55,8 @@
 
     //디버그 모드시 자동 입력을 위한 설정
 #ifdef DEBUG
-    self.email_ID.text = @"sooljotta@sooljotta.com";
-    self.password.text = @"sooljotta";
+    self.email_ID.text = @"wajl1004@naver.com";
+    self.password.text = @"wajl1004";
     self.forgotPassword.enabled = YES;
     
     
@@ -196,7 +196,7 @@
                                           option:@"POST"
                                       parameters:parameters
                                          success:^(NSURLResponse *response, id responseObject, NSError *error) {
-                                             NSLog(@"%@",responseObject);
+                                             NSLog(@"%@%@",response,responseObject);
                                              
                                              NSString *token = [responseObject objectForKey:@"token"];
                                              
@@ -208,7 +208,9 @@
                                              [dict removeObjectForKey:@"id"];
                                              [dict setObject:[dict objectForKey:@"nickname"] forKey:@"userName"];
                                              [dict removeObjectForKey:@"nickname"];
-                                             
+                                             [dict removeObjectForKey:@"password"];
+                                             [dict setObject:self.password.text forKey:@"password"];
+                                            
                                              NSLog(@"%@", dict);
                                              if(responseObject != nil){
                                                  [self verifiedUserInfo:dict];
@@ -419,10 +421,12 @@
     if(data != nil){
         //[[RequestObject sharedInstance] keyChainAccount:email passWord:password token:tokenString];
         [[UserObject sharedInstance] updateEmail:[data objectForKey:@"email"]
-                                        passWord:[data objectForKey:@"password"]
+                                        passWord:self.password.text
                                            token:[data objectForKey:@"token"]
                                               pk:[data objectForKey:@"pk"]];
         [[UserObject sharedInstance] setUserName:[data objectForKey:@"userName"]];
+        [[UserObject sharedInstance] setProfileUrl:[data objectForKey:@"avatar"]];
+        
     }
     
     //메인뷰로 넘어간다.

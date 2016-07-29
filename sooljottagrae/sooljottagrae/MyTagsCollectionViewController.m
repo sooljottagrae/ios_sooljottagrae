@@ -312,7 +312,7 @@ static NSString * const reuseIdentifier = @"Cell1";
         }];
         [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
     }else{
-        cell.imageView.image = [UIImage imageNamed:@"NoImageAvailable"];
+        cell.imageView.image = [UIImage imageNamed:@"No_Image_Available.png"];
         [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
     }
 

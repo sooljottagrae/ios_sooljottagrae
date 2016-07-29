@@ -44,19 +44,19 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>https://sooljotta.com</key>
-			<dict/>
-			<key>NSIncludesSubdomains</key>
-			<true/>
-			<key>NSExceptionRequiresForwardSecrecy</key>
-			<false/>
-			<key>New item</key>
-			<string></string>
-		</dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>NSExceptionRequiresForwardSecrecy</key>
+			<false/>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+			<key>New item</key>
+			<string></string>
+			<key>https://sooljotta.com</key>
+			<dict/>
+		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
@@ -75,8 +75,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>
