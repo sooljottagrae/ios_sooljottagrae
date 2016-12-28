@@ -58,5 +58,5 @@
     - 구글문서
         - 회의록 : [https://goo.gl/8KeS9q](https://goo.gl/8KeS9q)
         - 기획안 : [https://goo.gl/vRKK2j](https://goo.gl/vRKK2j)
-        - 앱목업 : [https://goo.gl/Guudq1](https://goo.gl/Guudq1)
+        
 
